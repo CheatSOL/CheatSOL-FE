@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   StyledHeaderDiv,
+  StyledHeaderLogoDiv,
   StyledHeaderInput,
   StyledHeaderParentDiv,
   StyledHeaderInputDiv,
@@ -21,7 +22,9 @@ export default function Header(props) {
 
   return (
     <StyledHeaderDiv>
-      <Logo size={"m"} />
+      <StyledHeaderLogoDiv>
+        <Logo size={"m"} />
+      </StyledHeaderLogoDiv>
       <StyledHeaderParentDiv>
         <StyledHeaderInputDiv>
           <StyledHeaderInput
