@@ -11,13 +11,18 @@ export const StyledHeaderDiv = styled.div`
   align-items: center;
   padding: 10px;
   padding-top: 20px;
+  background-color: white;
+`;
+export const StyledHeaderLogoDiv = styled.div`
+  margin-left: 30px;
 `;
 
 export const StyledHeaderParentDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-right: 50px;
+  margin: 0px 50px;
+  margin-left: 100px;
   width: 90%;
 `;
 
