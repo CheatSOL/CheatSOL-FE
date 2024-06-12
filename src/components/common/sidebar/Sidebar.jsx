@@ -47,6 +47,22 @@ export default function Sidebar() {
             <span>연관 키워드</span>
           </StyledSidebarItemDiv>
         </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          {isDarkMode ? (
+            <>
+              <StyledHeaderFillMoonIcon onClick={toggleTheme} filled />
+              <StyledToggleIcon onClick={toggleTheme} filled />
+              <StyledHeaderSunIcon onClick={toggleTheme} />
+            </>
+          ) : (
+            <>
+              <StyledHeaderMoonIcon onClick={toggleTheme} />
+              <StyledToggleDarkIcon onClick={toggleTheme} />
+              <StyledHeaderFillSunIcon onClick={toggleTheme} filled />
+            </>
+          )}
+        </div>
+      </StyledSidebarInfoDiv>
     </StyledSidebarDiv>
   );
 }
