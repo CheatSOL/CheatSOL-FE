@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const StyledLogoImg = styled.img`
-  transform: ${({ size }) =>
-    size === "s" ? "scale(0.3)" : size === "m" ? "scale(0.5)" : "scale(0.8)"};
+  width: ${({ size }) =>
+    size === "s" ? "50px" : size === "m" ? "100px" : "150px"};
+  aspect-ratio: "4/3";
 `;
