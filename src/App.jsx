@@ -9,16 +9,18 @@ import StockDetailPage from "./pages/stock/detail/Stock.detail";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />}></Route>
-        <Route path="/main" element={<MainPage />}></Route>
-        <Route path="/main/social" element={<Socialpage />}></Route>
-        <Route path="/main/stock" element={<StockPage />}></Route>
-        <Route path="/main/stocks/:id" element={<StockDetailPage />}></Route>
-        <Route path="/main/keyword" element={<KeywordPage />}></Route>
-      </Routes>
-    </Router>
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />}></Route>
+          <Route path="/main" element={<MainPage />}></Route>
+          <Route path="/main/social" element={<Socialpage />}></Route>
+          <Route path="/main/stock" element={<StockPage />}></Route>
+          <Route path="/main/stocks/:id" element={<StockDetailPage />}></Route>
+          <Route path="/main/keyword" element={<KeywordPage />}></Route>
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
