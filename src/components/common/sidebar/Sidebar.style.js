@@ -76,35 +76,36 @@ export const StyledKeywordIcon = styled(VscSymbolKeyword)`
 `;
 
 const DarkModeIconStyles = css`
-  font-size: 1.6rem !important;
+  font-size: 1.4rem !important;
   margin-right: 10px;
   cursor: pointer;
 `;
 
 const ToggleIconStyles = css`
-  font-size: 2.3rem !important;
+  font-size: 1.5rem !important;
   margin-right: 10px;
   cursor: pointer;
 `;
 
-export const StyledHeaderMoonIcon = styled(IoMoonOutline)`
+/* export const StyledHeaderMoonIcon = styled(IoMoonOutline)`
   ${DarkModeIconStyles}
-  color: ${({ darkMode }) => (darkMode ? "gold" : "gold")};
+  color: ${({ darkMode }) => (darkMode ? "black" : "rgba(0,0,0,0.3)")};
 `;
 
 export const StyledHeaderSunIcon = styled(IoSunnyOutline)`
   ${DarkModeIconStyles}
-  color: ${({ darkMode }) => (darkMode ? "rgba(0, 0, 0, 0.7)" : "#F87315")};
-`;
+  color: ${({ darkMode }) =>
+    darkMode ? "rgba(0, 0, 0, 0.7)" : "rgba(0,0,0,0.3)"};
+`; */
 
 export const StyledHeaderFillMoonIcon = styled(IoMoon)`
   ${DarkModeIconStyles}
-  color: ${({ filled }) => (filled ? "gold" : "#000")};
+  color: ${({ darkMode }) => (darkMode ? "gold" : "rgba(0,0,0,0.3)")};
 `;
 
 export const StyledHeaderFillSunIcon = styled(IoSunny)`
   ${DarkModeIconStyles}
-  color: ${({ filled }) => (filled ? "#F87315" : "#000")};
+  color: ${({ darkMode }) => (darkMode ? "rgba(0,0,0,0.3)" : "#F87315")};
 `;
 
 export const StyledToggleIcon = styled(MdToggleOff)`
@@ -116,4 +117,28 @@ export const StyledToggleDarkIcon = styled(BiSolidToggleRight)`
   ${ToggleIconStyles}
   color: rgba(0, 0, 0, 0.7);
   transition: color 0.3s;
+`;
+
+export const StyledToggleContainer = styled.div`
+  width: 50px;
+  height: 25px;
+  border-radius: 15px;
+  background-color: ${({ isDarkMode }) => (isDarkMode ? "#333" : "#ddd")};
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s;
+  margin: 0px 5px;
+`;
+
+export const StyledToggleCircle = styled.div`
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  left: ${({ isDarkMode }) => (isDarkMode ? "calc(100% - 25px)" : "5px")};
+  transition: left 0.3s;
 `;

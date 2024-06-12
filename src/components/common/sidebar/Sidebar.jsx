@@ -5,13 +5,11 @@ import {
   StyledAnalyzeIcon,
   StyledRelateIcon,
   StyledKeywordIcon,
-  StyledHeaderMoonIcon,
-  StyledHeaderSunIcon,
   StyledHeaderFillMoonIcon,
   StyledHeaderFillSunIcon,
   StyledSidebarInfoDiv,
-  StyledToggleIcon,
-  StyledToggleDarkIcon,
+  StyledToggleCircle,
+  StyledToggleContainer,
 } from "./Sidebar.style";
 import Logo from "../logo/Logo";
 import { useState } from "react";
@@ -47,20 +45,18 @@ export default function Sidebar() {
             <span>연관 키워드</span>
           </StyledSidebarItemDiv>
         </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          {isDarkMode ? (
-            <>
-              <StyledHeaderFillMoonIcon onClick={toggleTheme} filled />
-              <StyledToggleIcon onClick={toggleTheme} filled />
-              <StyledHeaderSunIcon onClick={toggleTheme} />
-            </>
-          ) : (
-            <>
-              <StyledHeaderMoonIcon onClick={toggleTheme} />
-              <StyledToggleDarkIcon onClick={toggleTheme} />
-              <StyledHeaderFillSunIcon onClick={toggleTheme} filled />
-            </>
-          )}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "10px",
+          }}
+        >
+          <StyledHeaderFillMoonIcon darkMode={isDarkMode} />
+          <StyledToggleContainer onClick={toggleTheme} isDarkMode={isDarkMode}>
+            <StyledToggleCircle isDarkMode={isDarkMode} />
+          </StyledToggleContainer>
+          <StyledHeaderFillSunIcon darkMode={isDarkMode} />
         </div>
       </StyledSidebarInfoDiv>
     </StyledSidebarDiv>
