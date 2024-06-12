@@ -1,1 +1,1 @@
-export const sidebarHeightOffset = "125px";
+export const sidebarHeightOffset = "140px";

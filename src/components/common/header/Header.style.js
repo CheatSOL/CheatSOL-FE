@@ -1,17 +1,13 @@
 import styled, { css } from "styled-components";
 import { IoSearch } from "react-icons/io5";
-import { IoMoonOutline } from "react-icons/io5";
-import { IoSunnyOutline } from "react-icons/io5";
-import { IoMoon } from "react-icons/io5";
-import { IoSunny } from "react-icons/io5";
 
 export const StyledHeaderDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100px;
   padding: 10px;
-  padding-top: 20px;
-  background-color: white;
+  padding-bottom: 0px;
 `;
 export const StyledHeaderLogoDiv = styled.div`
   margin-left: 30px;
@@ -59,28 +55,4 @@ export const StyledSearchIcon = styled(IoSearch)`
   transform: translateY(-50%);
   font-size: 24px;
   color: rgba(0, 0, 0, 0.5);
-`;
-
-const iconStyles = css`
-  font-size: 1.6rem !important;
-  margin-right: 10px;
-  cursor: pointer;
-`;
-
-export const StyledHeaderMoonIcon = styled(IoMoonOutline)`
-  ${iconStyles}
-`;
-
-export const StyledHeaderSunIcon = styled(IoSunnyOutline)`
-  ${iconStyles}
-`;
-
-export const StyledHeaderFillMoonIcon = styled(IoMoon)`
-  ${iconStyles}
-  color: ${({ filled }) => (filled ? "gold" : "#000")};
-`;
-
-export const StyledHeaderFillSunIcon = styled(IoSunny)`
-  ${iconStyles}
-  color: ${({ filled }) => (filled ? "#F87315" : "#000")};
 `;

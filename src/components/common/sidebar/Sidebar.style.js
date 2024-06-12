@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { sidebarHeightOffset } from "../../variables";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoStatsChart } from "react-icons/io5";
 import { TbCirclesRelation } from "react-icons/tb";
@@ -9,12 +8,19 @@ export const StyledSidebarDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 250px;
-  margin-top: 10px;
-  height: calc(100% - ${sidebarHeightOffset});
+  min-width: 250px;
+  height: 100%;
   border-right: 1px solid rgba(0, 0, 0, 0.2);
   background-color: white;
-  padding-top: 50px;
+  padding-top: 20px;
+`;
+
+export const StyledSidebarInfoDiv = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const StyledSidebarItemDiv = styled.div`
@@ -23,7 +29,7 @@ export const StyledSidebarItemDiv = styled.div`
   justify-content: start;
   align-items: center;
   margin-bottom: 20px;
-  padding: 10px 50px;
+  padding: 10px 60px;
   cursor: pointer;
 
   &:hover {
@@ -44,7 +50,6 @@ export const StyledSidebarItemDiv = styled.div`
 
 const iconStyles = css`
   font-size: 1.5rem !important;
-  color: rgba(0, 0, 0, 0.7);
   transition: color 0.3s;
 `;
 

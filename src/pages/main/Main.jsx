@@ -5,8 +5,10 @@ import { StyledMainDiv } from "./Main.style";
 export default function MainPage() {
   return (
     <StyledMainDiv>
-      <Header />
       <Sidebar />
+      <div>
+        <Header />
+      </div>
     </StyledMainDiv>
   );
 }
