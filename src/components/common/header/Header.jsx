@@ -10,6 +10,7 @@ import {
   StyledHeaderFillMoonIcon,
   StyledHeaderFillSunIcon,
 } from "./Header.style";
+import Logo from "../logo/Logo";
 
 export default function Header(props) {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -20,7 +21,7 @@ export default function Header(props) {
 
   return (
     <StyledHeaderDiv>
-      <div>logo</div>
+      <Logo size={"m"} />
       <StyledHeaderParentDiv>
         <StyledHeaderInputDiv>
           <StyledHeaderInput
