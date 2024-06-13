@@ -1,24 +1,12 @@
-import React, { useState } from "react";
-import {
-  StyledHeaderDiv,
-  StyledHeaderInput,
-  StyledHeaderParentDiv,
-  StyledHeaderInputDiv,
-  StyledSearchIcon,
-} from "./Header.style";
+import React from "react";
+import { StyledHeaderDiv, StyledHeaderParentDiv } from "./Header.style";
+import Search from "../search/Search";
 
 export default function Header(props) {
   return (
     <StyledHeaderDiv>
       <StyledHeaderParentDiv>
-        <StyledHeaderInputDiv>
-          <StyledHeaderInput
-            placeholder="Search"
-            width={props.width}
-            height={props.height}
-          />
-          <StyledSearchIcon />
-        </StyledHeaderInputDiv>
+        <Search width="900px" height="50px" />
       </StyledHeaderParentDiv>
     </StyledHeaderDiv>
   );

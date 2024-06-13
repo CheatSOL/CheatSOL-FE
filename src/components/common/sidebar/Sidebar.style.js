@@ -134,8 +134,8 @@ export const StyledToggleContainer = styled.div`
 `;
 
 export const StyledToggleCircle = styled.div`
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background-color: white;
   position: absolute;
