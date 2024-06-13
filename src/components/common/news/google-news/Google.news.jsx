@@ -1,3 +1,28 @@
+import React from "react";
+import {
+  StyledNewsDiv,
+  StyledNewsKeyword,
+  StyledNewsItemDiv,
+  StyledNewsItemHeaderDiv,
+  StyledNewsItemPatentDiv,
+} from "./Google.style";
+
+function timeAgo(dateString) {
+  const now = new Date();
+  const articleDate = new Date(dateString);
+  const differenceInMilliseconds = now - articleDate;
+  const differenceInHours = Math.floor(
+    differenceInMilliseconds / (1000 * 60 * 60)
+  );
+
+  if (differenceInHours < 24) {
+    return `${differenceInHours}시간 전`;
+  } else {
+    const differenceInDays = Math.floor(differenceInHours / 24);
+    return `${differenceInDays}일 전`;
+  }
+}
+
 const data = [
   {
     title: `[자막뉴스] "급성 중독 위험"…덴마크서 'K-불닭' 폐기 권고한 이유 - SBS 뉴스`,
@@ -44,3 +69,23 @@ const data = [
     source: "비즈니스포스트",
   },
 ];
+
+export default function GoogleNews() {
+  return (
+    <StyledNewsDiv>
+      <StyledNewsKeyword>
+        <span>"불닭"</span>이 이렇게 언급됐어요
+      </StyledNewsKeyword>
+      <StyledNewsItemPatentDiv>
+        {data.map((e, index) => (
+          <StyledNewsItemDiv key={index}>
+            <StyledNewsItemHeaderDiv>
+              <span>{e.source}</span> |<span>{timeAgo(e.pubDate)}</span>
+            </StyledNewsItemHeaderDiv>
+            <div>{e.title}</div>
+          </StyledNewsItemDiv>
+        ))}
+      </StyledNewsItemPatentDiv>
+    </StyledNewsDiv>
+  );
+}
