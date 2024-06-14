@@ -34,6 +34,17 @@ function timeAgo(dateString) {
     return `${differenceInDays}일 전`;
   }
 }
+const highlightColor = "#ff6347";
+
+function highlightedText(text, highlights) {
+  let highlighted = text;
+  highlights.forEach((highlight) => {
+    highlighted = highlighted
+      .split(highlight)
+      .join(`<span style="color: ${highlightColor}">${highlight}</span>`);
+  });
+  return <div dangerouslySetInnerHTML={{ __html: highlighted }} />;
+}
 
 const data = [
   {
@@ -142,7 +153,7 @@ export default function NaverNews() {
               </StyledNewsItemHeaderDiv>
               <div>{e.title}</div>
               <StyledNewsItemContentDiv>
-                {e.maxSentence}
+                {highlightedText(e.maxSentence, e.highlight)}
               </StyledNewsItemContentDiv>
             </a>
           </StyledNewsItemDiv>
