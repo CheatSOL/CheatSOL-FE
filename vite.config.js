@@ -10,6 +10,7 @@ export default defineConfig({
       { find: "~/components", replacement: "/src/components" },
       { find: "~/images", replacement: "/assets/images" },
       { find: "~/apis", replacement: "/src/lib/apis" },
+      { find: "~/utils", replacement: "/src/lib/utils" },
     ],
   },
 })
