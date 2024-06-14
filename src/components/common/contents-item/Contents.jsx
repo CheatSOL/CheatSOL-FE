@@ -11,7 +11,6 @@ export default function Contents(props) {
   const stock_sample_data = ["1",16000,2.75] 
   const stock_sample_tag = [610000, 640000, 103100]
 
-
   const stck_cd = stock_sample_code //종목코드
   const stck_name = stock_sample_name //회사이름
   const stck_prpr = stock_sample_price //시세(현재가)

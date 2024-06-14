@@ -1,4 +1,4 @@
-import ContentsItem from "../../components/common/contents-item/Contents";
+import ContentsItem from "~/components/common/contents-item/Contents";
 
 export default function StockPage() {
   return <div>
