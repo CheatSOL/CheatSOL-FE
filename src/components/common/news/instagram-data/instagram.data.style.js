@@ -1,15 +1,5 @@
 import styled from "styled-components";
 
-export const StyledNewsDiv = styled.div`
-  width: 550px;
-  height: 400px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 15px;
-`;
-
 export const StyledNewsItemParentDiv = styled.div`
     display: flex;
     flex-direction: column;
@@ -18,19 +8,11 @@ export const StyledNewsItemParentDiv = styled.div`
     overflow-y: scroll;
     padding: 20px;
 
-    & .youtube-title {
-        font-weight: 400;
-    }
-
-    & a {
-      text-decoration: none;
-      color: inherit;
-    }
 `;
 
 export const StyledNewsItemDiv = styled.div`
     display: flex;
-    gap: 5px;
+    gap: 20px;
     
     width: 100%;
     background-color: rgba(0, 0, 0, 0.03);
@@ -38,9 +20,24 @@ export const StyledNewsItemDiv = styled.div`
     border-radius: 20px;
     margin-bottom: 10px;
     padding-bottom: 20px;
+
+    & p{
+        font-size: 0.8rem;
+    }
+    & #hashtags {
+        margin-top: 10px;
+        font-weight: 800;
+    }
+    & section > a {
+        text-decoration: none;
+        color: inherit;
+    }
 `;
 
 export const StyledNewsItemHeaderDiv = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 12px;
   font-size: 0.7rem;
   margin-bottom: 10px;
   color: rgba(0, 0, 0, 0.6);
@@ -51,17 +48,16 @@ export const StyledNewsItemHeaderDiv = styled.div`
   & span:nth-child(2) {
     margin-left: 10px;
   }
+  & img {
+    width: 15px;
+  }
 `;
 
-export const StyledVideoDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
 
 export const StyledImageDiv = styled.div`
-    & img{
-    max-width: 180px;
-    height: auto;
-    border-radius: 10px;
+    & img {
+    height: 200px;
+    border-radius: 15px;
     }
-`;
+`
+
