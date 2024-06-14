@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import {
   StyledSidebarDiv,
   StyledSidebarItemDiv,
@@ -12,14 +14,16 @@ import {
   StyledToggleContainer,
 } from "./Sidebar.style";
 import Logo from "../logo/Logo";
-import { useState } from "react";
 
 export default function Sidebar() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const location = useLocation();
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
   };
+
+  const isActive = (path) => location.pathname === path;
 
   return (
     <StyledSidebarDiv>
@@ -28,21 +32,29 @@ export default function Sidebar() {
       </div>
       <StyledSidebarInfoDiv>
         <div>
-          <StyledSidebarItemDiv>
-            <StyledHomeIcon />
-            <span>한눈에 보기</span>
+          <StyledSidebarItemDiv active={isActive("/main")}>
+            <Link to="/main">
+              <StyledHomeIcon />
+              <span>한눈에 보기</span>
+            </Link>
           </StyledSidebarItemDiv>
-          <StyledSidebarItemDiv>
-            <StyledAnalyzeIcon />
-            <span>소셜 분석</span>
+          <StyledSidebarItemDiv active={isActive("/main/social")}>
+            <Link to="/main/social">
+              <StyledAnalyzeIcon />
+              <span>소셜 분석</span>
+            </Link>
           </StyledSidebarItemDiv>
-          <StyledSidebarItemDiv>
-            <StyledRelateIcon />
-            <span>연관 주식</span>
+          <StyledSidebarItemDiv active={isActive("/main/stock")}>
+            <Link to="/main/stock">
+              <StyledRelateIcon />
+              <span>연관 주식</span>
+            </Link>
           </StyledSidebarItemDiv>
-          <StyledSidebarItemDiv>
-            <StyledKeywordIcon />
-            <span>연관 키워드</span>
+          <StyledSidebarItemDiv active={isActive("/main/keyword")}>
+            <Link to="/main/keyword">
+              <StyledKeywordIcon />
+              <span>연관 키워드</span>
+            </Link>
           </StyledSidebarItemDiv>
         </div>
         <div

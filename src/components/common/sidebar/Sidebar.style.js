@@ -3,12 +3,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { IoStatsChart } from "react-icons/io5";
 import { TbCirclesRelation } from "react-icons/tb";
 import { VscSymbolKeyword } from "react-icons/vsc";
-import {
-  IoMoonOutline,
-  IoSunnyOutline,
-  IoMoon,
-  IoSunny,
-} from "react-icons/io5";
+import { IoMoon, IoSunny } from "react-icons/io5";
 import { MdToggleOff } from "react-icons/md";
 import { BiSolidToggleRight } from "react-icons/bi";
 
@@ -40,25 +35,40 @@ export const StyledSidebarItemDiv = styled.div`
   padding: 10px 60px;
   cursor: pointer;
 
-  &:hover {
-    background-color: #43d2ff;
-    border-radius: 50px;
-    & span,
-    & svg {
-      color: white;
-    }
+  background-color: ${({ active }) => (active ? "#43d2ff" : "transparent")};
+  border-radius: ${({ active }) => (active ? "50px" : "0")};
+
+  & > a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
   }
 
   & span {
     margin-left: 15px;
     transition: color 0.3s;
-    color: rgba(0, 0, 0, 0.5);
+    color: ${({ active }) => (active ? "white" : "rgba(0, 0, 0, 0.5)")};
+  }
+
+  & svg {
+    color: ${({ active }) => (active ? "white" : "")};
+  }
+
+  &:hover {
+    background-color: #43d2ff;
+    border-radius: 50px;
+
+    & span,
+    & svg {
+      color: white;
+    }
   }
 `;
 
 const iconStyles = css`
   font-size: 1.5rem !important;
-  color: ${({ darkMode }) => (darkMode ? "gold" : "rgba(0, 0, 0, 0.7)")};
+  color: ${({ active }) => (active ? "white" : "rgba(0, 0, 0, 0.5)")};
   transition: color 0.3s;
 `;
 
@@ -81,23 +91,6 @@ const DarkModeIconStyles = css`
   cursor: pointer;
 `;
 
-const ToggleIconStyles = css`
-  font-size: 1.5rem !important;
-  margin-right: 10px;
-  cursor: pointer;
-`;
-
-/* export const StyledHeaderMoonIcon = styled(IoMoonOutline)`
-  ${DarkModeIconStyles}
-  color: ${({ darkMode }) => (darkMode ? "black" : "rgba(0,0,0,0.3)")};
-`;
-
-export const StyledHeaderSunIcon = styled(IoSunnyOutline)`
-  ${DarkModeIconStyles}
-  color: ${({ darkMode }) =>
-    darkMode ? "rgba(0, 0, 0, 0.7)" : "rgba(0,0,0,0.3)"};
-`; */
-
 export const StyledHeaderFillMoonIcon = styled(IoMoon)`
   ${DarkModeIconStyles}
   color: ${({ darkMode }) => (darkMode ? "gold" : "rgba(0,0,0,0.3)")};
@@ -109,12 +102,17 @@ export const StyledHeaderFillSunIcon = styled(IoSunny)`
 `;
 
 export const StyledToggleIcon = styled(MdToggleOff)`
-  ${ToggleIconStyles}
+  font-size: 1.5rem !important;
+  margin-right: 10px;
+  cursor: pointer;
   color: rgba(0, 0, 0, 0.7);
   transition: color 0.3s;
 `;
+
 export const StyledToggleDarkIcon = styled(BiSolidToggleRight)`
-  ${ToggleIconStyles}
+  font-size: 1.5rem !important;
+  margin-right: 10px;
+  cursor: pointer;
   color: rgba(0, 0, 0, 0.7);
   transition: color 0.3s;
 `;
