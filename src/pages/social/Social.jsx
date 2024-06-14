@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Header from "../../components/common/header/Header";
 import GoogleNews from "../../components/common/news/google-news/Google.news";
 import Sidebar from "../../components/common/sidebar/Sidebar";
@@ -16,4 +17,15 @@ export default function SocialPage() {
       </StyledSocialInfoDiv>
     </StyledSocialDiv>
   );
+=======
+import YoutubeData from "~/components/common/news/youtube-data/Youtube.data";
+import InstagramData from "../../components/common/news/instagram-data/instagram.data";
+
+export default function SocialPage() {
+  return <div>
+    socialPage
+    <YoutubeData></YoutubeData>
+    <InstagramData></InstagramData>
+    </div>;
+>>>>>>> develop
 }
