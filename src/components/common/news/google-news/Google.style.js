@@ -2,12 +2,13 @@ import styled from "styled-components";
 
 export const StyledNewsDiv = styled.div`
   width: 500px;
-  height: 500px;
+  height: 400px;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 15px;
+  padding-top: 0px;
 `;
 export const StyledNewsKeyword = styled.div`
   width: 100%;
@@ -20,7 +21,7 @@ export const StyledNewsKeyword = styled.div`
 `;
 
 export const StyledNewsItemPatentDiv = styled.div`
-  height: 450px;
+  height: 350px;
   overflow-y: scroll;
 `;
 

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledNav = styled.nav`
   width: auto;
-  max-width: 478px;
+  max-width: 440px;
   background-color: rgba(0, 0, 0, 0.03);
   border-radius: 10px;
   display: flex;
@@ -12,7 +12,7 @@ export const StyledNav = styled.nav`
 
 export const StyledNavItem = styled.a`
   text-decoration: none;
-  font-size: 20px;
+  font-size: 15px;
   color: ${(props) => (props.active ? "#43d2ff" : "rgba(0, 0, 0, 0.4)")};
   padding: 8px 30px;
   cursor: pointer;
