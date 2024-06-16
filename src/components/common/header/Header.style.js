@@ -17,6 +17,5 @@ export const StyledHeaderParentDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0px 50px;
-  margin-left: 100px;
   width: 90%;
 `;
