@@ -149,6 +149,7 @@ export default function NaverNews() {
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <StyledNewsItemHeaderDiv>
+                <img src="/assets/images/blog.png" />
                 <span>{e.writer}</span> | <span>{timeAgo(e.documentDate)}</span>
               </StyledNewsItemHeaderDiv>
               <div>{e.title}</div>

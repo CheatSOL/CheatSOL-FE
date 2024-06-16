@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledNewsDiv = styled.div`
   width: 500px;
-  height: 500px;
+  height: 400px;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -42,14 +42,16 @@ export const StyledNewsItemDiv = styled.div`
 `;
 
 export const StyledNewsItemHeaderDiv = styled.div`
-  font-size: 14px;
+  font-size: 0.7rem;
   margin-bottom: 10px;
   color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
 
-  & span:nth-child(1) {
-    margin-right: 10px;
-  }
   & span:nth-child(2) {
+    margin: 0px 10px;
+  }
+  & span:nth-child(3) {
     margin-left: 10px;
   }
 `;
