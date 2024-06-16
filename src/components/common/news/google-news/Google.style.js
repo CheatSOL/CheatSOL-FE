@@ -2,12 +2,13 @@ import styled from "styled-components";
 
 export const StyledNewsDiv = styled.div`
   width: 500px;
-  height: 500px;
+  height: 400px;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 15px;
+  padding-top: 0px;
 `;
 export const StyledNewsKeyword = styled.div`
   width: 100%;
@@ -20,21 +21,26 @@ export const StyledNewsKeyword = styled.div`
 `;
 
 export const StyledNewsItemPatentDiv = styled.div`
-  height: 450px;
+  height: 350px;
   overflow-y: scroll;
 `;
 
 export const StyledNewsItemDiv = styled.div`
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: rgba(0, 0, 0, 0.02);
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 10px;
   padding-bottom: 20px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.04);
+  }
 `;
 
 export const StyledNewsItemHeaderDiv = styled.div`
-  font-size: 14px;
+  font-size: 0.7rem;
   margin-bottom: 10px;
   color: rgba(0, 0, 0, 0.6);
 

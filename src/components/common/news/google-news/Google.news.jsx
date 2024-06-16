@@ -78,12 +78,19 @@ export default function GoogleNews() {
       </StyledNewsKeyword>
       <StyledNewsItemPatentDiv>
         {data.map((e, index) => (
-          <StyledNewsItemDiv key={index}>
-            <StyledNewsItemHeaderDiv>
-              <span>{e.source}</span> |<span>{timeAgo(e.pubDate)}</span>
-            </StyledNewsItemHeaderDiv>
-            <div>{e.title}</div>
-          </StyledNewsItemDiv>
+          <a
+            href={e.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <StyledNewsItemDiv key={index}>
+              <StyledNewsItemHeaderDiv>
+                <span>{e.source}</span> |<span>{timeAgo(e.pubDate)}</span>
+              </StyledNewsItemHeaderDiv>
+              <div>{e.title}</div>
+            </StyledNewsItemDiv>
+          </a>
         ))}
       </StyledNewsItemPatentDiv>
     </StyledNewsDiv>

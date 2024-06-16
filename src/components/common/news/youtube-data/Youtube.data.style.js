@@ -1,43 +1,49 @@
 import styled from "styled-components";
 
 export const StyledNewsDiv = styled.div`
-  width: 550px;
+  width: 500px;
   height: 400px;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 15px;
+  padding-top: 0px;
 `;
 
 export const StyledNewsItemParentDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    height: 450px;
-    overflow-y: scroll;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  height: 450px;
+  overflow-y: scroll;
+  padding: 20px 0px;
 
-    & .youtube-title {
-        font-weight: 400;
-    }
+  & .youtube-title {
+    font-weight: 400;
+  }
 
-    & a {
-      text-decoration: none;
-      color: inherit;
-    }
+  & a {
+    text-decoration: none;
+    color: inherit;
+  }
 `;
 
 export const StyledNewsItemDiv = styled.div`
-    display: flex;
-    gap: 5px;
-    
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.03);
-    padding: 30px;
-    border-radius: 20px;
-    margin-bottom: 10px;
-    padding-bottom: 20px;
+  display: flex;
+  gap: 5px;
+
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.02);
+  padding: 20px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.04);
+  }
 `;
 
 export const StyledNewsItemHeaderDiv = styled.div`
@@ -54,14 +60,14 @@ export const StyledNewsItemHeaderDiv = styled.div`
 `;
 
 export const StyledVideoDiv = styled.div`
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const StyledImageDiv = styled.div`
-    & img{
+  & img {
     max-width: 180px;
     height: auto;
     border-radius: 10px;
-    }
+  }
 `;
