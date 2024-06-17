@@ -7,6 +7,7 @@ import StockPage from "./pages/stock/detail/maintab/Maintab";
 import KeywordPage from "./pages/keyword/Keyword";
 import StockDetailPage from "./pages/stock/detail/Stock.detail";
 
+import Pricetab from "./pages/stock/detail/pricetab/Pricetab";
 function App() {
   return (
     <div className="App">
@@ -18,6 +19,8 @@ function App() {
           <Route path="/main/stock" element={<StockPage />}></Route>
           <Route path="/main/stocks/:id" element={<StockDetailPage />}></Route>
           <Route path="/main/keyword" element={<KeywordPage />}></Route>
+
+          <Route path='/main/stock/dailyprice' element={<Pricetab/>}></Route>
         </Routes>
       </Router>
     </div>
