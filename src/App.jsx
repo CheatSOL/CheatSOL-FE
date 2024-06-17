@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/landing/Landing";
 import MainPage from "./pages/main/Main";
 import Socialpage from "./pages/social/Social";
-import StockPage from "./pages/stock/Stock";
+import StockPage from "./pages/stock/detail/maintab/Maintab";
 import KeywordPage from "./pages/keyword/Keyword";
 import StockDetailPage from "./pages/stock/detail/Stock.detail";
 
