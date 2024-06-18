@@ -14,6 +14,7 @@ export const StyledHeaderInput = styled.input`
   border-radius: 30px;
   font-size: 20px;
   margin-left: 100px;
+  padding-left: 20px;
 
   &:focus {
     outline: none;
