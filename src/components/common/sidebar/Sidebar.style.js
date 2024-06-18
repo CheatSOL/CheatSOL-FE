@@ -93,12 +93,12 @@ const DarkModeIconStyles = css`
 
 export const StyledHeaderFillMoonIcon = styled(IoMoon)`
   ${DarkModeIconStyles}
-  color: ${({ darkMode }) => (darkMode ? "gold" : "rgba(0,0,0,0.3)")};
+  color: ${({ darkmode }) => (darkmode ? "gold" : "rgba(0,0,0,0.3)")};
 `;
 
 export const StyledHeaderFillSunIcon = styled(IoSunny)`
   ${DarkModeIconStyles}
-  color: ${({ darkMode }) => (darkMode ? "rgba(0,0,0,0.3)" : "#F87315")};
+  color: ${({ darkmode }) => (darkmode ? "rgba(0,0,0,0.3)" : "#F87315")};
 `;
 
 export const StyledToggleIcon = styled(MdToggleOff)`

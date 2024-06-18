@@ -26,16 +26,19 @@ export default function ScrollToTopButton({ scrollRef }) {
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (scrollRef.current.scrollTop > 0) {
+      if (scrollRef.current && scrollRef.current.scrollTop > 0) {
         setVisible(true);
       } else {
         setVisible(false);
       }
     };
 
-    scrollRef.current.addEventListener("scroll", toggleVisibility);
-    return () =>
-      scrollRef.current.removeEventListener("scroll", toggleVisibility);
+    if (scrollRef.current) {
+      scrollRef.current?.addEventListener("scroll", toggleVisibility);
+
+      return () =>
+        scrollRef.current?.removeEventListener("scroll", toggleVisibility);
+    }
   }, [scrollRef]);
 
   const scrollToTop = () => {
