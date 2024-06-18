@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { auth, getCurrentPrice } from './currentPrice';
+import axios from 'axios';
 import { StyledMainTabDiv, Table, Th, Td, Thead, Tbody } from './Maintab.style';
 
 export default function Maintab() {
@@ -7,10 +7,15 @@ export default function Maintab() {
 
     useEffect(() => {
         const fetchData = async () => {
-            await auth();
-            const price = await getCurrentPrice("005930"); // 현재 삼성전자로 하드코딩
-            setCurrentPrice(price);
+            try {
+                const response = await axios.get('/api/current-price?symbol=005930'); // 현재 삼성전자로 하드코딩
+                console.log(response.data); // 확인을 위해 응답 데이터 전체를 출력
+                setCurrentPrice(response.data.output);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         };
+
         fetchData();
     }, []);
 
@@ -29,10 +34,10 @@ export default function Maintab() {
                     </Thead>
                     <Tbody>
                         <tr>
-                            <Td>{currentPrice.output.stck_prpr}</Td>
-                            <Td>{currentPrice.output.stck_oprc}</Td>
-                            <Td>{currentPrice.output.stck_hgpr}</Td>
-                            <Td>{currentPrice.output.stck_lwpr}</Td>
+                            <Td>{currentPrice.stck_prpr}</Td>
+                            <Td>{currentPrice.stck_oprc}</Td>
+                            <Td>{currentPrice.stck_hgpr}</Td>
+                            <Td>{currentPrice.stck_lwpr}</Td>
                         </tr>
                     </Tbody>
                     <Thead>
@@ -45,10 +50,10 @@ export default function Maintab() {
                     </Thead>
                     <Tbody>
                         <tr>
-                            <Td>{(currentPrice.output.acml_vol / 1000000).toFixed(2)} 백만</Td>
-                            <Td>{(currentPrice.output.acml_tr_pbmn / 100000000).toFixed(2)} 억</Td>
-                            <Td>{(currentPrice.output.lstn_stcn * currentPrice.output.stck_prpr / 100000000).toFixed(2)} 억</Td>
-                            <Td>{currentPrice.output.hts_frgn_ehrt}%</Td>
+                            <Td>{(currentPrice.acml_vol / 1000000).toFixed(2)} 백만</Td>
+                            <Td>{(currentPrice.acml_tr_pbmn / 100000000).toFixed(2)} 억</Td>
+                            <Td>{(currentPrice.lstn_stcn * currentPrice.stck_prpr / 100000000).toFixed(2)} 억</Td>
+                            <Td>{currentPrice.hts_frgn_ehrt}%</Td>
                         </tr>
                     </Tbody>
                     <Thead>
@@ -61,10 +66,10 @@ export default function Maintab() {
                     </Thead>
                     <Tbody>
                         <tr>
-                            <Td>{currentPrice.output.w52_hgpr}</Td>
-                            <Td>{currentPrice.output.w52_lwpr}</Td>
-                            <Td>{currentPrice.output.per}배</Td>
-                            <Td>{currentPrice.output.eps}원</Td>
+                            <Td>{currentPrice.w52_hgpr}</Td>
+                            <Td>{currentPrice.w52_lwpr}</Td>
+                            <Td>{currentPrice.per}배</Td>
+                            <Td>{currentPrice.eps}원</Td>
                         </tr>
                     </Tbody>
                     <Thead>
@@ -75,8 +80,8 @@ export default function Maintab() {
                     </Thead>
                     <Tbody>
                         <tr>
-                            <Td>{currentPrice.output.pbr} 배</Td>
-                            <Td>{currentPrice.output.bps} 원</Td>
+                            <Td>{currentPrice.pbr} 배</Td>
+                            <Td>{currentPrice.bps} 원</Td>
                         </tr>
                     </Tbody>
                 </Table>
