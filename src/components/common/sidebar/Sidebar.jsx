@@ -64,11 +64,11 @@ export default function Sidebar() {
             marginBottom: "10px",
           }}
         >
-          <StyledHeaderFillSunIcon darkMode={isDarkMode} />
+          <StyledHeaderFillSunIcon darkmode={isDarkMode} />
           <StyledToggleContainer onClick={toggleTheme} isDarkMode={isDarkMode}>
             <StyledToggleCircle isDarkMode={isDarkMode} />
           </StyledToggleContainer>
-          <StyledHeaderFillMoonIcon darkMode={isDarkMode} />
+          <StyledHeaderFillMoonIcon darkmode={isDarkMode} />
         </div>
       </StyledSidebarInfoDiv>
     </StyledSidebarDiv>
