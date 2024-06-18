@@ -16,7 +16,7 @@ import { ClipLoader } from "react-spinners";
 const fetchStockData = async () => {
   const response = await axios.get("http://localhost:3001/trends", {
     params: {
-      keyword: "기아", // Replace with your keyword variable if dynamic
+      keyword: "애플", // Replace with your keyword variable if dynamic
     },
   });
   return JSON.parse(response.data); // JSON 형식으로 파싱된 데이터
