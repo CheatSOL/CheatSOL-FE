@@ -18,8 +18,9 @@ export const StyledBubbleDiv = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  font-size: ${(props) => parseInt(props.width || "100px") * 0.12}px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03); */
+  /* font-size: ${(props) => parseInt(props.width || "100px") * 0.12}px; */
+  font-size: ${(props) => props.fontsize || "1rem"} !important;
   color: #2a5676;
 
   &:before {
@@ -49,4 +50,10 @@ export const StyledBubbleDiv = styled.div`
     left: calc(50% - ${(props) => parseInt(props.width || "100px") * 0.2}px);
     border-radius: 50%;
   }
+
+  &:hover {
+    cursor: ${props => props.nothover ? "none" : "pointer"};
+    opacity: ${props => props.nothover ? "default" : 1}; 
+  }
+  
 `;
