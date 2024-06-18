@@ -7,6 +7,7 @@ export default function Bubble(props) {
       width={props.width}
       height={props.height}
       opacity={props.opacity}
+      fontsize={props.fontsize}
     >
       {props.content}
     </StyledBubbleDiv>
