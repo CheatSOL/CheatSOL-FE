@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { auth, getDailyPrice } from './dailyPrice';
+// import { auth, getDailyPrice } from './dailyPrice';
 import { StyledTable, StyledChangeRate, StyledPriceChange } from './Pricetab.style';
-
+import axios from 'axios';
 export default function Pricetab() {
     const [dailyPrice, setDailyPrice] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            await auth();
-            const price = await getDailyPrice("005930"); // 현재 삼성전자로 하드코딩
-            setDailyPrice(price.output);
+            const response = await axios.get('/api/daily-price?symbol=005930'); // 현재 삼성전자로 하드코딩
+            console.log(response.data.output);
+            setDailyPrice(response.data.output);
         };
         fetchData();
     }, []);
@@ -38,11 +38,11 @@ export default function Pricetab() {
         const zero=dataString.substring(0,4);
         const number = dataString.substring(1);
         if (sign === '-') {
-            return <StyledChangeRate color="#077DF3">{numberWithCommas(number)}%</StyledChangeRate>;
+            return <StyledChangeRate color="#077DF3">-{numberWithCommas(number)}%</StyledChangeRate>;
         } else if (zero === '0.00') {
             return <StyledChangeRate color="gray">{numberWithCommas(dataString)}%</StyledChangeRate>;
         } else {
-            return <StyledChangeRate color="#ED3738">{numberWithCommas(dataString)}%</StyledChangeRate>;
+            return <StyledChangeRate color="#ED3738">+{numberWithCommas(dataString)}%</StyledChangeRate>;
         }
     };
     const numberWithCommas = (number) => {
