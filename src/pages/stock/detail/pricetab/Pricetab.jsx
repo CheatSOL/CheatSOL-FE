@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-// import { auth, getDailyPrice } from './dailyPrice';
 import { StyledTable, StyledChangeRate, StyledPriceChange } from './Pricetab.style';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-export default function Pricetab() {
+export default function Pricetab({id}) {
     const [dailyPrice, setDailyPrice] = useState(null);
-
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.get('/api/daily-price?symbol=005930'); // 현재 삼성전자로 하드코딩
-            console.log(response.data.output);
+            const response = await axios.get(`/api/daily-price?symbol=${id}`); 
             setDailyPrice(response.data.output);
         };
         fetchData();
@@ -51,7 +49,6 @@ export default function Pricetab() {
     };
     return (
         <div>
-            <h1>Samsung Daily Price</h1>
             {dailyPrice ? (
                 <StyledTable>
                     <thead>
