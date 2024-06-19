@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 const ChartContainer = styled.div`
   background: #fff;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(color[0], color[1], color[2], 0.1);
   border-radius: 10px;
 `;
 
@@ -163,23 +163,17 @@ const sketch = (p5) => {
 
       for (let i = 0; i < drawnLines; i++) {
         const startX = p5.map(i, 0, data.length - 1, 100, 500);
-        const startY = p5.map(data[i], 0, Math.max(...data), 300, 50);
+        const startY = p5.map(data[i], 0, 100, 300, 50);
         const endX = p5.map(i + 1, 0, data.length - 1, 100, 500);
-        const endY = p5.map(data[i + 1], 0, Math.max(...data), 300, 50);
+        const endY = p5.map(data[i + 1], 0, 100, 300, 50);
         p5.line(startX, startY, endX, endY);
       }
 
       if (drawnLines < data.length) {
         const startX = p5.map(drawnLines, 0, data.length - 1, 100, 500);
-        const startY = p5.map(data[drawnLines], 0, Math.max(...data), 300, 50);
+        const startY = p5.map(data[drawnLines], 0, 100, 300, 50);
         const endX = p5.map(drawnLines + 1, 0, data.length - 1, 100, 500);
-        const endY = p5.map(
-          data[drawnLines + 1],
-          0,
-          Math.max(...data),
-          300,
-          50
-        );
+        const endY = p5.map(data[drawnLines + 1], 0, 100, 300, 50);
         console.log(drawnLines, lineProgress);
         if (lineProgress == 1) {
           lineProgress = 0;
@@ -201,7 +195,7 @@ const sketch = (p5) => {
 
       // 막대 그래프 그리기
       for (let i = 0; i < data.length; i++) {
-        const barHeight = p5.map(data[i], 0, Math.max(...data), 0, 250);
+        const barHeight = p5.map(data[i], 0, Math.max(...data), 0, 125);
         currentBarHeight[i] = p5.lerp(0, barHeight, barProgress[i]);
         if (
           p5.mouseX >
@@ -247,7 +241,7 @@ const sketch = (p5) => {
           );
           p5.fill(color[0], color[1], color[2], 100);
           p5.textSize(12);
-          p5.fill(0, 0, 0, 255);
+          p5.fill(color[0], color[1], color[2], 255);
           if (data[i] == 100)
             p5.text(
               data[i],

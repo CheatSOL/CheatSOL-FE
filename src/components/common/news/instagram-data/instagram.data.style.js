@@ -1,5 +1,25 @@
 import styled from "styled-components";
 
+export const StyledNewsDiv = styled.div`
+  width: calc(100% - 600px);
+  height: 470px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  padding: 15px;
+  padding-top: 0px;
+`;
+export const StyledNewsKeyword = styled.div`
+  width: 100%;
+  font-size: 23px;
+  text-align: start;
+  margin-bottom: 20px;
+  & span {
+    font-weight: bold;
+  }
+`;
+
 export const StyledNewsItemParentDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -8,8 +28,16 @@ export const StyledNewsItemParentDiv = styled.div`
   overflow-y: scroll;
   padding: 20px 0px;
   padding-top: 0px;
+  position: relative;
 `;
 
+export const StyledBlurDiv = styled.div`
+  width: calc(100% - 30px);
+  height: 70px;
+  position: absolute;
+  bottom: 0px;
+  background: linear-gradient(to top, transparent, 0%, white, 50%, transparent);
+`;
 export const StyledNewsItemDiv = styled.div`
   display: flex;
   gap: 20px;
