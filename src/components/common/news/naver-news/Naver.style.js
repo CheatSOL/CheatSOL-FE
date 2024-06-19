@@ -1,8 +1,9 @@
-import styled from "styled-components";
+import styled, {keyframes,css}from "styled-components";
 
-export const StyledNewsDiv = styled.div`
-  width: 500px;
-  height: 400px;
+
+export const StyledNewsDiv = styled.div`   
+  width: ${(props) => props.width || "500px"};
+  height: ${(props) => props.height || "400px"};
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -29,6 +30,7 @@ export const StyledNewsItemPatentDiv = styled.div`
 `;
 
 export const StyledNewsItemDiv = styled.div`
+  font-size: ${(props) => props.Hfontsize || "16px"};
   width: 100%;
   background-color: rgba(0, 0, 0, 0.02);
   padding: 10px;
@@ -58,6 +60,6 @@ export const StyledNewsItemHeaderDiv = styled.div`
 
 export const StyledNewsItemContentDiv = styled.div`
   color: rgba(0, 0, 0, 0.4);
-  font-size: 14px;
+  font-size: ${(props) => props.Cfontsize || "14px"};
   margin-top: 10px;
 `;

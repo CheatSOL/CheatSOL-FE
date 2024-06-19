@@ -128,20 +128,20 @@ const data = [
   },
 ];
 
-export default function NaverNews() {
+export default function NaverNews(props) {
   // Sort data by documentDate in descending order
   const sortedData = data.sort(
     (a, b) => parseInt(b.documentDate) - parseInt(a.documentDate)
   );
 
   return (
-    <StyledNewsDiv>
+    <StyledNewsDiv width={props.width} height={props.height}>
       <StyledNewsKeyword>
         <span>"불닭"</span>이 이렇게 언급됐어요
       </StyledNewsKeyword>
       <StyledNewsItemPatentDiv>
         {sortedData.map((e, index) => (
-          <StyledNewsItemDiv key={index}>
+          <StyledNewsItemDiv key={index} Hfontsize={props.Hfontsize}>
             <a
               href={e.url}
               target="_blank"
@@ -153,7 +153,7 @@ export default function NaverNews() {
                 <span>{e.writer}</span> | <span>{timeAgo(e.documentDate)}</span>
               </StyledNewsItemHeaderDiv>
               <div>{e.title}</div>
-              <StyledNewsItemContentDiv>
+              <StyledNewsItemContentDiv Cfontsize={props.Cfontsize}>
                 {highlightedText(e.maxSentence, e.highlight)}
               </StyledNewsItemContentDiv>
             </a>

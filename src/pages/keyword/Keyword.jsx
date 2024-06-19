@@ -11,7 +11,7 @@ export default function KeywordPage() {
 
   return (  <StyledSocialDiv>
       <Sidebar />
-      <StyledSocialInfoDiv ref={scrollRef}>
+      <StyledSocialInfoDiv>
         <Header />
       <RelatedKeyword></RelatedKeyword>
       </StyledSocialInfoDiv>
