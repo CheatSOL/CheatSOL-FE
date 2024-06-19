@@ -5,7 +5,14 @@ import {
   StyledNewsItemDiv,
   StyledNewsItemHeaderDiv,
   StyledNewsItemPatentDiv,
+  StyledBlurDiv,
 } from "./Google.style";
+import {
+  StyledDefaultBlurDiv,
+  StyledDefaultNewsDiv,
+  StyledDefaultNewsItemPatentDiv,
+  StyledDefaultNewsKeyword,
+} from "../news.style/News.style.jsx";
 
 function timeAgo(dateString) {
   const now = new Date();
@@ -93,6 +100,7 @@ export default function GoogleNews() {
           </a>
         ))}
       </StyledNewsItemPatentDiv>
+      <StyledBlurDiv></StyledBlurDiv>
     </StyledNewsDiv>
   );
 }

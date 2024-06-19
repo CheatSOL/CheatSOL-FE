@@ -1,23 +1,41 @@
 import styled from "styled-components";
 
 export const StyledNewsDiv = styled.div`
-  width: 500px;
-  height: 400px;
-  background-color: white;
+  width: calc(100% - 600px);
+  height: 480px;
   display: flex;
+  position: relative;
+
   flex-direction: column;
   align-items: center;
   padding: 15px;
   padding-top: 0px;
 `;
+export const StyledBlurDiv = styled.div`
+  width: calc(100% - 30px);
+  height: 70px;
+  position: absolute;
+  bottom: 0px;
+  background: linear-gradient(to top, transparent, 0%, white, 50%, transparent);
+`;
 
+export const StyledNewsKeyword = styled.div`
+  width: 100%;
+  font-size: 23px;
+  text-align: start;
+  margin-bottom: 20px;
+  & span {
+    font-weight: bold;
+  }
+`;
 export const StyledNewsItemParentDiv = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  height: 450px;
+  // gap: 5px;
+
+  height: 480px;
   overflow-y: scroll;
-  padding: 20px 0px;
+  // padding: 20px 0px;
 
   & .youtube-title {
     font-weight: 400;

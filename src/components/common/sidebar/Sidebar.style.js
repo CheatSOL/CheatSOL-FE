@@ -47,7 +47,7 @@ export const StyledSidebarItemDiv = styled.div`
 
   & span {
     margin-left: 15px;
-    transition: color 0.3s;
+    transition: color 0.1s;
     color: ${({ active }) => (active ? "white" : "rgba(0, 0, 0, 0.5)")};
   }
 
@@ -56,13 +56,18 @@ export const StyledSidebarItemDiv = styled.div`
   }
 
   &:hover {
-    background-color: #43d2ff;
-    border-radius: 50px;
+    ${({ active }) =>
+      !active &&
+      css`
+        background-color: #aaaaaa;
+        border-radius: 50px;
 
-    & span,
-    & svg {
-      color: white;
-    }
+        & span,
+        & svg {
+          color: white;
+          transition: 0.1s;
+        }
+      `}
   }
 `;
 
@@ -87,7 +92,7 @@ export const StyledKeywordIcon = styled(VscSymbolKeyword)`
 
 const DarkModeIconStyles = css`
   font-size: 1.4rem !important;
-  margin-right: 10px;
+  margin: 5px;
   cursor: pointer;
 `;
 
@@ -103,22 +108,22 @@ export const StyledHeaderFillSunIcon = styled(IoSunny)`
 
 export const StyledToggleIcon = styled(MdToggleOff)`
   font-size: 1.5rem !important;
-  margin-right: 10px;
+  margin: 10px;
   cursor: pointer;
   color: rgba(0, 0, 0, 0.7);
-  transition: color 0.3s;
+  transition: color 0.1s;
 `;
 
 export const StyledToggleDarkIcon = styled(BiSolidToggleRight)`
   font-size: 1.5rem !important;
-  margin-right: 10px;
+  margin: 10px;
   cursor: pointer;
   color: rgba(0, 0, 0, 0.7);
   transition: color 0.3s;
 `;
 
 export const StyledToggleContainer = styled.div`
-  width: 50px;
+  width: 40px;
   height: 25px;
   border-radius: 15px;
   background-color: ${({ isDarkMode }) => (isDarkMode ? "#333" : "#ddd")};
@@ -137,6 +142,6 @@ export const StyledToggleCircle = styled.div`
   border-radius: 50%;
   background-color: white;
   position: absolute;
-  left: ${({ isDarkMode }) => (isDarkMode ? "calc(100% - 25px)" : "5px")};
+  left: ${({ isDarkMode }) => (isDarkMode ? "calc(100% - 22.5px)" : "2.5px")};
   transition: left 0.3s;
 `;
