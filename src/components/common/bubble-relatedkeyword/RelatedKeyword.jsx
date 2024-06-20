@@ -5,19 +5,8 @@ import RelatedKeywordChart from "./RelatedKeyword.chart";
 import { StyledHeadTitleBox, StyledTitleBox, StyledRelatedKeyword, StyledGraphBox, StyledNaverbox, StyledNewsContainer, StyledNewsTab, StyledRelatedKeywordContainer, StyledBubbleContainer, StyledCircleContainer, StyledCircleItem, StyledMiniCircleItem, StyledKeyCircleItem, StyledGraphKeyword } from "./RelatedKeyword.style";
 import sns from "~/images/sns_mark.png"
 
-export default function RelatedKeyword(){
-    const scrollRef = useRef(null);
-
-import {
-  StyledRelatedKeywordContainer,
-  StyledBubbleContainer,
-  StyledCircleContainer,
-  StyledCircleItem,
-  StyledMiniCircleItem,
-  StyledKeyCircleItem,
-} from "./RelatedKeyword.style";
-
 export default function RelatedKeyword() {
+    const scrollRef = useRef(null);
   // !! sample data -> 실제 데이터로 추후 변경해주세요.
   const keyword_sample = "불닭";
   const related_big_keywords_sample = [
