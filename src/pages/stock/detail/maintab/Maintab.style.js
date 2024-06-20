@@ -10,7 +10,7 @@ export const StyledMainTabDiv = styled.div`
 export const Table = styled.table`
     border-collapse: collapse;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 10px;
     border-bottom:2px solid #959595;
 `;
 

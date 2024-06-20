@@ -4,7 +4,7 @@ export const NewsListContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top:20px;
+  margin-top:10px;
 `;
 
 export const NewsItem = styled.div`
