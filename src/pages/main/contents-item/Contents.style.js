@@ -9,6 +9,7 @@ export const StyledContentsDiv = styled.div`
   height: ${(props) => props.height || "196px"};
   padding: 15px;
   align-text: center;
+  cursor: pointer;
   border: 2px solid #d3d3d3;
   border-radius: 20px;
   background-color: white;
