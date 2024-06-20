@@ -41,9 +41,7 @@ export default function StockContent(props) {
     // !! div에 key값 붙여주세요. (redux 구현 후)
     <StyledContentsDiv width={props.width} height={props.height}>
       <StyledContentsTitleGroup>
-        <div>
-          <StyledContentsTitle>{companyName}</StyledContentsTitle>
-        </div>
+        <StyledContentsTitle>{companyName}</StyledContentsTitle>
         <StyledContentsMiniTitle signPerYesterday={signPerYesterday}>
           <p>({ratePerYesterday}%)</p>
           {signPerYesterday > 0 ? (
