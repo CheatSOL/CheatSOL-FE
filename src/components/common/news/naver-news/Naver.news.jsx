@@ -19,7 +19,7 @@ function timeAgo(dateString) {
   const minute = parseInt(dateString.slice(10, 12), 10);
   const second = parseInt(dateString.slice(12, 14), 10);
 
-  console.log(`${year}-${month}-${day}`);
+  // console.log(`${year}-${month}-${day}`);
 
   const articleDate = new Date(year, month, day, hour, minute, second);
   const differenceInMilliseconds = now - articleDate;
@@ -135,11 +135,11 @@ export default function NaverNews(props) {
   );
 
   return (
-    <StyledNewsDiv width={props.width} height={props.height}>
-      <StyledNewsKeyword>
+    <StyledNewsDiv backgroundcol={props.backgroundcol} width={props.width} height={props.height}>
+      {/* <StyledNewsKeyword>
         <span>"불닭"</span>이 이렇게 언급됐어요
-      </StyledNewsKeyword>
-      <StyledNewsItemPatentDiv>
+      </StyledNewsKeyword> */}
+      <StyledNewsItemPatentDiv isscroll={props.isscroll} >
         {sortedData.map((e, index) => (
           <StyledNewsItemDiv key={index} Hfontsize={props.Hfontsize}>
             <a

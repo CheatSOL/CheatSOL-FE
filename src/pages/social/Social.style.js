@@ -11,5 +11,5 @@ export const StyledSocialInfoDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: 'scroll'
+  overflow-y: scroll;
 `;

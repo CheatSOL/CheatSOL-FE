@@ -9,11 +9,8 @@ export const StyledNewsDiv = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 15px;
-
-  &:hover {
-    cursor: pointer;
-  }
 `;
+
 export const StyledNewsKeyword = styled.div`
   width: 100%;
   font-size: 23px;
@@ -26,7 +23,7 @@ export const StyledNewsKeyword = styled.div`
 
 export const StyledNewsItemPatentDiv = styled.div`
   height: 450px;
-  overflow-y: scroll;
+  overflow-y: ${(props) => props.isscroll || "scroll"};
 `;
 
 export const StyledNewsItemDiv = styled.div`

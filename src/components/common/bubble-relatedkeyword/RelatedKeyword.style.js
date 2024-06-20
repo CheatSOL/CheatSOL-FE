@@ -15,7 +15,7 @@ const animate_click = keyframes`
     transform: translateX(0) scale(1);
   }
   100% {
-    transform: translateX(-250px) scale(0.8);
+    transform: translateX(-380px) scale(0.5);
   }
 `;
 
@@ -26,7 +26,7 @@ const animate_tab = keyframes`
   }
   100% {
     transform: translateY(0);
-    opacity: 1;
+     opacity: 1;
   }
 `;
 
@@ -34,7 +34,6 @@ export const StyledRelatedKeywordContainer = styled.div`
     display: flex;
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
 `
 
 export const StyledBubbleContainer = styled.div`
@@ -46,6 +45,7 @@ export const StyledBubbleContainer = styled.div`
 
 export const StyledCircleContainer = styled.div`
     position: relative;
+    top: 20px;
     margin: 50px auto;
     ${props => props.move &&
     css`animation: ${animate_click} 1s ease-in-out forwards;
@@ -62,8 +62,8 @@ export const StyledCircleItem = styled.div`
 
     left: ${( props ) => `calc(50% + ${props.x}px - ${parseInt(props.distance)*0.5}px)`};
     top: ${( props ) => `calc(50% + ${props.y}px - ${parseInt(props.distance)*0.5}px)`};
-    /* animation: ${animate} ${(props) => props.time || '2s'} ${(props) => props.delay || '2s'} ease-in-out infinite alternate;
-  cursor: pointer; */
+    animation: ${animate} ${(props) => props.time || '2s'} ${(props) => props.delay || '2s'} ease-in-out infinite alternate;
+  cursor: pointer;
 `
 
 export const StyledMiniCircleItem = styled.div`
@@ -93,18 +93,85 @@ export const StyledKeyCircleItem = styled.div`
 
 export const StyledNewsContainer = styled.div`
     position: absolute;
-    right: 0;
+    right: 5vw;
     margin-right: 3vw;
     border: 1px;
 `
 
 export const StyledNewsTab = styled.div`
     /* position: absolute;
-    right: 0; */
+    right: 0; */    
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+`
+
+export const StyledTitleBox = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  opacity: 0;
+
+${(props) =>
+  props.animate &&
+  css`
+    animation: ${animate_tab} 0.6s ease-in-out forwards;
+    animation-delay: 0.8s;
+    animation-fill-mode: forwards; /* 애니메이션 후 상태 유지 */
+  `}  
+
+`
+
+export const StyledNaverbox = styled.div`
+    opacity: 0; /* 처음에 숨김 */
+    
+    border-radius: 20px;
+    box-shadow: 8px 20px 30px 0px rgb(0, 0, 0, 0.04);
+    margin-bottom: 10vh;
+    padding: 5px;
+    background-color: white;
 
     ${(props) =>
       props.animate &&
       css`
-        animation: ${animate_tab} 1s ease-in-out forwards;
+        animation: ${animate_tab} 0.6s ease-in-out forwards;
+        animation-delay: 0.4s;
+        animation-fill-mode: forwards; /* 애니메이션 후 상태 유지 */
+      `}  
+    
+`
+
+export const StyledGraphBox = styled.div`
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 8px 20px 30px 0px rgb(0, 0, 0, 0.04);
+    opacity: 0;
+
+    ${(props) =>
+      props.animate &&
+      css`
+        animation: ${animate_tab} 0.6s ease-in-out forwards;
+        animation-delay: 0.5s;
+        animation-fill-mode: forwards; /* 애니메이션 후 상태 유지 */
       `}  
 `
+
+export const StyledGraphKeyword = styled.div`
+    background-color: rgb(67,210,255,1);
+    text-align: center;
+    font-size: 1.1rem;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 8px 20px 30px 0px rgb(0, 0, 0, 0.04);
+`
+
+export const StyledRelatedKeyword = styled.div`
+  width: 100%;
+  font-size: 23px;
+  padding: 10px;
+  & span {
+    font-weight: bold;
+  }
+`;
