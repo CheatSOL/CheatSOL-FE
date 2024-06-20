@@ -43,7 +43,14 @@ export const Contents = styled.div`
 `;
 
 // Title & SubTitle & MiniTitle
-export const StyledContentsTitle = styled.div``;
+export const StyledContentsTitle = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  font-size: 18px;
+  width: 10vw;
+`;
 export const StyledContentsSubTitle = styled.div``;
 export const StyledContentsMiniTitle = styled.div`
   display: flex;
