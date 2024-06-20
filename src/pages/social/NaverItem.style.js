@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledSocialNaverDiv = styled.div`
-  width: 80%;
+  width: 90%;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -9,6 +9,7 @@ export const StyledSocialNaverDiv = styled.div`
   padding: 30px;
   border-radius: 20px;
   margin-bottom: 30px;
+  font-size: 23px;
 `;
 
 export const StyledNaverItemDiv = styled.div`
