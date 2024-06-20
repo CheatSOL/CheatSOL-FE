@@ -8,6 +8,7 @@ import {
   StyledYoutubeChartNewsDiv,
 } from "./Youtube.style";
 
+import YoutubeGraph from "../../components/common/keywordGraph/youtubeGraph/YoutubeGraph";
 export default function YoutubeItem() {
   return (
     <StyledSocialYoutubeDiv>
@@ -22,11 +23,7 @@ export default function YoutubeItem() {
         <div></div>
       </StyledYoutubeItemDiv>
       <StyledYoutubeChartNewsDiv>
-        <div>
-          <span>
-            <strong>"불닭"</strong>이 이만큼 언급됐어요
-          </span>
-        </div>
+        <YoutubeGraph></YoutubeGraph>
         <YoutubeData />
       </StyledYoutubeChartNewsDiv>
     </StyledSocialYoutubeDiv>

@@ -1,14 +1,15 @@
 import styled from "styled-components";
 
 export const StyledNewsDiv = styled.div`
-  width: 500px;
-  height: 400px;
-  background-color: white;
+  width: calc(100% - 600px);
+  height: 470px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 15px;
   padding-top: 0px;
+  position: relative;
 `;
 export const StyledNewsKeyword = styled.div`
   width: 100%;
@@ -19,16 +20,24 @@ export const StyledNewsKeyword = styled.div`
     font-weight: bold;
   }
 `;
-
+export const StyledBlurDiv = styled.div`
+  width: calc(100% - 30px);
+  height: 70px;
+  position: absolute;
+  bottom: 0px;
+  background: linear-gradient(to top, transparent, 0%, white, 50%, transparent);
+`;
 export const StyledNewsItemPatentDiv = styled.div`
-  height: 350px;
+  height: 100%;
   overflow-y: scroll;
+  margin-bottom: 0px;
 `;
 
 export const StyledNewsItemDiv = styled.div`
   width: 100%;
   background-color: rgba(0, 0, 0, 0.02);
   padding: 10px;
+
   border-radius: 10px;
   margin-bottom: 10px;
   padding-bottom: 20px;
