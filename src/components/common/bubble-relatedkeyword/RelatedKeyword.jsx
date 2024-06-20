@@ -2,7 +2,7 @@ import { useState,useEffect,useRef } from "react";
 import Bubble from "../bubble/KeywordBubble";
 import NaverNews from "../news/naver-news/Naver.news";
 import RelatedKeywordChart from "./RelatedKeyword.chart";
-import { StyledTitleBox, StyledRelatedKeyword, StyledGraphBox, StyledNaverbox, StyledNewsContainer, StyledNewsTab, StyledRelatedKeywordContainer, StyledBubbleContainer, StyledCircleContainer, StyledCircleItem, StyledMiniCircleItem, StyledKeyCircleItem, StyledGraphKeyword } from "./RelatedKeyword.style";
+import { StyledHeadTitleBox, StyledTitleBox, StyledRelatedKeyword, StyledGraphBox, StyledNaverbox, StyledNewsContainer, StyledNewsTab, StyledRelatedKeywordContainer, StyledBubbleContainer, StyledCircleContainer, StyledCircleItem, StyledMiniCircleItem, StyledKeyCircleItem, StyledGraphKeyword } from "./RelatedKeyword.style";
 import sns from "~/images/sns_mark.png"
 
 export default function RelatedKeyword(){
@@ -37,7 +37,7 @@ export default function RelatedKeyword(){
     //Click시 버블 투명도 찐하게
     const [currentbubble, setCurrentBubble] = useState(null);
     //Click시 나머지 버블 투명도 조절
-    const [opacity, setOpacity] = useState(null);
+    const [opacity, setOpacity] = useState("0.5");
     const [miniopacity, setMiniOpacity] = useState(null);
     //Click시 그래프&뉴스탭 보이기
     const [shownewstab, setShowNewsTab] = useState(false);
@@ -132,8 +132,14 @@ export default function RelatedKeyword(){
 
 
     return(
-        <StyledRelatedKeywordContainer>            
+            
+        <StyledRelatedKeywordContainer>  
+        <StyledHeadTitleBox className="related-text-box" animate={clickedbubble}>
+                            <img src={sns} width={"50px"} height={"auto"}></img>                                 
+                                <span>{keyword}과 같이 언급되는 단어들이에요. </span>
+            </StyledHeadTitleBox>                      
             <StyledBubbleContainer>
+            
                 <StyledCircleContainer id="circle-container"  move={clickedbubble}>
                     <StyledKeyCircleItem >
                         <Bubble content={keyword} width={key_bubble_size} height={key_bubble_size} fontsize={"1.7rem"} nothover={true}></Bubble>
@@ -171,7 +177,9 @@ export default function RelatedKeyword(){
                     );
                 })}        
                 </StyledCircleContainer>
-                <StyledNewsContainer className="NewsContainer">
+                                             
+            </StyledBubbleContainer>   
+            <StyledNewsContainer className="NewsContainer">
 
                     {shownewstab && (
 
@@ -191,8 +199,7 @@ export default function RelatedKeyword(){
                         </StyledNaverbox>
                         </StyledNewsTab> 
                     )}
-                </StyledNewsContainer>                              
-            </StyledBubbleContainer>            
+                </StyledNewsContainer>          
         </StyledRelatedKeywordContainer>
 
     )

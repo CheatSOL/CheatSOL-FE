@@ -30,10 +30,38 @@ const animate_tab = keyframes`
   }
 `;
 
+const animate_fadeout = keyframes`
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(50px);
+     opacity: 0;
+  }
+`;
+
+export const StyledHeadTitleBox = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  margin-left: 50px;
+
+${(props) =>
+  props.animate &&
+  css`
+    animation: ${animate_fadeout} 0.6s ease-in-out forwards;
+    animation-fill-mode: forwards; /* 애니메이션 후 상태 유지 */
+  `}  
+
+`
+
 export const StyledRelatedKeywordContainer = styled.div`
     display: flex;
     width: 100%;
     height: 100%;
+    flex-direction: column;
+    position: relative;
 `
 
 export const StyledBubbleContainer = styled.div`
@@ -170,7 +198,6 @@ export const StyledGraphKeyword = styled.div`
 export const StyledRelatedKeyword = styled.div`
   width: 100%;
   font-size: 23px;
-  padding: 10px;
   & span {
     font-weight: bold;
   }
