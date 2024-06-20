@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledSocialInstagramDiv = styled.div`
-  width: 80%;
+  width: 90%;
   background-color: white;
   display: flex;
   flex-direction: column;

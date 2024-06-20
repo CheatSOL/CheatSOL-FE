@@ -1,9 +1,8 @@
 import styled, {keyframes,css}from "styled-components";
 
-
 export const StyledNewsDiv = styled.div`   
-  width: ${(props) => props.width || "500px"};
-  height: ${(props) => props.height || "400px"};
+  width: ${(props) => props.width || "470px"};
+  height: ${(props) => props.height || "600px"};
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -20,9 +19,16 @@ export const StyledNewsKeyword = styled.div`
     font-weight: bold;
   }
 `;
+export const StyledBlurDiv = styled.div`
+  width: calc(100% - 30px);
+  height: 70px;
+  position: absolute;
+  bottom: 0px;
+  background: linear-gradient(to top, transparent, 0%, white, 50%, transparent);
+`;
 
 export const StyledNewsItemPatentDiv = styled.div`
-  height: 450px;
+  height: 100%;
   overflow-y: ${(props) => props.isscroll || "scroll"};
 `;
 

@@ -61,14 +61,24 @@ export default function Sidebar() {
           style={{
             display: "flex",
             alignItems: "center",
-            marginBottom: "10px",
+            marginBottom: "30px",
           }}
         >
-          <StyledHeaderFillSunIcon darkmode={isDarkMode} />
-          <StyledToggleContainer onClick={toggleTheme} isDarkMode={isDarkMode}>
+          <StyledHeaderFillSunIcon
+            darkmode={isDarkMode}
+            onClick={() => {
+              isDarkMode ? toggleTheme() : null;
+            }}
+          />
+          <StyledToggleContainer isDarkMode={isDarkMode} onClick={toggleTheme}>
             <StyledToggleCircle isDarkMode={isDarkMode} />
           </StyledToggleContainer>
-          <StyledHeaderFillMoonIcon darkmode={isDarkMode} />
+          <StyledHeaderFillMoonIcon
+            darkmode={isDarkMode}
+            onClick={() => {
+              !isDarkMode ? toggleTheme() : null;
+            }}
+          />
         </div>
       </StyledSidebarInfoDiv>
     </StyledSidebarDiv>

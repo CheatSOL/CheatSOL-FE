@@ -8,6 +8,7 @@ import {
   StyledNewsItemContentDiv,
 } from "./Naver.style";
 
+import { StyledBlurDiv } from "./Naver.style";
 function timeAgo(dateString) {
   const now = new Date();
 
@@ -160,6 +161,7 @@ export default function NaverNews(props) {
           </StyledNewsItemDiv>
         ))}
       </StyledNewsItemPatentDiv>
+      <StyledBlurDiv></StyledBlurDiv>
     </StyledNewsDiv>
   );
 }

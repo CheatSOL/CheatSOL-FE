@@ -8,26 +8,49 @@ import sns from "~/images/sns_mark.png"
 export default function RelatedKeyword(){
     const scrollRef = useRef(null);
 
-    // !! sample data -> 실제 데이터로 추후 변경해주세요.
-    const keyword_sample = '불닭';
-    const related_big_keywords_sample = ['맛집','카페','삼양','아이스크림','오랜만','인스타그램'];
-    const related_sml_keywords_sample = ['불닭','불닭','불닭','불닭','불닭','불닭'];
-    
-    //data
-    const keyword = keyword_sample;
-    const related_big_keywords = related_big_keywords_sample;
-    const related_sml_keywords = related_sml_keywords_sample;
+import {
+  StyledRelatedKeywordContainer,
+  StyledBubbleContainer,
+  StyledCircleContainer,
+  StyledCircleItem,
+  StyledMiniCircleItem,
+  StyledKeyCircleItem,
+} from "./RelatedKeyword.style";
 
-    //버블 원형 배치를 위한 코드
-    const big_radius = 200; // 반지름
-    const sml_radius = 130;
-    const angleStep = 360 / related_big_keywords.length;
+export default function RelatedKeyword() {
+  // !! sample data -> 실제 데이터로 추후 변경해주세요.
+  const keyword_sample = "불닭";
+  const related_big_keywords_sample = [
+    "맛집",
+    "카페",
+    "삼양",
+    "아이스크림",
+    "오랜만",
+    "인스타그램",
+  ];
+  const related_sml_keywords_sample = [
+    "불닭",
+    "불닭",
+    "불닭",
+    "불닭",
+    "불닭",
+    "불닭",
+  ];
 
-    //버블 사이즈
-    const bubble_size = "170px";
-    const mini_bubble_size = "60px"
-    const key_bubble_size = "80px"
+  //data
+  const keyword = keyword_sample;
+  const related_big_keywords = related_big_keywords_sample;
+  const related_sml_keywords = related_sml_keywords_sample;
 
+  //버블 원형 배치를 위한 코드
+  const big_radius = 200; // 반지름
+  const sml_radius = 130;
+  const angleStep = 360 / related_big_keywords.length;
+
+  //버블 사이즈
+  const bubble_size = "170px";
+  const mini_bubble_size = "60px";
+  const key_bubble_size = "80px";
 
     //Click한 키워드명
      const [currentword,setCurrentword] = useState(keyword);
@@ -202,5 +225,5 @@ export default function RelatedKeyword(){
                 </StyledNewsContainer>          
         </StyledRelatedKeywordContainer>
 
-    )
+  );
 }

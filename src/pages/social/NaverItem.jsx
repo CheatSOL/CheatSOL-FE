@@ -2,12 +2,14 @@ import CountrySelectBar from "../../components/common/chart-select-bar/country/C
 import PeriodSelectBar from "../../components/common/chart-select-bar/period/Period.select.bar";
 import GoogleNews from "../../components/common/news/google-news/Google.news";
 import NaverNews from "../../components/common/news/naver-news/Naver.news";
+import NaverGraph from "../../components/common/keywordGraph/naverGraph/NaverGraph";
 import {
   StyledSocialNaverDiv,
   StyledNaverItemDiv,
   StyledNaverHeaderDiv,
   StyledNaverChartNewsDiv,
 } from "./NaverItem.style";
+import NaverGroups from "../../components/common/keywordGraph/naverGraph/NaverGroups.jsx";
 
 export default function NaverItem() {
   return (
@@ -24,9 +26,8 @@ export default function NaverItem() {
       </StyledNaverItemDiv>
       <StyledNaverChartNewsDiv>
         <div>
-          <span>
-            <strong>"불닭"</strong>이 이만큼 언급됐어요
-          </span>
+          <NaverGraph></NaverGraph>
+          <NaverGroups />
         </div>
         <NaverNews />
       </StyledNaverChartNewsDiv>

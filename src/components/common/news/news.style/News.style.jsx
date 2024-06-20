@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const StyledNewsDiv = styled.div`
+export const StyledDefaultNewsDiv = styled.div`
   width: calc(100% - 600px);
-  height: 470px;
+  height: 460px;
 
   display: flex;
   flex-direction: column;
@@ -11,7 +11,7 @@ export const StyledNewsDiv = styled.div`
   padding-top: 0px;
   position: relative;
 `;
-export const StyledNewsKeyword = styled.div`
+export const StyledDefaultNewsKeyword = styled.div`
   width: 100%;
   font-size: 23px;
   text-align: start;
@@ -20,20 +20,20 @@ export const StyledNewsKeyword = styled.div`
     font-weight: bold;
   }
 `;
-export const StyledBlurDiv = styled.div`
-  width: calc(100% - 30px);
+export const StyledDefaultBlurDiv = styled.div`
+  width: 100%;
   height: 70px;
   position: absolute;
   bottom: 0px;
   background: linear-gradient(to top, transparent, 0%, white, 50%, transparent);
 `;
-export const StyledNewsItemPatentDiv = styled.div`
+export const StyledDefaultNewsItemPatentDiv = styled.div`
   height: 100%;
   overflow-y: scroll;
   margin-bottom: 0px;
 `;
 
-export const StyledNewsItemDiv = styled.div`
+export const StyleDefaultdNewsItemDiv = styled.div`
   width: 100%;
   background-color: rgba(0, 0, 0, 0.02);
   padding: 10px;
@@ -48,7 +48,7 @@ export const StyledNewsItemDiv = styled.div`
   }
 `;
 
-export const StyledNewsItemHeaderDiv = styled.div`
+export const StyleDefaultdNewsItemHeaderDiv = styled.div`
   font-size: 0.7rem;
   margin-bottom: 10px;
   color: rgba(0, 0, 0, 0.6);
