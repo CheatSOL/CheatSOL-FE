@@ -131,7 +131,7 @@ export default function StockChart(props) {
         height="400"
         border-radius="10px"
       />
-      <StockInfoDetail info={props.stockDetails}></StockInfoDetail>
+      <StockInfoDetail info={props.stockDetails} curCompanyCode={props.curCompanyCode} curCompanyName={props.curCompanyName}></StockInfoDetail>
     </StyledStockParentDiv>
   );
 }

@@ -28,9 +28,7 @@ function App() {
               <Route path="/main/stock" element={<StockPage />} />
               <Route path="/main/stocks/:id/main" element={<Maintab />} />
               <Route path="/main/keyword" element={<KeywordPage />} />
-              <Route path="/main/stocks/:id/dailyprice" element={<Pricetab />} />
-              <Route path="/main/stocks/:id/news" element={<Newstab />} />
-              <Route path="/main/stocks/:id" element={<StockDetail />} />
+              <Route path="/main/stocks/detail/:code/:name" element={<StockDetail />} />
             </Routes>
           </Router>
         </QueryClientProvider>

@@ -10,11 +10,13 @@ import {
   StyledContentsMiniTitle,
   StyledContentsTag,
 } from "./Contents.style";
+import { formatCurrency } from "../../../lib/utils/utils";
 
 const fetchDailyPrice = async (symbol) => {
   const result = await axios.get("/api/daily-price", {
     params: {
       symbol: symbol,
+      period: 'D'
     },
   });
   return result.data;
@@ -63,21 +65,28 @@ export default function Contents(props) {
         <div>
           <StyledContentsTitle>{props.item.name}</StyledContentsTitle>
           <StyledContentsSubTitle>
-            {Number(currentData.stck_oprc) + Number(currentData.prdy_vrss)} krw
+            {formatCurrency(Number(currentData.stck_oprc) + Number(currentData.prdy_vrss))} krw
           </StyledContentsSubTitle>
         </div>
         <StyledContentsMiniTitle isPriceIncrease={isPriceIncrease}>
-          <p>
+          <span>
             {isPriceIncrease ? "+" : ""}
-            {currentData.prdy_vrss}원
-          </p>
-          <p>({currentData.prdy_ctrt}%) 오늘</p>
+            {formatCurrency(currentData.prdy_vrss)}원
+          </span>
+          <span>({currentData.prdy_ctrt}%) 오늘</span>
           {priceChangeIcon}
         </StyledContentsMiniTitle>
       </StyledContentsTitleGroup>
       <StyledContentsTag>
-        <div className="price-box">
-          시가 <p>{currentData.stck_oprc}</p>
+        <div style={{
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: "rgba(0,0,0,0.04)",
+            padding: "10px",
+            borderRadius: "10px",
+            marginTop: "3px",
+        }}>
+          시가 <span style={{marginLeft:"5px"}}>{currentData.stck_oprc}</span>
         </div>
       </StyledContentsTag>
     </StyledContentsDiv>

@@ -34,6 +34,9 @@ export const StyledInfoDetailDiv = styled.div`
     font-weight: normal;
     color: gray;
   }
+
+  p{
+  margin-bottom:0px}
 `;
 
 export const StyledTitleStockDetail = styled.p`

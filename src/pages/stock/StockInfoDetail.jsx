@@ -7,6 +7,7 @@ import {
   StyledMoveDetailDiv,
   StyledMoveIcon,
 } from "./StockInfoDetail.style";
+import { Link, useNavigate } from "react-router-dom";
 
 let curDate = new Date();
 curDate.setDate(curDate.getDate() - 1);
@@ -144,15 +145,26 @@ const StockDataComponent = ({ data }) => {
   }
 };
 
-const StockInfoDetail = ({ info }) => {
+
+
+const StockInfoDetail = ( props ) => {
+  const navigate= useNavigate();
+
+  const onClickMoveDetailPage = () =>{
+    const params = new URLSearchParams({ code:props.curCompanyCode , name: props.curCompanyName }).toString();
+    navigate(`?${params}`);
+
+
+  }
   return (
     <>
       <StyledStockDetailDiv>
-        {info?.map((data, index) => (
+        {props.info?.map((data, index) => (
           <StockDataComponent key={index} data={data} />
         ))}
       </StyledStockDetailDiv>
-      <StyledMoveDetailDiv>
+      <Link to={`/main/stocks/detail/${props.curCompanyCode}/${props.curCompanyName }`} >
+      <StyledMoveDetailDiv onClick={onClickMoveDetailPage}>
         <span>
           상세정보 더보기{" "}
           <span>
@@ -160,6 +172,8 @@ const StockInfoDetail = ({ info }) => {
           </span>
         </span>
       </StyledMoveDetailDiv>
+      </Link>
+
     </>
   );
 };
