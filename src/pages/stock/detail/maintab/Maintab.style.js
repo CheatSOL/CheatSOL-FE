@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 // 메인 컨테이너 스타일
 export const StyledMainTabDiv = styled.div`
-    padding: 20px;
+   
     
 `;
 
@@ -10,16 +10,17 @@ export const StyledMainTabDiv = styled.div`
 export const Table = styled.table`
     border-collapse: collapse;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 10px;
+    border-bottom:2px solid #959595;
 `;
 
 export const Th = styled.th`
     background-color: #F1FCFF;
     /* 제목 셀 하단에만 경계선 추가 */
-    padding: 12px;  /* 높이를 늘리기 위해 패딩 조정 */
+    padding: 12px;  
     text-align: center;
     font-weight: bold;
-    color: #666; /* 연한 색상 */
+    color: #666; 
 `;
 
 export const Td = styled.td`
