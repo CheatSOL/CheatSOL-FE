@@ -6,7 +6,7 @@ export default function Pricetab({id}) {
     const [dailyPrice, setDailyPrice] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.get(`/api/daily-price?symbol=${id}`); 
+            const response = await axios.get(`/api/daily-price?symbol=${id}&period=D`); 
             setDailyPrice(response.data.output);
         };
         fetchData();
