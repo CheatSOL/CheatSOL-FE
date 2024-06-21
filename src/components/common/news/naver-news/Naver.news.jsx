@@ -20,7 +20,7 @@ function timeAgo(dateString) {
   const minute = parseInt(dateString.slice(10, 12), 10);
   const second = parseInt(dateString.slice(12, 14), 10);
 
-  console.log(`${year}-${month}-${day}`);
+  // console.log(`${year}-${month}-${day}`);
 
   const articleDate = new Date(year, month, day, hour, minute, second);
   const differenceInMilliseconds = now - articleDate;
