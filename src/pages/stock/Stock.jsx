@@ -45,6 +45,7 @@ export default function StockPage() {
   const keyword = useSelector((state) => state.keyword.keyword);
   const [curCompanyPrice, setCurCompanyPrice] = useState([]);
   const [curCompanyName, setCurCompanyName] = useState("");
+  const [curCompanyCode, setCurCompanyCode] = useState("");
   const [curCompanyId, setCurCompanyId] = useState(0);
   const [stockDetails, setStockDetails] = useState([]);
 
@@ -83,10 +84,12 @@ export default function StockPage() {
           const result = await axios.get("/api/daily-price", {
             params: {
               symbol: companyData[0].code,
+              period:'D'
             },
           });
           console.log(result);
           setCurCompanyName(companyData[0].name);
+          setCurCompanyCode(companyData[0].code)
           setCurCompanyPrice(
             result.data.output.map((e) => e.stck_oprc).reverse()
           );
@@ -153,6 +156,7 @@ export default function StockPage() {
                   data={stockData?.default?.timelineData}
                   curCompanyPrice={curCompanyPrice}
                   curCompanyName={curCompanyName}
+                  curCompanyCode={curCompanyCode}
                   stockDetails={stockDetails}
                 />
               )

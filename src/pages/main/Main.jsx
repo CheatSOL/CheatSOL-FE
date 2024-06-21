@@ -3,9 +3,10 @@ import Header from "../../components/common/header/Header";
 import Sidebar from "../../components/common/sidebar/Sidebar";
 import { StyledMainDiv, MainBody, MainContent } from "./Main.style";
 import RelatedStock from "./RelatedStock";
+import { useSelector } from "react-redux";
 
 export default function MainPage() {
-  const [keyword, setKeyWord] = useState("메타몽");
+  const keyword= useSelector((state) => state.keyword.keyword);
 
   return (
     <StyledMainDiv>

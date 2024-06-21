@@ -187,7 +187,7 @@ const DateStatus = () => {
               <CustomTabLink eventKey="price">시세</CustomTabLink>
             </Nav.Item>
             <Nav.Item className="w-22">
-              <CustomTabLink eventKey="financial">재무</CustomTabLink>
+              <CustomTabLink eventKey="financial" disabled>재무</CustomTabLink>
             </Nav.Item>
           </CustomTabs>
           <div style={{height: 'calc(100vh - 406px)', overflowY: 'auto' }}>
