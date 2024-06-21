@@ -23,8 +23,9 @@ export const ChartSection = styled.div`
     justify-content: center;
     height: 230px;
     display: flex;
-    
+    gap:250px;
     align-items: center;
+    
     .header-content {
         display: flex;
         flex-direction: column;
@@ -36,12 +37,11 @@ export const ChartSection = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
+
     }
 
-    img {
-        max-width: 70%;
-        height: auto;
-    }
+  
 `;
 
 // TabsSection을 정의하여 탭의 스타일을 설정합니다.
@@ -73,7 +73,6 @@ export const CustomTabLink = styled(Nav.Link)`
   }
 `;
 export const Price=styled.div`
-  margin-top: 5px;
   text-align: center;
   gap:10px;
   display:flex;
@@ -81,4 +80,20 @@ export const Price=styled.div`
   font-size:18px;
   font-weight:bold;
 
+`
+export const StockStatus=styled.div`
+  color: #8F9293;
+  margin-left: 10px;
+  
+
+`
+export const StyledChangeRate = styled.span`
+    font-size: 14px;
+    font-weight: 600;
+    ${({ color }) => `color: ${color};`}
+`;
+export const PriceContent=styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 `
