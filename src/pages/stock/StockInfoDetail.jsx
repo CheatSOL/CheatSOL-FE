@@ -148,14 +148,6 @@ const StockDataComponent = ({ data }) => {
 
 
 const StockInfoDetail = ( props ) => {
-  const navigate= useNavigate();
-
-  const onClickMoveDetailPage = () =>{
-    const params = new URLSearchParams({ code:props.curCompanyCode , name: props.curCompanyName }).toString();
-    navigate(`?${params}`);
-
-
-  }
   return (
     <>
       <StyledStockDetailDiv>
@@ -164,7 +156,7 @@ const StockInfoDetail = ( props ) => {
         ))}
       </StyledStockDetailDiv>
       <Link to={`/main/stocks/detail/${props.curCompanyCode}/${props.curCompanyName }`} >
-      <StyledMoveDetailDiv onClick={onClickMoveDetailPage}>
+      <StyledMoveDetailDiv>
         <span>
           상세정보 더보기{" "}
           <span>
