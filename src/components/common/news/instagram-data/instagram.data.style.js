@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledNewsDiv = styled.div`
   width: calc(100% - 600px);
-  height: 470px;
+  height: 430px;
   display: flex;
   flex-direction: column;
   position: relative;
