@@ -53,34 +53,21 @@ export const TabsSection = styled.div`
 // CustomTabs를 정의하여 탭의 스타일을 설정합니다.
 export const CustomTabs = styled(Nav)`
   width: 100%;
-  border-bottom: 1.5px solid #959595;
-`;
+  border-bottom: 1px solid #959595;
 
-// CustomTabLink를 정의하여 탭 링크의 스타일을 설정합니다.
-export const CustomTabLink = styled(Nav.Link)`
-  padding: 10px 15px;
-  color: #333;
-  text-decoration: none;
-  min-width: 260px;
-  text-align: center;
-  &:hover {
-    border-bottom: 2px solid #43D2FF;
-    color: #43D2FF;
-  }
-  &.active {
-    border-bottom: 2px solid #43D2FF;
-    color: #43D2FF;
+  .nav-link {
+    color: black;
+    &:hover {
+      border-bottom: 2px solid #077DF3;
+      color: #077DF3;
+    }
+    &.active {
+      border-bottom: 2px solid #077DF3;
+      color: #077DF3;
+    }
   }
 `;
-export const Price=styled.div`
-  text-align: center;
-  gap:10px;
-  display:flex;
-  flex-direction:row;
-  font-size:18px;
-  font-weight:bold;
 
-`
 export const StockStatus=styled.div`
   color: #8F9293;
   margin-left: 10px;
