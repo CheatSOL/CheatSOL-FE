@@ -8,6 +8,7 @@ import {
   StyledHeaderChart,
   StyledSearchSpan,
   StyledPriceSpan,
+  BlurDiv,
 } from "./Stock.style";
 
 import ContentsItem from "~/components/common/contents-item/Contents";
@@ -44,6 +45,8 @@ export default function StockPage() {
   const keyword = useSelector((state) => state.keyword.keyword);
   const [curCompanyPrice, setCurCompanyPrice] = useState([]);
   const [curCompanyName, setCurCompanyName] = useState("");
+  const [curCompanyId, setCurCompanyId] = useState(0);
+  const [stockDetails, setStockDetails] = useState([]);
 
   const {
     data: stockData,
@@ -55,7 +58,7 @@ export default function StockPage() {
     {
       staleTime: Infinity,
       enabled: !!keyword,
-      refetchInterval: 5000,
+      refetchInterval: 10000,
     }
   );
 
@@ -69,7 +72,7 @@ export default function StockPage() {
     {
       staleTime: Infinity,
       enabled: !!keyword,
-      refetchInterval: 5000,
+      refetchInterval: 10000,
     }
   );
 
@@ -87,6 +90,7 @@ export default function StockPage() {
           setCurCompanyPrice(
             result.data.output.map((e) => e.stck_oprc).reverse()
           );
+          setCurCompanyId(0);
         } catch (error) {
           console.error(error);
         }
@@ -95,7 +99,20 @@ export default function StockPage() {
     fetchDailyPrice();
   }, [companyData]);
 
-  const handleItemClick = (data, name) => {
+  useEffect(() => {
+    const test = async () => {
+      const result = await axios.get("/api/stockInfo", {
+        params: {
+          word: curCompanyName,
+        },
+      });
+      setStockDetails(result.data);
+    };
+    test();
+  }, [curCompanyName]);
+
+  const handleItemClick = async (data, name, id) => {
+    setCurCompanyId(id);
     setCurCompanyPrice(data.output.map((e) => e.stck_clpr).reverse());
     setCurCompanyName(name);
   };
@@ -136,11 +153,12 @@ export default function StockPage() {
                   data={stockData?.default?.timelineData}
                   curCompanyPrice={curCompanyPrice}
                   curCompanyName={curCompanyName}
+                  stockDetails={stockDetails}
                 />
               )
             )}
           </div>
-          <div>
+          <div style={{ height: "100%", position: "relative" }}>
             <StyledHeaderChart>
               <span>
                 {keyword}의 <StyledSearchSpan>연관 기업 정보 </StyledSearchSpan>
@@ -161,7 +179,6 @@ export default function StockPage() {
                   </StyledContentsDiv>
                 ))
               ) : (
-                // Show company data
                 <>
                   {companyData.map((e, i) => (
                     <ContentsItem
@@ -169,12 +186,15 @@ export default function StockPage() {
                       height={"180px"}
                       item={e}
                       key={i}
+                      id={i}
                       currentCompany={handleItemClick}
+                      curCompanyId={curCompanyId}
                     />
                   ))}
                 </>
               )}
             </StyledBodyCompanyDiv>
+            <BlurDiv />
           </div>
         </StyledStockBodyDiv>
       </div>

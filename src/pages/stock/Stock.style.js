@@ -26,6 +26,7 @@ export const StyledStockHeaderDiv = styled.div`
 
 export const StyledStockBodyDiv = styled.div`
   width: 100%;
+  height: 700px;
   display: flex;
   justify-content: space-between;
   align-items: start;
@@ -37,8 +38,9 @@ export const StyledBodyCompanyDiv = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
-  height: 400px;
+  height: 636px;
   overflow-y: scroll;
+  position: relative;
 
   &:hover {
     cursor: pointer;
@@ -87,4 +89,19 @@ export const StyledSearchSpan = styled.span`
 export const StyledPriceSpan = styled.span`
   color: #43d2ff;
   font-weight: bold;
+`;
+
+export const BlurDiv = styled.div`
+  width: calc(100% - 30px);
+  height: 70px;
+  position: absolute;
+  bottom: -26px;
+  background: linear-gradient(
+    to top,
+    transparent,
+    0%,
+    #fafcff,
+    50%,
+    transparent
+  );
 `;
