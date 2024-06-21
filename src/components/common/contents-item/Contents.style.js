@@ -7,9 +7,18 @@ export const StyledContentsDiv = styled.div`
   height: ${(props) => props.height || "196px"};
   padding: 30px;
 
-  border: 1px solid #d3d3d3;
+  border: ${(props) =>
+    props.isCheck ? "2px solid #43D2FF" : "1px solid #d3d3d3;"};
   border-radius: 50px;
   background-color: white;
+
+  /* &:hover {
+    background-color: ${(props) =>
+    props.isCheck ? "" : " rgba(0, 0, 0, 0.02)"};
+  } */
+  &:hover {
+    border: ${(props) => (props.isCheck ? "" : "1px solid #43D2FF")};
+  }
 `;
 
 // TitleGroup

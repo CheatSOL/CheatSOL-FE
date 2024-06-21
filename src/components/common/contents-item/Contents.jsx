@@ -25,7 +25,7 @@ export default function Contents(props) {
     ["dailyPrice", props.item.code],
     () => fetchDailyPrice(props.item.code),
     {
-      refetchInterval: 5000,
+      refetchInterval: 10000,
     }
   );
 
@@ -46,9 +46,9 @@ export default function Contents(props) {
     <img src="/assets/images/down-icon.png" alt="Decrease" />
   );
 
-  const onClickItem = () => {
+  const onClickItem = (e) => {
     if (!isLoading) {
-      props.currentCompany(allData, props.item.name);
+      props.currentCompany(allData, props.item.name, props.id);
     }
   };
 
@@ -56,6 +56,7 @@ export default function Contents(props) {
     <StyledContentsDiv
       width={props.width}
       height={props.height}
+      isCheck={props.curCompanyId === props.id}
       onClick={onClickItem}
     >
       <StyledContentsTitleGroup>
