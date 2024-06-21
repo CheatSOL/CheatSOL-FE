@@ -8,6 +8,9 @@ export default function Bubble(props) {
       height={props.height}
       opacity={props.opacity}
       fontsize={props.fontsize}
+      onClick={(e)=>props.clickfunc(e)}
+      iscurrent={props.iscurrent}
+      id={props.id}
     >
       {props.content}
     </StyledBubbleDiv>

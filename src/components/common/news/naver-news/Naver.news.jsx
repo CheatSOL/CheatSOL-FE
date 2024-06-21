@@ -20,7 +20,7 @@ function timeAgo(dateString) {
   const minute = parseInt(dateString.slice(10, 12), 10);
   const second = parseInt(dateString.slice(12, 14), 10);
 
-  console.log(`${year}-${month}-${day}`);
+  // console.log(`${year}-${month}-${day}`);
 
   const articleDate = new Date(year, month, day, hour, minute, second);
   const differenceInMilliseconds = now - articleDate;
@@ -129,20 +129,20 @@ const data = [
   },
 ];
 
-export default function NaverNews() {
+export default function NaverNews(props) {
   // Sort data by documentDate in descending order
   const sortedData = data.sort(
     (a, b) => parseInt(b.documentDate) - parseInt(a.documentDate)
   );
 
   return (
-    <StyledNewsDiv>
-      <StyledNewsKeyword>
+    <StyledNewsDiv backgroundcol={props.backgroundcol} width={props.width} height={props.height}>
+      {/* <StyledNewsKeyword>
         <span>"불닭"</span>이 이렇게 언급됐어요
-      </StyledNewsKeyword>
-      <StyledNewsItemPatentDiv>
+      </StyledNewsKeyword> */}
+      <StyledNewsItemPatentDiv isscroll={props.isscroll} >
         {sortedData.map((e, index) => (
-          <StyledNewsItemDiv key={index}>
+          <StyledNewsItemDiv key={index} Hfontsize={props.Hfontsize}>
             <a
               href={e.url}
               target="_blank"
@@ -154,7 +154,7 @@ export default function NaverNews() {
                 <span>{e.writer}</span> | <span>{timeAgo(e.documentDate)}</span>
               </StyledNewsItemHeaderDiv>
               <div>{e.title}</div>
-              <StyledNewsItemContentDiv>
+              <StyledNewsItemContentDiv Cfontsize={props.Cfontsize}>
                 {highlightedText(e.maxSentence, e.highlight)}
               </StyledNewsItemContentDiv>
             </a>

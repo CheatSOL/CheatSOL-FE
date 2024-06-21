@@ -1,9 +1,40 @@
-import styled from "styled-components";
+import styled, {keyframes,css} from "styled-components";
+
+const bubbleBurst = keyframes`
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }  
+  50% {
+    transform: scale(1.2) ;
+    opacity: 0.8;
+  }
+  95% {
+    transform: scale(1.4) ;
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1.5) ;
+    opacity: 0;
+  }
+  
+`;
 
 export const StyledBubbleDiv = styled.div`
+  /* display: ${(props) => (props.iscurrent ? "none" : "flex" || "flex")};; */
+  display: flex;
   width: ${(props) => props.width || "100px"};
   height: ${(props) => props.height || "100px"};
-  opacity: ${(props) => props.opacity || "1"};
+  /* opacity 값 설정 */
+  opacity: ${(props) => (props.iscurrent ? "1" : props.opacity || "1")};
+  
+  /* ${(props) =>
+    props.iscurrent &&
+    css`
+      animation: ${bubbleBurst} 0.1s forwards;
+    `} */
+
+    
   background: radial-gradient(
     circle,
     white 0%,
@@ -14,7 +45,6 @@ export const StyledBubbleDiv = styled.div`
   );
   border: none;
   border-radius: 50%;
-  display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -22,6 +52,8 @@ export const StyledBubbleDiv = styled.div`
   /* font-size: ${(props) => parseInt(props.width || "100px") * 0.12}px; */
   font-size: ${(props) => props.fontsize || "1rem"} !important;
   color: #2a5676;
+
+  
 
   &:before {
     content: "";
@@ -52,8 +84,8 @@ export const StyledBubbleDiv = styled.div`
   }
 
   &:hover {
-    cursor: ${props => props.nothover ? "none" : "pointer"};
-    opacity: ${props => props.nothover ? "default" : 1}; 
+    cursor: ${props => props.iscurrent ? "default" : "pointer"};
+    opacity: 1; 
   }
   
 `;
