@@ -3,21 +3,20 @@ import styled from "styled-components";
 export const StyledContentsDiv = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: ${(props) => props.width || "377px"};
   height: ${(props) => props.height || "196px"};
-  padding: 30px;
-
-  border: ${(props) =>
-    props.isCheck ? "2px solid #43D2FF" : "1px solid #d3d3d3;"};
-  border-radius: 50px;
+  padding: 15px;
+  align-text: center;
+  cursor: pointer;
+  border: 2px solid #d3d3d3;
+  border-radius: 20px;
   background-color: white;
+  margin: 4px;
 
-  /* &:hover {
-    background-color: ${(props) =>
-    props.isCheck ? "" : " rgba(0, 0, 0, 0.02)"};
-  } */
   &:hover {
-    border: ${(props) => (props.isCheck ? "" : "1px solid #43D2FF")};
+    border-color: #43d2ff;
   }
 `;
 
@@ -26,24 +25,50 @@ export const StyledContentsTitleGroup = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 10px;
 
   font-weight: 800;
   font-size: 1.5rem;
 `;
+
+export const Contents = styled.div`
+  flex: 1;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: auto;
+  white-space: nowrap;
+`;
+
 // Title & SubTitle & MiniTitle
-export const StyledContentsTitle = styled.div``;
+export const StyledContentsTitle = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  font-size: 18px;
+  width: 10vw;
+`;
 export const StyledContentsSubTitle = styled.div``;
 export const StyledContentsMiniTitle = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
   gap: 9px;
 
   & p {
     font-size: 0.9rem !important;
     font-weight: 500;
-    color: ${(props) => (props.isPriceIncrease ? "tomato" : "#4284F3")};
+    color: ${(props) =>
+      props.signPerYesterday > 0
+        ? "blue"
+        : props.signPerYesterday < 0
+        ? "orangered"
+        : "black"};
   }
 
   & img {

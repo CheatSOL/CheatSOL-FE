@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyledHeaderInput,
   StyledHeaderInputDiv,
@@ -10,10 +10,27 @@ import { searchKeyword } from "../../../store/reducers/search";
 export default function Search(props) {
   const dispatch = useDispatch();
   const keyword = useSelector((state) => state.keyword.keyword);
-  console.log(keyword);
+  const [text, setText] = useState(() => {
+    return localStorage.getItem("searchKeyword") || keyword;
+  });
 
-  const handleInputChange = (e) => {
-    dispatch(searchKeyword(e.target.value));
+  useEffect(() => {
+    if (keyword) {
+      setText(keyword);
+      localStorage.setItem("searchKeyword", keyword);
+    }
+  }, [keyword]);
+
+  const onChangeKeyword = (e) => {
+    setText(e.target.value);
+  };
+
+  const onkeydownKeyword = (e) => {
+    if (e.key === "Enter") {
+      if (text === "") return;
+      dispatch(searchKeyword(e.target.value));
+      localStorage.setItem("searchKeyword", e.target.value);
+    }
   };
 
   return (
@@ -22,8 +39,9 @@ export default function Search(props) {
         placeholder="Search"
         width={props.width}
         height={props.height}
-        value={keyword} // Redux 상태를 input의 value로 설정
-        onChange={handleInputChange} // input 값이 변경될 때 Redux 상태 업데이트
+        value={text}
+        onChange={onChangeKeyword}
+        onKeyDown={onkeydownKeyword}
       />
       <StyledSearchIcon />
     </StyledHeaderInputDiv>
