@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { useSelector } from "react-redux";
-import {
-  StyledHeaderChart,
-  StyledSearchSpan,
-  StyledPriceSpan,
-} from "./Stock.chart.style";
-
+import StockInfoDetail from "./StockInfoDetail";
+import { StyledStockParentDiv } from "./Stock.chart.style";
 export default function StockChart(props) {
   const keyword = useSelector((state) => state.keyword.keyword);
   const [options, setOptions] = useState({
@@ -126,18 +122,16 @@ export default function StockChart(props) {
   }, [props.data, props.curCompanyPrice]);
 
   return (
-    <div className="mixed-chart">
+    <StyledStockParentDiv>
       <Chart
         options={options}
         series={series}
         type="area"
-        width="800"
+        width="790"
         height="400"
+        border-radius="10px"
       />
-      <div>
-        <div>{/* 종목 상세 장보 보여주기 */}</div>
-        <button>상세정보 보러가기</button>
-      </div>
-    </div>
+      <StockInfoDetail info={props.stockDetails}></StockInfoDetail>
+    </StyledStockParentDiv>
   );
 }
