@@ -1,17 +1,15 @@
-import styled from "styled-components";
+import styled, {keyframes,css}from "styled-components";
 
-export const StyledNewsDiv = styled.div`
-  width: 470px;
-  height: 600px;
+export const StyledNewsDiv = styled.div`   
+  width: ${(props) => props.width || "470px"};
+  height: ${(props) => props.height || "600px"};
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 15px;
-  position: relative;
-  &:hover {
-    cursor: pointer;
-  }
 `;
+
 export const StyledNewsKeyword = styled.div`
   width: 100%;
   font-size: 23px;
@@ -28,12 +26,14 @@ export const StyledBlurDiv = styled.div`
   bottom: 0px;
   background: linear-gradient(to top, transparent, 0%, white, 50%, transparent);
 `;
+
 export const StyledNewsItemPatentDiv = styled.div`
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: ${(props) => props.isscroll || "scroll"};
 `;
 
 export const StyledNewsItemDiv = styled.div`
+  font-size: ${(props) => props.Hfontsize || "16px"};
   width: 100%;
   background-color: rgba(0, 0, 0, 0.02);
   padding: 10px;
@@ -63,6 +63,6 @@ export const StyledNewsItemHeaderDiv = styled.div`
 
 export const StyledNewsItemContentDiv = styled.div`
   color: rgba(0, 0, 0, 0.4);
-  font-size: 14px;
+  font-size: ${(props) => props.Cfontsize || "14px"};
   margin-top: 10px;
 `;
