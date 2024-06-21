@@ -114,10 +114,11 @@ export default function StockPage() {
     test();
   }, [curCompanyName]);
 
-  const handleItemClick = async (data, name, id) => {
+  const handleItemClick = async (data, name, id, code) => {
     setCurCompanyId(id);
     setCurCompanyPrice(data.output.map((e) => e.stck_clpr).reverse());
     setCurCompanyName(name);
+    setCurCompanyCode(code);
   };
 
   return (
