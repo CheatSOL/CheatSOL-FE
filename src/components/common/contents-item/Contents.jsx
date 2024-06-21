@@ -50,7 +50,7 @@ export default function Contents(props) {
 
   const onClickItem = (e) => {
     if (!isLoading) {
-      props.currentCompany(allData, props.item.name, props.id);
+      props.currentCompany(allData, props.item.name, props.id, props.item.code);
     }
   };
 
