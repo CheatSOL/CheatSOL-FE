@@ -3,22 +3,37 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/landing/Landing";
 import MainPage from "./pages/main/Main";
 import Socialpage from "./pages/social/Social";
-import StockPage from "./pages/stock/Stock";
+import Maintab from "./pages/stock/detail/maintab/Maintab";
 import KeywordPage from "./pages/keyword/Keyword";
-import StockDetailPage from "./pages/stock/detail/Stock.detail";
+import Newstab from "./pages/stock/detail/newstab/Newstab";
+import StockPage from "./pages/stock/Stock";
+import StockDetail from "./pages/stock/detail/StockDetail";
+import { QueryClient, QueryClientProvider } from "react-query";
+import Pricetab from "./pages/stock/detail/pricetab/Pricetab";
+import { Provider } from "react-redux";
+import store from "./store/store";
 
 function App() {
+  const queryClient = new QueryClient();
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />}></Route>
-        <Route path="/main" element={<MainPage />}></Route>
-        <Route path="/main/social" element={<Socialpage />}></Route>
-        <Route path="/main/stock" element={<StockPage />}></Route>
-        <Route path="/main/stocks/:id" element={<StockDetailPage />}></Route>
-        <Route path="/main/keyword" element={<KeywordPage />}></Route>
-      </Routes>
-    </Router>
+    <div className="App">
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <Router>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/main" element={<MainPage />} />
+              <Route path="/main/social" element={<Socialpage />} />
+              <Route path="/main/stock" element={<StockPage />} />
+              <Route path="/main/stocks/:id/main" element={<Maintab />} />
+              <Route path="/main/keyword" element={<KeywordPage />} />
+              <Route path="/main/stocks/detail/:code/:name" element={<StockDetail />} />
+            </Routes>
+          </Router>
+        </QueryClientProvider>
+      </Provider>
+    </div>
   );
 }
 
