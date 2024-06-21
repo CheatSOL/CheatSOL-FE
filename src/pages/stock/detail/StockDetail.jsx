@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../../components/common/sidebar/Sidebar';
 import Nav from 'react-bootstrap/Nav';
-import { Container, Content, ChartSection, TabsSection, CustomTabs, CustomTabLink, Price, StockStatus, PriceContent } from './StockDetail.style';
+import { Container, Content, ChartSection, TabsSection, CustomTabs, StockStatus, PriceContent } from './StockDetail.style';
 import {StyledPriceChange} from './pricetab/Pricetab.style';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Maintab from './maintab/Maintab';
@@ -15,7 +15,8 @@ import { useParams } from 'react-router-dom';
 import ChartModal from './chart/ChartModal';
 
 export default function StockDetail() {
-  const { id } = useParams();
+  const { code, name } = useParams();
+  
   const [activeTab, setActiveTab] = useState('main'); 
   const [stockData, setStockData] = useState(null); 
   const [marketStatus, setMarketStatus] = useState(1);
@@ -39,7 +40,7 @@ export default function StockDetail() {
 
     const fetchDailyData = async () => {
       try {
-        const response = await axios.get(`/api/daily-price?symbol=${id}&period=D`);
+        const response = await axios.get(`/api/daily-price?symbol=${code}&period=D`);
         setLastPrice(response.data.output[0]);
         setMarketStatus(0); // Market closed
       } catch (error) {
@@ -52,7 +53,7 @@ export default function StockDetail() {
       const ws = new WebSocket('ws://localhost:3002');
       ws.onopen = function() {
         console.log('WebSocket 연결이 열렸습니다.');
-        ws.send(JSON.stringify({ id: id }));
+        ws.send(JSON.stringify({ id: code }));
       };
       ws.onmessage = function(event) {
         const data = JSON.parse(event.data);
@@ -72,7 +73,7 @@ export default function StockDetail() {
      
     };
   
-  }, [id]);
+  }, [code]);
 
   const handleTabSelect = (eventKey) => {
     setActiveTab(eventKey);
@@ -148,8 +149,8 @@ const DateStatus = () => {
       <Header></Header>
       <ChartSection>
           <div className="header-content">
-            <div style={{fontSize:"24px", fontWeight:"bold"}}>{id}</div>
-            <h4>삼성전자</h4> 
+            <div style={{fontSize:"24px", fontWeight:"bold"}}>{code}</div>
+            <h4>{name}</h4> 
             <div>
               {marketStatus === 1 && renderPriceChange()}
               {marketStatus === 0 && lastPrice && (
@@ -172,29 +173,29 @@ const DateStatus = () => {
             <i class="bi bi-arrows-fullscreen" style={{color:"#0DAA5C", fontSize:"12px", fontWeight:"bold", cursor:"pointer"}} onClick={handleShowChart}></i>
             <span style={{fontSize:"12px", marginLeft:"10px", color:"#0DAA5C", cursor:"pointer"}} onClick={handleShowChart} >차트 자세히 보기</span>
             </div>
-            <ChartModal show={show} onHide={onHide}/>
+            <ChartModal show={show} onHide={onHide} code={code} name={name}/>
           </div>
         </ChartSection>
         <TabsSection>
-          <CustomTabs variant="underline" activeKey={activeTab} onSelect={handleTabSelect}>
-            <Nav.Item className="w-22">
-              <CustomTabLink eventKey="main">종합</CustomTabLink>
+          <CustomTabs justify variant="underline" activeKey={activeTab} onSelect={handleTabSelect}>
+            <Nav.Item>
+              <Nav.Link eventKey="main" >종합</Nav.Link>
             </Nav.Item>
-            <Nav.Item className="w-22">
-              <CustomTabLink eventKey="news">뉴스</CustomTabLink>
+            <Nav.Item>
+            <Nav.Link eventKey="news">뉴스</Nav.Link>
             </Nav.Item>
-            <Nav.Item className="w-22">
-              <CustomTabLink eventKey="price">시세</CustomTabLink>
+            <Nav.Item >
+            <Nav.Link eventKey="price">시세</Nav.Link>
             </Nav.Item>
-            <Nav.Item className="w-22">
-              <CustomTabLink eventKey="financial" disabled>재무</CustomTabLink>
+            <Nav.Item >
+            <Nav.Link eventKey="financial" >재무</Nav.Link>
             </Nav.Item>
           </CustomTabs>
           <div style={{height: 'calc(100vh - 406px)', overflowY: 'auto' }}>
-            {activeTab === 'main' && <Maintab id={id} />}
-            {activeTab === 'news' && <Newstab id={id} />}
-            {activeTab === 'price' && <Pricetab id={id} />}
-            {activeTab === 'financial' && <Financial id={id} />}
+            {activeTab === 'main' && <Maintab id={code} />}
+            {activeTab === 'news' && <Newstab id={code} />}
+            {activeTab === 'price' && <Pricetab id={code} />}
+            {activeTab === 'financial' && <Financial id={code} />}
           </div>
         </TabsSection>
       </Content>
