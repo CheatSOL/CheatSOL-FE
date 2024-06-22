@@ -47,7 +47,7 @@ function highlightedText(text, highlights) {
   return <div dangerouslySetInnerHTML={{ __html: highlighted }} />;
 }
 
-const data = [
+const sample_data = [
   {
     maxScore: 1,
     maxSentence:
@@ -130,10 +130,12 @@ const data = [
 ];
 
 export default function NaverNews(props) {
+  const data = props.data.data || sample_data;
+
   // Sort data by documentDate in descending order
-  const sortedData = data.sort(
-    (a, b) => parseInt(b.documentDate) - parseInt(a.documentDate)
-  );
+  // const sortedData = data.sort(
+  //   (a, b) => parseInt(b.documentDate) - parseInt(a.documentDate)
+  // );
 
   return (
     <StyledNewsDiv backgroundcol={props.backgroundcol} width={props.width} height={props.height}>
@@ -141,7 +143,7 @@ export default function NaverNews(props) {
         <span>"불닭"</span>이 이렇게 언급됐어요
       </StyledNewsKeyword> */}
       <StyledNewsItemPatentDiv isscroll={props.isscroll} >
-        {sortedData.map((e, index) => (
+        {data.map((e, index) => (
           <StyledNewsItemDiv key={index} Hfontsize={props.Hfontsize}>
             <a
               href={e.url}

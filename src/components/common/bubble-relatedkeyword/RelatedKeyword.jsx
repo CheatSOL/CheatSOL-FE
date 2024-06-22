@@ -11,46 +11,8 @@ export default function RelatedKeyword() {
     const scrollRef = useRef(null);
 
     const params1 = {
-        keyword:"불닭",
-        scoringKeyword:"불닭",
-        startDate: "20240614",
-        endDate: "20240620"
-    };
-    const params2 = {
-        ex: {
-            blog: ["삼양식품"], 
-            news: ["삼양식품"]
-        },
-        keyword: params1.keyword,
-        scoringKeyword:params1.scoringKeyword,
-        startDate: params1.startDate,
-        endDate: params1.endDate
-    };
-
-    
-    const [relatedNewsParams, setRelatedNewsParams] = useState(null);
-
-    const { data: relatedKeywordData, isLoading: isLoadingKeyword, error: errorKeyword } = useQuery(
-        "relatedkeywordData",
-        () => relatedKeywordAPI(params1),
-        {
-            staleTime: Infinity,
-            onSuccess: () => {
-                setRelatedNewsParams(params2); // Trigger related news query after related keyword data is loaded
-            },
-            
-        }
-        
-    );
-
-    const { data: relatedNewsData, isLoading: isLoadingNews, error: errorNews } = useQuery(
-        "relatednewsData",
-        () => relatedNewsAPI(relatedNewsParams),
-        {
-            staleTime: Infinity,
-            enabled: !!relatedNewsParams, // Only run the query if relatedNewsParams is set
-        }
-    );
+        keyword:"HBM",
+    };   
         
   // !! sample data -> 실제 데이터로 추후 변경해주세요.
   const keyword_sample = "불닭";
@@ -73,8 +35,6 @@ export default function RelatedKeyword() {
 
   //data
   const keyword = params1.keyword;
-  const [big6words, setBigWords] = useState(null);
-  const [sml6words, setSmlWords] = useState(null);
 
   //버블 원형 배치를 위한 코드
   const big_radius = 200; // 반지름
@@ -87,7 +47,7 @@ export default function RelatedKeyword() {
   const key_bubble_size = "80px";
 
     //Click한 키워드명
-     const [currentword,setCurrentword] = useState(keyword);
+     const [currentword,setCurrentword] = useState(null);
     //Click시 버블 줄이기
     const [clickedbubble, setClickedBubble] = useState(false);
     //Click시 버블 투명도 찐하게
@@ -101,7 +61,8 @@ export default function RelatedKeyword() {
     const handleClick = (e) => {
         setClickedBubble(true);
         setShowNewsTab(true); 
-        setOpacity("0.3");
+        setOpacity("0.3");        
+
         if (currentbubble !== e.target.id) {
             setCurrentBubble(e.target.id);
             setCurrentword(e.target.innerText);
@@ -184,6 +145,29 @@ export default function RelatedKeyword() {
         ]
       ]
 
+      
+    const params2 = {        
+        keyword: params1.keyword,
+        exWord: currentword,
+    };
+
+    const { data: relatedKeywordData, isLoading: isLoadingKeyword, error: errorKeyword } = useQuery(
+    "relatedkeywordData",
+    () => relatedKeywordAPI(params1),
+    {
+        staleTime: Infinity,            
+    }        
+    );
+
+    const { data: relatedNewsData, isLoading: isLoadingNews, error: errorNews } = useQuery(
+        "relatednewsData",
+        () => relatedNewsAPI(params2),
+        {
+            staleTime: Infinity,
+            enabled: !!currentword // Only run the query if relatedNewsParams is set
+        }
+    );
+
     if (isLoadingKeyword || isLoadingNews) {
         return <div>Loading related keywords...</div>;
     }
@@ -254,9 +238,9 @@ export default function RelatedKeyword() {
                              </StyledGraphBox>
                         <StyledNaverbox animate={clickedbubble}>
                                 <StyledGraphKeyword>
-                                <span>연관 기사들</span>
+                                <span>연관 기사들{relatedNewsData.data.length}</span>                           
                                 </StyledGraphKeyword>   
-                            <NaverNews width={"680px"} Hfontsize={"0.8rem"} Cfontsize={"0.7rem"}></NaverNews>
+                            <NaverNews data={relatedNewsData} width={"680px"} Hfontsize={"0.8rem"} Cfontsize={"0.7rem"}></NaverNews>
                         </StyledNaverbox>
                         </StyledNewsTab> 
                     )}
