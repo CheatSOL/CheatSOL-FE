@@ -1,12 +1,57 @@
-import { useState,useEffect,useRef } from "react";
+import { useState,useRef,useEffect } from "react";
 import Bubble from "../bubble/KeywordBubble";
 import NaverNews from "../news/naver-news/Naver.news";
 import RelatedKeywordChart from "./RelatedKeyword.chart";
 import { StyledHeadTitleBox, StyledTitleBox, StyledRelatedKeyword, StyledGraphBox, StyledNaverbox, StyledNewsContainer, StyledNewsTab, StyledRelatedKeywordContainer, StyledBubbleContainer, StyledCircleContainer, StyledCircleItem, StyledMiniCircleItem, StyledKeyCircleItem, StyledGraphKeyword } from "./RelatedKeyword.style";
 import sns from "~/images/sns_mark.png"
+import { relatedKeywordAPI, relatedNewsAPI } from "~/apis/RelatedKeyword.js"
+import { useQuery } from "react-query";
 
 export default function RelatedKeyword() {
     const scrollRef = useRef(null);
+
+    const params1 = {
+        keyword:"불닭",
+        scoringKeyword:"불닭",
+        startDate: "20240614",
+        endDate: "20240620"
+    };
+    const params2 = {
+        ex: {
+            blog: ["삼양식품"], 
+            news: ["삼양식품"]
+        },
+        keyword: params1.keyword,
+        scoringKeyword:params1.scoringKeyword,
+        startDate: params1.startDate,
+        endDate: params1.endDate
+    };
+
+    
+    const [relatedNewsParams, setRelatedNewsParams] = useState(null);
+
+    const { data: relatedKeywordData, isLoading: isLoadingKeyword, error: errorKeyword } = useQuery(
+        "relatedkeywordData",
+        () => relatedKeywordAPI(params1),
+        {
+            staleTime: Infinity,
+            onSuccess: () => {
+                setRelatedNewsParams(params2); // Trigger related news query after related keyword data is loaded
+            },
+            
+        }
+        
+    );
+
+    const { data: relatedNewsData, isLoading: isLoadingNews, error: errorNews } = useQuery(
+        "relatednewsData",
+        () => relatedNewsAPI(relatedNewsParams),
+        {
+            staleTime: Infinity,
+            enabled: !!relatedNewsParams, // Only run the query if relatedNewsParams is set
+        }
+    );
+        
   // !! sample data -> 실제 데이터로 추후 변경해주세요.
   const keyword_sample = "불닭";
   const related_big_keywords_sample = [
@@ -27,14 +72,14 @@ export default function RelatedKeyword() {
   ];
 
   //data
-  const keyword = keyword_sample;
-  const related_big_keywords = related_big_keywords_sample;
-  const related_sml_keywords = related_sml_keywords_sample;
+  const keyword = params1.keyword;
+  const [big6words, setBigWords] = useState(null);
+  const [sml6words, setSmlWords] = useState(null);
 
   //버블 원형 배치를 위한 코드
   const big_radius = 200; // 반지름
   const sml_radius = 130;
-  const angleStep = 360 / related_big_keywords.length;
+  const angleStep = 360 / 6;
 
   //버블 사이즈
   const bubble_size = "170px";
@@ -43,7 +88,6 @@ export default function RelatedKeyword() {
 
     //Click한 키워드명
      const [currentword,setCurrentword] = useState(keyword);
-    
     //Click시 버블 줄이기
     const [clickedbubble, setClickedBubble] = useState(false);
     //Click시 버블 투명도 찐하게
@@ -74,7 +118,6 @@ export default function RelatedKeyword() {
         if (currentbubble !== e.target.id) {
             setCurrentBubble(e.target.id);
             setCurrentword(e.target.innerText);
-
         } else {
             setCurrentBubble(null);
         }
@@ -141,10 +184,15 @@ export default function RelatedKeyword() {
         ]
       ]
 
+    if (isLoadingKeyword || isLoadingNews) {
+        return <div>Loading related keywords...</div>;
+    }
 
-
-    return(
-            
+    if (errorKeyword || errorNews) {
+        return <div>Error loading related keywords: {errorKeyword.message}</div>;
+    }
+    
+    else return(
         <StyledRelatedKeywordContainer>  
         <StyledHeadTitleBox className="related-text-box" animate={clickedbubble}>
                             <img src={sns} width={"50px"} height={"auto"}></img>                                 
@@ -156,7 +204,8 @@ export default function RelatedKeyword() {
                     <StyledKeyCircleItem >
                         <Bubble content={keyword} width={key_bubble_size} height={key_bubble_size} fontsize={"1.7rem"} nothover={true}></Bubble>
                     </StyledKeyCircleItem>
-                {related_big_keywords.map((item, index) => {
+                    
+                {relatedKeywordData.data.slice(0,6).map((item, index) => {
                     const angle = index * angleStep;
                     const radian = (angle * Math.PI) / 180;
                     const x = big_radius * Math.cos(radian);
@@ -167,13 +216,13 @@ export default function RelatedKeyword() {
                     x={x} y={y} distance={bubble_size} time={"1.3s"} delay={`${index * 0.5}s`}>
                         <Bubble id={`big-bubble-${index}`} clickfunc={(e) => handleClick(e)}
                         iscurrent={currentbubble===`big-bubble-${index}`}
-                        opacity={opacity} content={item} width={bubble_size} height={bubble_size} fontsize={"1.7rem"}></Bubble>
+                        opacity={opacity} content={item.label} width={bubble_size} height={bubble_size} fontsize={"1.7rem"}></Bubble>
                     </StyledCircleItem>
                     );
 
 
                 })}
-                {related_sml_keywords.map((item, index) => {
+                {related_sml_keywords_sample.map((item, index) => {
                     const angle = index * angleStep;
                     const radian = (angle * Math.PI) / 180;
                     const x = sml_radius * Math.cos(radian+Math.PI/6);
