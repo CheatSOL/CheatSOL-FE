@@ -34,9 +34,8 @@ export default function StockDetail() {
     const currentDate = new Date();
     const hours = currentDate.getHours();
     const minutes = currentDate.getMinutes();
-
-    // Determine market status based on time
-    const isMarketClosed = (hours < 9) || (hours > 15) || (hours === 15 && minutes > 30);
+    const day = currentDate.getDay();
+    const isMarketClosed = (day === 0) || (day === 6) || (hours < 9) || (hours > 15) || (hours === 15 && minutes > 30);
 
     const fetchDailyData = async () => {
       try {
