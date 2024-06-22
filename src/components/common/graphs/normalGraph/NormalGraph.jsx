@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { ReactP5Wrapper } from "react-p5-wrapper";
 import styled from "styled-components";
-
+// import p5 from "p5";
+// window.p5 = p5;
 const ChartContainer = styled.div`
   background: #fff;
   padding: 10px;
@@ -46,7 +47,7 @@ const sketch = (p5) => {
       barIndex = 0;
       isAnimating = true;
       axisProgress = 0;
-      console.log(props);
+      // console.log(props);
     }
     if (props.date) {
       date = props.date;
@@ -134,7 +135,7 @@ const sketch = (p5) => {
         45,
         355 - yAxisLength,
         55,
-        360 - yAxisLength
+        355 - yAxisLength
       );
     } else if (data.length > 1 && isAnimating) {
       // x축과 평행한 보조선 그리기
@@ -174,14 +175,14 @@ const sketch = (p5) => {
         const startY = p5.map(data[drawnLines], 0, 100, 300, 50);
         const endX = p5.map(drawnLines + 1, 0, data.length - 1, 100, 500);
         const endY = p5.map(data[drawnLines + 1], 0, 100, 300, 50);
-        console.log(drawnLines, lineProgress);
+        // console.log(drawnLines, lineProgress);
         if (lineProgress == 1) {
           lineProgress = 0;
         } else if (lineProgress + lineStep >= 1) {
           lineProgress = 1;
           drawnLines++;
           lineStep = lineStep + 0.01;
-          console.log("asdf:", drawnLines);
+          // console.log("asdf:", drawnLines);
         } else {
           lineProgress += lineStep;
         }
@@ -281,7 +282,7 @@ const sketch = (p5) => {
       if (barProgress[data.length - 1] < data.length) {
         for (let ii = 0; ii <= barIndex; ii++) {
           barProgress[ii] += barStep;
-          if (barProgress[ii] >= 1) {
+          if (barProgress[ii] >= 0.5) {
             barProgress[ii] = 1;
             if (barProgress[barIndex] > 0.4) {
               barIndex++;

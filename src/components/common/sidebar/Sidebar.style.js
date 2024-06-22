@@ -24,6 +24,15 @@ export const StyledSidebarInfoDiv = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+
+  & div {
+    & > a {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+    }
+  }
 `;
 
 export const StyledSidebarItemDiv = styled.div`
@@ -37,13 +46,6 @@ export const StyledSidebarItemDiv = styled.div`
 
   background-color: ${({ active }) => (active ? "#43d2ff" : "transparent")};
   border-radius: ${({ active }) => (active ? "50px" : "0")};
-
-  & > a {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    align-items: center;
-  }
 
   & span {
     margin-left: 15px;

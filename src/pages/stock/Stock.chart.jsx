@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
-
+import { useSelector } from "react-redux";
+import StockInfoDetail from "./StockInfoDetail";
+import { StyledStockParentDiv } from "./Stock.chart.style";
 export default function StockChart(props) {
+  const keyword = useSelector((state) => state.keyword.keyword);
   const [options, setOptions] = useState({
     chart: {
       id: "basic-area",
@@ -9,12 +12,14 @@ export default function StockChart(props) {
         show: false,
       },
       background: "#fff",
-      stacked: false, // 스택 옵션을 false로 설정
+      stacked: false,
     },
     xaxis: {
-      categories: [], // 초기에는 빈 배열로 설정
+      categories: [],
+      type: "dateTime",
+      tickAmount: 6,
       labels: {
-        show: false,
+        show: true,
       },
       axisBorder: {
         show: false,
@@ -57,12 +62,12 @@ export default function StockChart(props) {
       shared: true,
       intersect: false,
     },
-    colors: ["#EC4B36", "#A8E8F9"],
+    colors: ["rgba(236, 75, 54, 0.9)", "rgba(168, 232, 249, 0.9)"],
   });
 
   const [series, setSeries] = useState([
     {
-      name: " 불닭",
+      name: keyword,
       data: [], // 초기에는 빈 배열로 설정
       yAxisIndex: 0,
     },
@@ -73,14 +78,6 @@ export default function StockChart(props) {
     },
   ]);
 
-  // 데이터 정규화 함수
-  const normalizeData = (data) => {
-    const min = Math.min(...data);
-    const max = Math.max(...data);
-    return data.map((value) => ((value - min) / (max - min)) * 100);
-  };
-
-  // props.data가 변경될 때마다 series를 업데이트
   useEffect(() => {
     async function getSeries() {
       const flattenedData = await props.data.flatMap((e) => e.value);
@@ -89,44 +86,52 @@ export default function StockChart(props) {
 
     if (props.data && props.data.length > 0) {
       getSeries().then((flattenedData) => {
-        console.log(flattenedData);
-        const samsungData = [
-          76000, 77200, 76900, 77200, 77500, 77800, 78000, 77000, 77000, 79000,
-          78000, 77500, 78000, 77500, 78000, 77500, 78000, 77500,
-        ];
         setSeries([
           {
-            name: "불닭",
+            name: keyword,
             data: flattenedData,
             yAxisIndex: 0,
           },
           {
-            name: "삼성전자",
-            data: samsungData,
+            name: props.curCompanyName,
+            data: [...props.curCompanyPrice],
             yAxisIndex: 1,
           },
         ]);
-      });
 
-      // x축 카테고리 설정
-      setOptions((prevOptions) => ({
-        ...prevOptions,
-        xaxis: {
-          type: "datetime",
-        },
-      }));
+        const categories = props.data.map((e) => {
+          let date = new Date(e.formattedTime);
+          let day = date.getDate();
+          let month = date.getMonth() + 1;
+          return `${month}/${day}`;
+        });
+
+        setOptions((prevOptions) => ({
+          ...prevOptions,
+          xaxis: {
+            type: "dateTime",
+            tickAmount: 6,
+            categories: categories,
+            labels: {
+              rotate: 0,
+            },
+          },
+        }));
+      });
     }
-  }, [props.data]);
+  }, [props.data, props.curCompanyPrice]);
 
   return (
-    <div className="mixed-chart">
+    <StyledStockParentDiv>
       <Chart
         options={options}
         series={series}
         type="area"
-        width="650"
-        height="450"
+        width="790"
+        height="400"
+        border-radius="10px"
       />
-    </div>
+      <StockInfoDetail info={props.stockDetails} curCompanyCode={props.curCompanyCode} curCompanyName={props.curCompanyName}></StockInfoDetail>
+    </StyledStockParentDiv>
   );
 }

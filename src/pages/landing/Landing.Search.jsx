@@ -47,14 +47,12 @@ export default function LandingSearch() {
 
   const onChangeText = (e) => {
     const { value } = e.target;
-    dispatch(searchKeyword(value));
     setText(value);
     if (e.target.value.length > 0) setFocus(true);
   };
 
   const onClickKeyword = (text) => () => {
     setText(text);
-    dispatch(searchKeyword(text));
     inputRef.current.focus();
   };
 
@@ -62,6 +60,7 @@ export default function LandingSearch() {
     if (e.key === "Enter") {
       setText("");
       setFocus(false);
+      dispatch(searchKeyword(text));
       navigate("/main");
     }
   };
@@ -82,7 +81,7 @@ export default function LandingSearch() {
       <StyledSearchInputDiv>
         <StyledSearchInput
           type="text"
-          value={keyword}
+          value={text}
           placeholder={focus ? "" : "Search"}
           onChange={onChangeText}
           onFocus={handleFocus}

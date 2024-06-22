@@ -32,30 +32,30 @@ export default function Sidebar() {
       </div>
       <StyledSidebarInfoDiv>
         <div>
-          <StyledSidebarItemDiv active={isActive("/main")}>
-            <Link to="/main">
+          <Link to="/main">
+            <StyledSidebarItemDiv active={isActive("/main")}>
               <StyledHomeIcon />
               <span>한눈에 보기</span>
-            </Link>
-          </StyledSidebarItemDiv>
-          <StyledSidebarItemDiv active={isActive("/main/social")}>
-            <Link to="/main/social">
+            </StyledSidebarItemDiv>
+          </Link>
+          <Link to="/main/social">
+            <StyledSidebarItemDiv active={isActive("/main/social")}>
               <StyledAnalyzeIcon />
               <span>소셜 분석</span>
-            </Link>
-          </StyledSidebarItemDiv>
-          <StyledSidebarItemDiv active={isActive("/main/stock")}>
-            <Link to="/main/stock">
+            </StyledSidebarItemDiv>
+          </Link>
+          <Link to="/main/stock">
+            <StyledSidebarItemDiv active={isActive("/main/stock")}>
               <StyledRelateIcon />
               <span>연관 주식</span>
-            </Link>
-          </StyledSidebarItemDiv>
-          <StyledSidebarItemDiv active={isActive("/main/keyword")}>
-            <Link to="/main/keyword">
+            </StyledSidebarItemDiv>
+          </Link>
+          <Link to="/main/keyword">
+            <StyledSidebarItemDiv active={isActive("/main/keyword")}>
               <StyledKeywordIcon />
               <span>연관 키워드</span>
-            </Link>
-          </StyledSidebarItemDiv>
+            </StyledSidebarItemDiv>
+          </Link>
         </div>
         <div
           style={{

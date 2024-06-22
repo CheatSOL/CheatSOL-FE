@@ -10,6 +10,7 @@ import {
 import { weekTimeAgo } from "~/utils/utils";
 import insta from "~/images/instagram.png";
 import { StyledBlurDiv } from "./instagram.data.style";
+import InstagramIndexes from "../../keywordGraph/instagramGraph/InstagramIndexes";
 
 export default function InstagramData() {
   //!! 샘플 데이터입니다.
@@ -58,8 +59,9 @@ export default function InstagramData() {
   return (
     <StyledNewsDiv>
       <StyledNewsKeyword>
-        <span>"불닭"</span>이 이렇게 언급됐어요
+        <span>"kpop"</span>이 이렇게 언급됐어요
       </StyledNewsKeyword>
+      <InstagramIndexes></InstagramIndexes>
       <StyledNewsItemParentDiv>
         {data.map((e, index) => (
           <>

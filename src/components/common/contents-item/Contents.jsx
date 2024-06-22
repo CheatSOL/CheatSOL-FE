@@ -1,58 +1,94 @@
 import React from "react";
-import { StyledContentsDiv, StyledContentsTitle, StyledContentsTitleGroup, StyledContentsSubTitle, StyledContentsMiniTitle } from "./Contents.style";
-import { StyledContentsTag } from "./Contents.style";
+import axios from "axios";
+import { useQuery } from "react-query";
+
+import {
+  StyledContentsDiv,
+  StyledContentsTitle,
+  StyledContentsTitleGroup,
+  StyledContentsSubTitle,
+  StyledContentsMiniTitle,
+  StyledContentsTag,
+} from "./Contents.style";
+import { formatCurrency } from "../../../lib/utils/utils";
+
+const fetchDailyPrice = async (symbol) => {
+  const result = await axios.get("/api/daily-price", {
+    params: {
+      symbol: symbol,
+      period: 'D'
+    },
+  });
+  return result.data;
+};
 
 export default function Contents(props) {
-  // DB 모든 회사의 종목코드마다 map 돌려서 요청해서 그 안에서 컴포넌트 불러와주면 될 것 같다
-  // !! sample data -> 실제 데이터로 추후 변경해주세요.
-  const stock_sample_code = "005930"
-  const stock_sample_name = "삼성전자"
-  const stock_sample_price = 597000
-  const stock_sample_data = ["1",16000,2.75] 
-  const stock_sample_tag = [610000, 640000, 103100]
+  const { data, isLoading, error } = useQuery(
+    ["dailyPrice", props.item.code],
+    () => fetchDailyPrice(props.item.code),
+    {
+      refetchInterval: 10000,
+    }
+  );
 
-  const stck_cd = stock_sample_code //종목코드
-  const stck_name = stock_sample_name //회사이름
-  const stck_prpr = stock_sample_price //시세(현재가)
-  // !! 전일 대비 부호가 1이면 +, 2이면 -로 임의 설정해뒀습니다. API 구현 후 수정해주세요.
-  const prdy_vrss_sign = stock_sample_data[0] === "1"? "+" : "-" //전일 대비
-  const prdy_vrss_sign_ic = stock_sample_data[0] === "1"? "~/images/up-icon.png" : "~/images/down-icon.png" 
-  const prdy_vrss = stock_sample_data[1] //전일 대비 부호 
-  const prdy_ctrt = stock_sample_data[2] //전일 대비율
-  const stck_oprc = stock_sample_tag[0] //시가(하루의 첫거래가)
-  const stck_dryy_hgpr = stock_sample_tag[1] //1년 최고
-  const stck_dryy_lwpr = stock_sample_tag[2] //1년 최저
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-  // contentsdiv
-  // -> contentstitlegroup
-  // --> contentstitle & subtitle & minititle
-  // -> contentstaggroup
-  // --> contentstag
+  if (error) {
+    return <div>Error fetching data</div>;
+  }
+
+  const allData = data;
+  const currentData = data.output[0];
+  const isPriceIncrease = currentData.prdy_vrss_sign === "2";
+  const priceChangeIcon = isPriceIncrease ? (
+    <img src="/assets/images/up-icon.png" alt="Increase" />
+  ) : (
+    <img src="/assets/images/down-icon.png" alt="Decrease" />
+  );
+
+  const onClickItem = (e) => {
+    if (!isLoading) {
+      props.currentCompany(allData, props.item.name, props.id, props.item.code);
+    }
+  };
+
   return (
-          // !! div에 key값 붙여주세요. (redux 구현 후)
-          <StyledContentsDiv
-          width={props.width}
-          height={props.height}>
-            <StyledContentsTitleGroup>
-              <div>
-              <StyledContentsTitle>
-              {stck_name}
-              </StyledContentsTitle>
-              <StyledContentsSubTitle>
-                {stck_prpr} krw
-              </StyledContentsSubTitle>
-              </div>
-              <StyledContentsMiniTitle>
-                <p>{prdy_vrss_sign}{prdy_vrss}</p>
-                <p>({prdy_ctrt}%)</p>
-                <img src="/assets/images/up-icon.png"></img>
-              </StyledContentsMiniTitle>
-            </StyledContentsTitleGroup>
-            <StyledContentsTag>
-            <div className="price-box">시가 <p>{stck_oprc}</p></div>
-            <div className="price-box">1년 최고 {stck_dryy_hgpr}</div>
-            <div className="price-box">1년 최저 {stck_dryy_lwpr}</div>
-            </StyledContentsTag>
-          </StyledContentsDiv>
-        )
+    <StyledContentsDiv
+      width={props.width}
+      height={props.height}
+      isCheck={props.curCompanyId === props.id}
+      onClick={onClickItem}
+    >
+      <StyledContentsTitleGroup>
+        <div>
+          <StyledContentsTitle>{props.item.name}</StyledContentsTitle>
+          <StyledContentsSubTitle>
+            {formatCurrency(Number(currentData.stck_oprc) + Number(currentData.prdy_vrss))} krw
+          </StyledContentsSubTitle>
+        </div>
+        <StyledContentsMiniTitle isPriceIncrease={isPriceIncrease}>
+          <span>
+            {isPriceIncrease ? "+" : ""}
+            {formatCurrency(currentData.prdy_vrss)}원
+          </span>
+          <span>({currentData.prdy_ctrt}%) 오늘</span>
+          {priceChangeIcon}
+        </StyledContentsMiniTitle>
+      </StyledContentsTitleGroup>
+      <StyledContentsTag>
+        <div style={{
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: "rgba(0,0,0,0.04)",
+            padding: "10px",
+            borderRadius: "10px",
+            marginTop: "3px",
+        }}>
+          시가 <span style={{marginLeft:"5px"}}>{currentData.stck_oprc}</span>
+        </div>
+      </StyledContentsTag>
+    </StyledContentsDiv>
+  );
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { useParams } from 'react-router-dom';
 import { 
   NewsListContainer, 
   NewsItem, 
@@ -12,15 +12,13 @@ import {
   StyledLink
 } from './Newstab.style';
 
-export default function Newstab() {
+export default function Newstab({id}) {
   const [news, setNews] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/stocknews?symbol=000660'); // 현재 삼성전자로 하드코딩
-        console.log(response.data);
-        const flattenedNews = response.data.flat(); // Flattening the nested arrays
+        const response = await axios.get(`/api/stocknews?symbol=${id}`); 
+        const flattenedNews = response.data.flat(); 
         setNews(flattenedNews);
       } catch (error) {
         console.error('Error fetching the news:', error);
