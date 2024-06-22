@@ -130,7 +130,9 @@ const sample_data = [
 ];
 
 export default function NaverNews(props) {
-  const data = props.data.data || sample_data;
+  console.log(sample_data);
+
+  const data = props.data ? props.data.data : sample_data;
 
   // Sort data by documentDate in descending order
   // const sortedData = data.sort(

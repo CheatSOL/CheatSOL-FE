@@ -168,11 +168,11 @@ export default function RelatedKeyword() {
         }
     );
 
-    if (isLoadingKeyword || isLoadingNews) {
+    if (isLoadingKeyword) {
         return <div>Loading related keywords...</div>;
     }
 
-    if (errorKeyword || errorNews) {
+    if (errorKeyword) {
         return <div>Error loading related keywords: {errorKeyword.message}</div>;
     }
     
@@ -238,7 +238,7 @@ export default function RelatedKeyword() {
                              </StyledGraphBox>
                         <StyledNaverbox animate={clickedbubble}>
                                 <StyledGraphKeyword>
-                                <span>연관 기사들{relatedNewsData.data.length}</span>                           
+                                <span>연관 기사들</span>                           
                                 </StyledGraphKeyword>   
                             {/* <NaverNews data={relatedNewsData} width={"680px"} Hfontsize={"0.8rem"} Cfontsize={"0.7rem"}></NaverNews> */}
                             <RelatedNews params2={params2}></RelatedNews>
