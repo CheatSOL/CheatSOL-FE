@@ -1,6 +1,6 @@
 import { useState,useRef,useEffect } from "react";
 import Bubble from "../bubble/KeywordBubble";
-import NaverNews from "../news/naver-news/Naver.news";
+import RelatedNews from "./RelatedNews";
 import RelatedKeywordChart from "./RelatedKeyword.chart";
 import { StyledHeadTitleBox, StyledTitleBox, StyledRelatedKeyword, StyledGraphBox, StyledNaverbox, StyledNewsContainer, StyledNewsTab, StyledRelatedKeywordContainer, StyledBubbleContainer, StyledCircleContainer, StyledCircleItem, StyledMiniCircleItem, StyledKeyCircleItem, StyledGraphKeyword } from "./RelatedKeyword.style";
 import sns from "~/images/sns_mark.png"
@@ -240,7 +240,8 @@ export default function RelatedKeyword() {
                                 <StyledGraphKeyword>
                                 <span>연관 기사들{relatedNewsData.data.length}</span>                           
                                 </StyledGraphKeyword>   
-                            <NaverNews data={relatedNewsData} width={"680px"} Hfontsize={"0.8rem"} Cfontsize={"0.7rem"}></NaverNews>
+                            {/* <NaverNews data={relatedNewsData} width={"680px"} Hfontsize={"0.8rem"} Cfontsize={"0.7rem"}></NaverNews> */}
+                            <RelatedNews params2={params2}></RelatedNews>
                         </StyledNaverbox>
                         </StyledNewsTab> 
                     )}
