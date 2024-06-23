@@ -35,7 +35,7 @@ export const ChartSection = styled.div`
     }
 
     .chart-image {
-        margin-right:80px;
+        margin-right:40px;
         display: flex;
         justify-content: center;
         align-items: center;
