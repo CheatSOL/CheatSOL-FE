@@ -51,7 +51,7 @@ function timeAgo(dateString) {
 
 export default function RelatedNews(props) {
     const { data: relatedNewsData, isLoading: isLoadingNews, error: errorNews } = useQuery(
-        "relatednewsData",
+      ["relatednewsData", props.params2],
         () => relatedNewsAPI(props.params2),
         {
             staleTime: Infinity,
@@ -98,7 +98,7 @@ export default function RelatedNews(props) {
           Array.from({ length: 5 }).map((e,i) => (
             <StyledNewsItemDiv key={i}>
                 <Skeleton
-                  width={610}
+                  width={580}
                   height={50}
                   style={{ margin: "0.8rem", padding: "10px", 
                     borderRadius: "10px"}}

@@ -159,14 +159,6 @@ export default function RelatedKeyword() {
     }        
     );
 
-    const { data: relatedNewsData, isLoading: isLoadingNews, error: errorNews } = useQuery(
-        "relatednewsData",
-        () => relatedNewsAPI(params2),
-        {
-            staleTime: Infinity,
-            enabled: !!currentword // Only run the query if relatedNewsParams is set
-        }
-    );
 
     if (isLoadingKeyword) {
         return <div>Loading related keywords...</div>;
@@ -234,7 +226,7 @@ export default function RelatedKeyword() {
                                 <span>{keyword}과 {currentword}의 검색량을 비교해보세요. </span>
                             </StyledTitleBox>
                                 <StyledGraphBox animate={clickedbubble}>                                
-                                <RelatedKeywordChart data1={keyword_data} data2={relatedkeyword_data}></RelatedKeywordChart>
+                                <RelatedKeywordChart keyword={keyword} related={currentword} ></RelatedKeywordChart>
                              </StyledGraphBox>
                         <StyledNaverbox animate={clickedbubble}>
                                 <StyledGraphKeyword>
