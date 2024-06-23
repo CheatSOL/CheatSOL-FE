@@ -7,6 +7,7 @@ import sns from "~/images/sns_mark.png"
 import { relatedKeywordAPI } from "~/apis/RelatedKeyword.js"
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
+import Loading from "../Loading/Loading";
 
 export default function RelatedKeyword() {
     const scrollRef = useRef(null);
@@ -80,7 +81,15 @@ export default function RelatedKeyword() {
 
 
     if (isLoadingKeyword) {
-        return <div>Loading related keywords...</div>;
+        return (
+            <StyledRelatedKeywordContainer>  
+        <StyledHeadTitleBox className="related-text-box" animate={clickedbubble}>
+                            <img src={sns} width={"50px"} height={"auto"}></img>                                 
+                                <span>{keyword}과 같이 언급되는 단어들이에요. </span>
+            </StyledHeadTitleBox>  
+            <Loading></Loading>
+            </StyledRelatedKeywordContainer>
+        )
     }
 
     if (errorKeyword) {
