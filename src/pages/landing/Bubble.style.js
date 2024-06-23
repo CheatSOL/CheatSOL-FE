@@ -15,15 +15,16 @@ export const StyledBubble = styled.div`
   height: ${(props) => props.height};
   border-radius: 50%;
   position: absolute;
+  border: 1px solid rgba(0,0,0,0.01);
   top: ${(props) => props.top};
   left: ${(props) => props.left};
   background: linear-gradient(
     to top right,
-    rgba(124, 224, 255, 0.32),
+    rgba(124, 224, 255, 0.52),
     rgba(124, 224, 255, 0.06),
     rgba(235, 231, 255, 1)
   );
   opacity: 100%;
   animation: ${animate} ${(props) => props.time} ease-in-out infinite alternate;
-  cursor: pointer;
+  box-shadow: 0px 10px 10px 0px rgba(49, 136, 164, 0.05);
 `;

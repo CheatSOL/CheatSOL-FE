@@ -11,6 +11,8 @@ import {
   StyledKeywordsDiv,
   StyledKeyword,
   HighlightedText,
+  StyledLandingDiv,
+  StyledCenterDiv,
 } from "./Landing.Search.style";
 import { useNavigate } from "react-router-dom";
 
@@ -74,34 +76,38 @@ export default function LandingSearch() {
   };
 
   return (
-    <StyledSearchDiv>
+    <StyledLandingDiv>
+      <StyledCenterDiv>
       <StyledSearchLogoImgDiv>
-        <img src="/assets/images/logo.png" alt="Logo" />
+        <img src="/assets/images/logo2.png" alt="Logo" />
       </StyledSearchLogoImgDiv>
-      <StyledSearchInputDiv>
-        <StyledSearchInput
-          type="text"
-          value={text}
-          placeholder={focus ? "" : "Search"}
-          onChange={onChangeText}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          focus={focus}
-          onKeyDown={onKeyDownText}
-          ref={inputRef}
-        />
-        <StyledSearchIcon visible={!focus && text.length === 0} />
-      </StyledSearchInputDiv>
-      <StyledKeywordsDiv>
-        <div>연관 검색어</div>
-        <StyledKeywordsParentDiv>
-          {keywords.map((keyword, index) => (
-            <StyledKeyword key={index} onClick={onClickKeyword(keyword)}>
-              <Highlight text={keyword} highlight="신한" />
-            </StyledKeyword>
-          ))}
-        </StyledKeywordsParentDiv>
-      </StyledKeywordsDiv>
+      <StyledSearchDiv>
+        <StyledSearchInputDiv>
+          <StyledSearchInput
+            type="text"
+            value={text}
+            placeholder={focus ? "" : "Search"}
+            onChange={onChangeText}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            focus={focus}
+            onKeyDown={onKeyDownText}
+            ref={inputRef}
+          />
+          <StyledSearchIcon visible={!focus && text.length === 0} />
+          <StyledKeywordsDiv>
+          <div>연관 검색어</div>
+          <StyledKeywordsParentDiv>
+            {keywords.map((keyword, index) => (
+              <StyledKeyword key={index} onClick={onClickKeyword(keyword)}>
+                <Highlight text={keyword} highlight="신한" />
+              </StyledKeyword>
+            ))}
+          </StyledKeywordsParentDiv>
+        </StyledKeywordsDiv>
+        </StyledSearchInputDiv>      
     </StyledSearchDiv>
+    </StyledCenterDiv>
+  </StyledLandingDiv>
   );
 }
