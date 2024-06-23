@@ -20,8 +20,8 @@ export const StyledSearchDiv = styled.div`
   flex-grow: 4;
   width: 100%;
   height: 100%;
-  padding-bottom: 30px;
-  border-radius: 40px;
+  padding: 30px;
+  border-radius: 70px;
   border: 3px solid rgba(255, 255, 255, 0.1);
   background-color: rgba(255, 255, 255, 0.35);
   box-shadow: 0px 0px 10px 10px rgba(49, 136, 164, 0.03);
@@ -44,7 +44,6 @@ export const StyledSearchLogoImgDiv = styled.div`
 `;
 
 export const StyledSearchInputDiv = styled.div`
-  width: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
