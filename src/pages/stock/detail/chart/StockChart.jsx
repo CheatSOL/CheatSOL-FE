@@ -2,33 +2,53 @@ import React, { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import axios from 'axios';
 import Nav from 'react-bootstrap/Nav';
-
-export const StockChart = () => {
+import {StyledInput, FlexContainer, Label, CustomTabs} from './StockChart.style';
+const getBusinessDaysAgo = (days) => {
+  const today = new Date();
+  let count = 0;
+  while (count < days) {
+    today.setDate(today.getDate() - 1);
+    if (today.getDay() !== 0 && today.getDay() !== 6) { // Skip Sundays and Saturdays
+      count++;
+    }
+  }
+  return today.toISOString().split('T')[0];
+};
+export const StockChart = ({symbol}) => {
+  const today = new Date();
+  const startDateBusinessDaysAgo = getBusinessDaysAgo(85);
+  const [startDate, setStartDate] = useState(startDateBusinessDaysAgo);
+  const [endDate, setEndDate] = useState(today.toISOString().split('T')[0]);
   const [activeTab, setActiveTab] = useState('D'); // Default to 'day' tab
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-    fetchChartData(activeTab); // Fetch initial chart data based on active tab
-  }, [activeTab]);
+    fetchChartData(formatDate(startDate), formatDate(endDate), activeTab); // Fetch initial chart data based on active tab
+  },[activeTab, endDate, startDate]);
 
-  const fetchChartData = async (period) => {
-    let symbol = '005930'; // Replace with your symbol if it's dynamic
-    let apiUrl = `/api/daily-price?symbol=${symbol}&period=${period}`;
+  const fetchChartData = async (startDate, endDate, period) => {
+    let apiUrl = `/api/period-price?symbol=${symbol}&startDate=${startDate}&endDate=${endDate}&period=${period}`;
 
     try {
       const response = await axios.get(apiUrl);
-      console.log(response.data.output); // Log the fetched data
-      setChartData(response.data.output); // Update state with fetched data
+     setChartData(response.data); 
     } catch (error) {
       console.error('Error fetching chart data:', error);
     }
   };
 
   const transformDataForChart = (data) => {
-    return data.map(item => ({
-      x: new Date(item.stck_bsop_date.slice(0, 4), parseInt(item.stck_bsop_date.slice(4, 6)) - 1, item.stck_bsop_date.slice(6, 8)).getTime(), // Convert date to timestamp
-      y: [parseFloat(item.stck_oprc), parseFloat(item.stck_hgpr), parseFloat(item.stck_lwpr), parseFloat(item.stck_clpr)]
-    }));
+    return data.map(item => {
+      // item.stck_bsop_date가 undefined가 아닌지 확인
+      if (!item.stck_bsop_date) {
+        console.error('stck_bsop_date is undefined for item:', item);
+        return null; // null을 반환하여 이 항목을 무시하도록 설정
+      }
+      return {
+        x: new Date(item.stck_bsop_date.slice(0, 4), parseInt(item.stck_bsop_date.slice(4, 6)) - 1, item.stck_bsop_date.slice(6, 8)).getTime(), // Convert date to timestamp
+        y: [parseFloat(item.stck_oprc), parseFloat(item.stck_hgpr), parseFloat(item.stck_lwpr), parseFloat(item.stck_clpr)]
+      };
+    }).filter(item => item !== null); // null인 항목을 제거
   };
 
   const options = {
@@ -56,30 +76,65 @@ export const StockChart = () => {
   ];
 
   
-
+  const handleStartDateChange = (e) => setStartDate(e.target.value);
+  const handleEndDateChange = (e) => setEndDate(e.target.value);
   const handleTabChange = (eventKey) => {
     setActiveTab(eventKey);
+  };
+  const formatDate = (dateString) => {
+    const dateParts = dateString.split('-');
+    return dateParts.join('');
   };
 
   return (
     <div id="chart">
      
-      <Nav justify variant="underline" activeKey={activeTab} onSelect={handleTabChange}>
+     <FlexContainer>
+      <span >
+        <Label>시작 날짜:</Label>
+        <StyledInput 
+          type="date" 
+          value={startDate} 
+          onChange={handleStartDateChange} 
+          min={startDateBusinessDaysAgo}
+          max={today.toISOString().split('T')[0]}
+        />
+        </span>
+        <span>
+        <Label>종료 날짜:</Label>
+        <StyledInput 
+          type="date" 
+          value={endDate} 
+          onChange={handleEndDateChange}
+          min={startDate}
+          max={today.toISOString().split('T')[0]}
+        />
+        
+        </span>
+      
+      
+      </FlexContainer>
+      <div style={{fontSize:"14px", display:"flex", justifyContent:"end", marginBottom:"35px"}}><i class="bi bi-info-circle" style={{marginRight:"5px"}}></i>일별 / 주별 / 월별 / 연별로 현재 날짜로부터 최대 100개의 정보를 제공합니다.</div>
+
+      <CustomTabs justify variant='tabs' activeKey={activeTab} onSelect={handleTabChange}>
         <Nav.Item>
-          <Nav.Link eventKey="D">일별</Nav.Link>
+          <Nav.Link  eventKey="D">일별</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="W">주별</Nav.Link>
+          <Nav.Link  eventKey="W">주별</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="M">월별</Nav.Link>
         </Nav.Item>
-      </Nav>
+        <Nav.Item>
+          <Nav.Link eventKey="Y">연별</Nav.Link>
+        </Nav.Item>
+      </CustomTabs>
       <Chart
         options={options}
         series={series}
         type="candlestick"
-        height={350}
+        height={400}
         
       />
     </div>

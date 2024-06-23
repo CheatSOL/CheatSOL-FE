@@ -23,8 +23,9 @@ export const ChartSection = styled.div`
     justify-content: center;
     height: 230px;
     display: flex;
-    gap:250px;
+    gap:115px;
     align-items: center;
+    position:relative;
     
     .header-content {
         display: flex;
@@ -34,6 +35,7 @@ export const ChartSection = styled.div`
     }
 
     .chart-image {
+        margin-right:40px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -83,4 +85,18 @@ export const PriceContent=styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+`
+export const LinkTo=styled.span`
+  position:absolute;
+  right:0;
+  bottom:0;
+  margin-bottom:35px;
+  margin-right:20px;
+  border-radius:10px;
+  padding:5px 10px;
+  cursor:pointer;
+  &:hover {
+    color: #077DF3; /* Change this to the desired hover color */
+  }
+
 `
