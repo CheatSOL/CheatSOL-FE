@@ -1,41 +1,21 @@
-import { useState,useRef,useEffect } from "react";
+import { useState,useRef } from "react";
 import Bubble from "../bubble/KeywordBubble";
 import RelatedNews from "./RelatedNews";
 import RelatedKeywordChart from "./RelatedKeyword.chart";
-import { StyledHeadTitleBox, StyledTitleBox, StyledRelatedKeyword, StyledGraphBox, StyledNaverbox, StyledNewsContainer, StyledNewsTab, StyledRelatedKeywordContainer, StyledBubbleContainer, StyledCircleContainer, StyledCircleItem, StyledMiniCircleItem, StyledKeyCircleItem, StyledGraphKeyword } from "./RelatedKeyword.style";
+import { StyledHeadTitleBox, StyledTitleBox, StyledGraphBox, StyledNaverbox, StyledNewsContainer, StyledNewsTab, StyledRelatedKeywordContainer, StyledBubbleContainer, StyledCircleContainer, StyledCircleItem, StyledMiniCircleItem, StyledKeyCircleItem, StyledGraphKeyword } from "./RelatedKeyword.style";
 import sns from "~/images/sns_mark.png"
-import { relatedKeywordAPI, relatedNewsAPI } from "~/apis/RelatedKeyword.js"
+import { relatedKeywordAPI } from "~/apis/RelatedKeyword.js"
 import { useQuery } from "react-query";
+import { useSelector } from "react-redux";
 
 export default function RelatedKeyword() {
     const scrollRef = useRef(null);
+    const keyword = useSelector((state) => state.keyword.keyword);
 
     const params1 = {
-        keyword:"HBM",
+        keyword: keyword,
     };   
-        
-  // !! sample data -> 실제 데이터로 추후 변경해주세요.
-  const keyword_sample = "불닭";
-  const related_big_keywords_sample = [
-    "맛집",
-    "카페",
-    "삼양",
-    "아이스크림",
-    "오랜만",
-    "인스타그램",
-  ];
-  const related_sml_keywords_sample = [
-    "불닭",
-    "불닭",
-    "불닭",
-    "불닭",
-    "불닭",
-    "불닭",
-  ];
-
-  //data
-  const keyword = params1.keyword;
-
+  
   //버블 원형 배치를 위한 코드
   const big_radius = 200; // 반지름
   const sml_radius = 130;
@@ -85,67 +65,6 @@ export default function RelatedKeyword() {
         
     }
 
-
-    // !! googletrends sample data => 추후 api 요청해서 받아오는 걸로 변경
-    const keyword_data = [
-        [
-          '2024-04-20', '2024-04-21', '2024-04-22', '2024-04-23',
-          '2024-04-24', '2024-04-25', '2024-04-26', '2024-04-27',
-          '2024-04-28', '2024-04-29', '2024-04-30', '2024-05-01',
-          '2024-05-02', '2024-05-03', '2024-05-04', '2024-05-05',
-          '2024-05-06', '2024-05-07', '2024-05-08', '2024-05-09',
-          '2024-05-10', '2024-05-11', '2024-05-12', '2024-05-13',
-          '2024-05-14', '2024-05-15', '2024-05-16', '2024-05-17',
-          '2024-05-18', '2024-05-19', '2024-05-20', '2024-05-21',
-          '2024-05-22', '2024-05-23', '2024-05-24', '2024-05-25',
-          '2024-05-26', '2024-05-27', '2024-05-28', '2024-05-29',
-          '2024-05-30', '2024-05-31', '2024-06-01', '2024-06-02',
-          '2024-06-03', '2024-06-04', '2024-06-05', '2024-06-06',
-          '2024-06-07', '2024-06-08', '2024-06-09', '2024-06-10',
-          '2024-06-11', '2024-06-12', '2024-06-13', '2024-06-14',
-          '2024-06-15', '2024-06-16', '2024-06-17', '2024-06-18',
-          '2024-06-19', '2024-06-20'
-        ],
-        [
-           56, 54, 67, 71, 67, 65, 61, 64, 62, 72, 62, 60,
-           65, 68, 66, 78, 68, 69, 61, 63, 67, 74, 76, 74,
-          100, 87, 70, 85, 87, 84, 96, 81, 64, 77, 75, 77,
-           79, 66, 68, 60, 71, 64, 77, 70, 87, 71, 76, 68,
-           75, 72, 76, 75, 72, 78, 76, 74, 87, 78, 82, 80,
-           73, 32
-        ]
-      ]
-
-      const relatedkeyword_data = [
-        [
-          '2024-04-20', '2024-04-21', '2024-04-22', '2024-04-23',
-          '2024-04-24', '2024-04-25', '2024-04-26', '2024-04-27',
-          '2024-04-28', '2024-04-29', '2024-04-30', '2024-05-01',
-          '2024-05-02', '2024-05-03', '2024-05-04', '2024-05-05',
-          '2024-05-06', '2024-05-07', '2024-05-08', '2024-05-09',
-          '2024-05-10', '2024-05-11', '2024-05-12', '2024-05-13',
-          '2024-05-14', '2024-05-15', '2024-05-16', '2024-05-17',
-          '2024-05-18', '2024-05-19', '2024-05-20', '2024-05-21',
-          '2024-05-22', '2024-05-23', '2024-05-24', '2024-05-25',
-          '2024-05-26', '2024-05-27', '2024-05-28', '2024-05-29',
-          '2024-05-30', '2024-05-31', '2024-06-01', '2024-06-02',
-          '2024-06-03', '2024-06-04', '2024-06-05', '2024-06-06',
-          '2024-06-07', '2024-06-08', '2024-06-09', '2024-06-10',
-          '2024-06-11', '2024-06-12', '2024-06-13', '2024-06-14',
-          '2024-06-15', '2024-06-16', '2024-06-17', '2024-06-18',
-          '2024-06-19', '2024-06-20'
-        ],
-        [
-          81,  85, 70, 71, 70, 75, 76, 74, 75, 76, 76, 78,
-          68,  73, 84, 89, 75, 72, 61, 72, 74, 82, 79, 73,
-          76,  78, 71, 76, 70, 69, 79, 85, 66, 69, 72, 70,
-          80,  68, 71, 72, 63, 74, 76, 66, 70, 76, 72, 79,
-          74,  81, 79, 74, 78, 63, 69, 69, 80, 78, 72, 74,
-          74, 100
-        ]
-      ]
-
-      
     const params2 = {        
         keyword: params1.keyword,
         exWord: currentword,
@@ -198,7 +117,7 @@ export default function RelatedKeyword() {
 
 
                 })}
-                {related_sml_keywords_sample.map((item, index) => {
+                {relatedKeywordData.data.slice(6,12).map((item, index) => {
                     const angle = index * angleStep;
                     const radian = (angle * Math.PI) / 180;
                     const x = sml_radius * Math.cos(radian+Math.PI/6);
@@ -209,7 +128,7 @@ export default function RelatedKeyword() {
                      x={x} y={y} distance={mini_bubble_size} time={"1s"} delay={`${index * 0.5}s`}>
                         <Bubble id={`sml-bubble-${index}`} clickfunc={(e) => handleMiniClick(e)}
                         iscurrent={currentbubble===`sml-bubble-${index}`}
-                        opacity={opacity} content={item} width={mini_bubble_size} height={mini_bubble_size} fontsize={"1.3rem"}></Bubble>
+                        opacity={opacity} content={item.label} width={mini_bubble_size} height={mini_bubble_size} fontsize={"1.3rem"}></Bubble>
                     </StyledMiniCircleItem>
                     );
                 })}        
