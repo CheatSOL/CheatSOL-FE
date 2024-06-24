@@ -1,4 +1,4 @@
-import { useState,useRef } from "react";
+import { useState,useRef, useEffect } from "react";
 import Bubble from "../bubble/KeywordBubble";
 import RelatedNews from "./RelatedNews";
 import RelatedKeywordChart from "./RelatedKeyword.chart";
@@ -29,13 +29,19 @@ export default function RelatedKeyword() {
 
     //Click한 키워드명
      const [currentword,setCurrentword] = useState(null);
+        //keyword가 바뀌어서 연관키워드가 재요청되면, 버블에 띄워진 current word도 업데이트시키기
+        useEffect(() => {
+            setCurrentword(null);
+            setClickedBubble(false);
+            setCurrentBubble(null);
+            setShowNewsTab(false); 
+          }, [keyword]);
     //Click시 버블 줄이기
     const [clickedbubble, setClickedBubble] = useState(false);
     //Click시 버블 투명도 찐하게
     const [currentbubble, setCurrentBubble] = useState(null);
     //Click시 나머지 버블 투명도 조절
     const [opacity, setOpacity] = useState("0.5");
-    const [miniopacity, setMiniOpacity] = useState(null);
     //Click시 그래프&뉴스탭 보이기
     const [shownewstab, setShowNewsTab] = useState(false);
     //Click하면 수행되는 함수
@@ -72,7 +78,7 @@ export default function RelatedKeyword() {
     };
 
     const { data: relatedKeywordData, isLoading: isLoadingKeyword, error: errorKeyword } = useQuery(
-    "relatedkeywordData",
+    ["relatedkeywordData",keyword],
     () => relatedKeywordAPI(params1),
     {
         staleTime: Infinity,            
