@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 export const StyledNewsDiv = styled.div`
-  width: calc(100% - 600px);
+  width: calc(100% - 700px);
   height: 470px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 15px;
+  padding: 20px;
   padding-top: 0px;
   position: relative;
 `;
@@ -28,6 +28,7 @@ export const StyledBlurDiv = styled.div`
   background: linear-gradient(to top, transparent, 0%, white, 50%, transparent);
 `;
 export const StyledNewsItemPatentDiv = styled.div`
+  width: 100%;
   height: 100%;
   overflow-y: scroll;
   margin-bottom: 0px;
@@ -36,7 +37,7 @@ export const StyledNewsItemPatentDiv = styled.div`
 export const StyledNewsItemDiv = styled.div`
   width: 100%;
   background-color: rgba(0, 0, 0, 0.02);
-  padding: 10px;
+  padding: 20px;
 
   border-radius: 10px;
   margin-bottom: 10px;
@@ -59,4 +60,14 @@ export const StyledNewsItemHeaderDiv = styled.div`
   & span:nth-child(2) {
     margin-left: 10px;
   }
+`;
+export const StyledContentsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  background-color: white;
 `;
