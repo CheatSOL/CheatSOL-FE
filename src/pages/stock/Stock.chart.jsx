@@ -3,16 +3,22 @@ import Chart from "react-apexcharts";
 import { useSelector } from "react-redux";
 import StockInfoDetail from "./StockInfoDetail";
 import { StyledStockParentDiv } from "./Stock.chart.style";
+
 export default function StockChart(props) {
   const keyword = useSelector((state) => state.keyword.keyword);
-  const [options, setOptions] = useState({
+  const darkMode = useSelector((state) => state.theme.darkMode);
+
+  const getInitialOptions = (darkMode) => ({
     chart: {
       id: "basic-area",
       toolbar: {
         show: false,
       },
-      background: "#fff",
+      background: darkMode ? "#333" : "#fff",
       stacked: false,
+    },
+    theme: {
+      mode: darkMode ? "dark" : "light",
     },
     xaxis: {
       categories: [],
@@ -20,6 +26,9 @@ export default function StockChart(props) {
       tickAmount: 6,
       labels: {
         show: true,
+        style: {
+          colors: darkMode ? "#fff" : "#333",
+        },
       },
       axisBorder: {
         show: false,
@@ -48,6 +57,9 @@ export default function StockChart(props) {
         labels: {
           show: true,
           formatter: (value) => value.toFixed(0),
+          style: {
+            colors: darkMode ? "#fff" : "#333",
+          },
         },
       },
       {
@@ -55,15 +67,21 @@ export default function StockChart(props) {
         labels: {
           show: true,
           formatter: (value) => value.toFixed(0),
+          style: {
+            colors: darkMode ? "#fff" : "#333",
+          },
         },
       },
     ],
     tooltip: {
       shared: true,
       intersect: false,
+      theme: darkMode ? "dark" : "light",
     },
     colors: ["rgba(236, 75, 54, 0.9)", "rgba(168, 232, 249, 0.9)"],
   });
+
+  const [options, setOptions] = useState(getInitialOptions(darkMode));
 
   const [series, setSeries] = useState([
     {
@@ -109,29 +127,32 @@ export default function StockChart(props) {
         setOptions((prevOptions) => ({
           ...prevOptions,
           xaxis: {
-            type: "dateTime",
-            tickAmount: 6,
+            ...prevOptions.xaxis,
             categories: categories,
-            labels: {
-              rotate: 0,
-            },
           },
         }));
       });
     }
-  }, [props.data, props.curCompanyPrice]);
+  }, [props.data, props.curCompanyPrice, keyword]);
+
+  useEffect(() => {
+    setOptions(getInitialOptions(darkMode));
+  }, [darkMode]);
 
   return (
-    <StyledStockParentDiv>
+    <StyledStockParentDiv darkMode={darkMode}>
       <Chart
         options={options}
         series={series}
         type="area"
         width="790"
         height="400"
-        border-radius="10px"
       />
-      <StockInfoDetail info={props.stockDetails} curCompanyCode={props.curCompanyCode} curCompanyName={props.curCompanyName}></StockInfoDetail>
+      <StockInfoDetail
+        info={props.stockDetails}
+        curCompanyCode={props.curCompanyCode}
+        curCompanyName={props.curCompanyName}
+      />
     </StyledStockParentDiv>
   );
 }
