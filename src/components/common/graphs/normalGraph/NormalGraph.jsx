@@ -196,7 +196,7 @@ const sketch = (p5) => {
 
       // 막대 그래프 그리기
       for (let i = 0; i < data.length; i++) {
-        const barHeight = p5.map(data[i], 0, Math.max(...data), 0, 125);
+        const barHeight = p5.map(data[i], 0, Math.max(...data), 0, 250);
         currentBarHeight[i] = p5.lerp(0, barHeight, barProgress[i]);
         if (
           p5.mouseX >
