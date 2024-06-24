@@ -3,6 +3,7 @@ import Sidebar from "../../components/common/sidebar/Sidebar";
 import { StyledMainDiv, MainBody, MainContent } from "./Main.style";
 import RelatedStockContent from "./RelatedStockContent";
 import { useSelector } from "react-redux";
+import RelatedKeyword from "./RelatedKeyword";
 import SearchContent from "./SearchContent";
 import { useState } from "react";
 import ScrollToTopButton from "../../components/common/scroll-top-button/Scroll.top.button";
@@ -18,6 +19,7 @@ export default function MainPage() {
           <Header />
           <RelatedStockContent keyword={keyword}></RelatedStockContent>
           <SearchContent keyword={keyword}></SearchContent>
+          <RelatedKeyword keyword={keyword}></RelatedKeyword>
         </MainBody>
       </MainContent>
     </StyledMainDiv>

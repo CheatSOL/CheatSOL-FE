@@ -5,6 +5,7 @@ export const HeaderContentDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  width:100%;
 `;
 
 export const GlowIcon = styled.div`
@@ -19,7 +20,7 @@ export const GlowIcon = styled.div`
     transition: filter 0.3s ease-in-out;
 
     &:hover {
-      filter: drop-shadow(0 0 3px rgba(0, 83, 122, 0.3));
+      filter: drop-shadow(0 0 3px rgba(0, 83, 122, 0.8));
     }
   }
 `;
