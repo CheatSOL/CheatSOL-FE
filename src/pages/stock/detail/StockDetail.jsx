@@ -11,7 +11,7 @@ import Pricetab from './pricetab/Pricetab';
 import Newstab from './newstab/Newstab';
 import Header from '../../../components/common/header/Header';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ChartModal from './chart/ChartModal';
 
 export default function StockDetail() {
@@ -20,10 +20,9 @@ export default function StockDetail() {
   const [activeTab, setActiveTab] = useState('main'); 
   const [stockData, setStockData] = useState(null); 
   const [marketStatus, setMarketStatus] = useState(1);
-  const [timeoutId, setTimeoutId] = useState(null)
   const [lastPrice, setLastPrice] = useState();
   const [show, setShow] = useState(false);
-  const [ws, setWs] = useState(null);
+  const [loading, setLoading] = useState(true);
   const handleShowChart=()=>{
     setShow(true);
   }
@@ -44,6 +43,8 @@ export default function StockDetail() {
         setMarketStatus(0); // Market closed
       } catch (error) {
         console.error('API 요청 에러:', error);
+      } finally {
+        setLoading(false); // 데이터 로딩 완료 시 Loading 상태 해제
       }
     };
     if(isMarketClosed){
@@ -59,17 +60,15 @@ export default function StockDetail() {
         console.log("받은 데이터!!", data);
         setStockData(data); 
         setMarketStatus(1);
+        setLoading(false);
       };
 
       ws.onclose = function(event) {
         console.log('WebSocket 연결이 닫혔습니다.');
       };
-
-      setWs(ws);
     }
 
      return () => { 
-     
     };
   
   }, [code]);
@@ -79,6 +78,9 @@ export default function StockDetail() {
   };
 
   const renderPriceChange = () => {
+    if (loading) {
+      return <img src="/assets/images/wsloading.png" style={{width:"180px", marginLeft:"15px"}}></img>
+    }
     if (!stockData) return null;
     return (
       <PriceContent>

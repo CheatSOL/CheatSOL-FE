@@ -59,7 +59,7 @@ export default function Newstab({id}) {
           src={item.imageOriginLink}
           alt="No image."
           onError={(e) => {
-            if (e.target.src !== `/assets/images/bubbleimg.pn`) {
+            if (e.target.src !== `/assets/images/bubbleimg.png`) {
               e.target.onerror = null;
               e.target.src = `/assets/images/bubbleimg.png`;
             }
