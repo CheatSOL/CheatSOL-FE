@@ -1,12 +1,26 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
-// @keyframes 애니메이션을 별도로 정의
-const animate = keyframes`
+// 둥둥 떠다니는 애니메이션
+const float = keyframes`
   0% {
-    transform: translateY(0);
+    transform: translate(-20%, -20%) translateY(0);
+  }
+  50% {
+    transform: translate(-20%, -20%) translateY(-20px);
   }
   100% {
-    transform: translateY(-100px);
+    transform: translate(-20%, -20%) translateY(0);
+  }
+`;
+
+const pop = keyframes`
+  0% {
+    transform: translate(-20%, -20%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-20%, -20%) scale(1.5);
+    opacity: 0;
   }
 `;
 
@@ -23,7 +37,15 @@ export const StyledBubble = styled.div`
     rgba(124, 224, 255, 0.06),
     rgba(235, 231, 255, 1)
   );
-  opacity: 100%;
-  animation: ${animate} ${(props) => props.time} ease-in-out infinite alternate;
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  animation: ${(props) =>
+    props.pop
+      ? css`
+          ${pop} 0.5s ease-in-out forwards
+        `
+      : css`
+          ${float} ${(props) => props.time} ease-in-out infinite
+        `};
   cursor: pointer;
 `;

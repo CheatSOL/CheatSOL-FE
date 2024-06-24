@@ -15,6 +15,8 @@ export const StyledHeaderInput = styled.input`
   font-size: 20px;
   margin-left: 100px;
   padding-left: 20px;
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
+  color: ${(props) => (props.darkMode ? "white" : "")};
 
   &:focus {
     outline: none;
