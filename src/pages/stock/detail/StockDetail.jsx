@@ -10,6 +10,7 @@ import Newstab from './newstab/Newstab';
 import Header from '../../../components/common/header/Header';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 import ChartModal from './chart/ChartModal';
 import { ClipLoader } from "react-spinners";
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
@@ -25,6 +26,7 @@ export default function StockDetail() {
   const [marketStatus, setMarketStatus] = useState(1);
   const [lastPrice, setLastPrice] = useState();
   const [show, setShow] = useState(false);
+
   const [loading, setLoading]=useState(true);
   const navigate=useNavigate();
   const handleShowChart=()=>{
@@ -74,6 +76,7 @@ export default function StockDetail() {
         console.log('WebSocket 연결이 닫혔습니다.');
       };
     }
+
     return () => {
       if (ws) {
         ws.close();
@@ -89,6 +92,7 @@ export default function StockDetail() {
   const renderPriceChange = () => {
     if (loading) {
       return <ClipLoader/>
+
     }
     if (!stockData) return null;
     return (
