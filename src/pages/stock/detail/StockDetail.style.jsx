@@ -21,9 +21,9 @@ export const Content = styled.div`
 export const ChartSection = styled.div`
     flex: 0 0 auto; 
     justify-content: center;
-    height: 230px;
+    height: 335px;
     display: flex;
-    gap:115px;
+    gap:140px;
     align-items: center;
     position:relative;
     
@@ -35,7 +35,6 @@ export const ChartSection = styled.div`
     }
 
     .chart-image {
-        margin-right:40px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -89,14 +88,30 @@ export const PriceContent=styled.div`
 export const LinkTo=styled.span`
   position:absolute;
   right:0;
-  bottom:0;
-  margin-bottom:35px;
-  margin-right:20px;
+  top:0;
+  margin-top:30px;
+  margin-right:15px;
   border-radius:10px;
   padding:5px 10px;
   cursor:pointer;
+  color: #00537a;
   &:hover {
-    color: #077DF3; /* Change this to the desired hover color */
+    filter: drop-shadow(0 0 3px rgba(0, 83, 122, 0.8));
   }
 
 `
+
+export const GlowIcon = styled.div`
+  display: flex;
+  margin-top:15px;
+  svg {
+    width: 40px;
+    height: 40px;
+    color: #00537a;
+    transition: filter 0.3s ease-in-out;
+
+    &:hover {
+      filter: drop-shadow(0 0 3px rgba(0, 83, 122, 0.8));
+    }
+  }
+`;
