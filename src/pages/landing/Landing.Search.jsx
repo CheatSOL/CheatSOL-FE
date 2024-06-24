@@ -12,7 +12,6 @@ import {
   StyledKeyword,
   HighlightedText,
   StyledLandingDiv,
-  StyledCenterDiv,
 } from "./Landing.Search.style";
 import { useNavigate } from "react-router-dom";
 
@@ -75,18 +74,23 @@ export default function LandingSearch() {
     setFocus(false);
   };
 
+  const handleClick = () => {
+    dispatch(searchKeyword(text));
+    navigate("/main");
+  }
+
   return (
     <StyledLandingDiv>
-      <StyledCenterDiv>
-      <StyledSearchLogoImgDiv>
-        <img src="/assets/images/logo2.png" alt="Logo" />
-      </StyledSearchLogoImgDiv>
+      {/* <StyledCenterDiv> */}
       <StyledSearchDiv>
+      <StyledSearchLogoImgDiv>
+        <img src="/assets/images/logo4 (2).png" alt="Logo" />
+      </StyledSearchLogoImgDiv>
         <StyledSearchInputDiv>
           <StyledSearchInput
             type="text"
             value={text}
-            placeholder={focus ? "" : "Search"}
+            placeholder={focus ? "" : "관심있는 키워드가 입력하세요."}
             onChange={onChangeText}
             onFocus={handleFocus}
             onBlur={handleBlur}
@@ -94,9 +98,8 @@ export default function LandingSearch() {
             onKeyDown={onKeyDownText}
             ref={inputRef}
           />
-          <StyledSearchIcon visible={!focus && text.length === 0} />
+          <StyledSearchIcon visible={true} onClick={handleClick}/>
           <StyledKeywordsDiv>
-          <div>연관 검색어</div>
           <StyledKeywordsParentDiv>
             {keywords.map((keyword, index) => (
               <StyledKeyword key={index} onClick={onClickKeyword(keyword)}>
@@ -107,7 +110,7 @@ export default function LandingSearch() {
         </StyledKeywordsDiv>
         </StyledSearchInputDiv>      
     </StyledSearchDiv>
-    </StyledCenterDiv>
+    {/* </StyledCenterDiv> */}
   </StyledLandingDiv>
   );
 }

@@ -7,24 +7,15 @@ export const StyledLandingDiv = styled.div`
     align-items: center;
 `;
 
-export const StyledCenterDiv = styled.div`
-  position: relative; /* 중앙에 위치한 자식 요소를 relative로 설정 */
-  height: 40vh; /* 원하는 높이 설정 */
-  display: flex; /* Flexbox로 자식 요소들 설정 */
-  flex-direction: column;
-  justify-content: flex-end; /* 자식 요소를 수평 중앙 정렬 */
-  align-items: center; /* 자식 요소를 수직 중앙 정렬 */
-`;
 
 export const StyledSearchDiv = styled.div`
-  flex-grow: 4;
-  width: 100%;
+  width:88%;
   height: 100%;
   padding: 30px;
   border-radius: 70px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  background-color: rgba(255, 255, 255, 0.35);
-  box-shadow: 0px 0px 10px 10px rgba(49, 136, 164, 0.03);
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.36);
+  box-shadow: 0px 0px 10px 10px rgba(49, 136, 164, 0.09);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,14 +24,12 @@ export const StyledSearchDiv = styled.div`
 `;
 
 export const StyledSearchLogoImgDiv = styled.div`
-  flex-grow: 1;
   opacity: 1;
   & img {
     opacity: 1;
-    position: relative;
-    top: 29%;
   }
   z-index: 1;
+  padding: 10px;
 `;
 
 export const StyledSearchInputDiv = styled.div`
@@ -52,13 +41,15 @@ export const StyledSearchInputDiv = styled.div`
 `;
 
 export const StyledSearchInput = styled.input`
-  width: 100%;
+  width: 80%;
+  height: 58px;
   line-height: 2.8rem;
   border-radius: 50px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  padding-left: 20px;
+  border: 2px solid rgba(255,255,255, 0.1);
+  text-align: center;
   opacity: 1;
   font-size: 17px;
+  background-color: rgba(255,255,255,0.4);
 
   &::placeholder {
     padding-left: 20px;
@@ -69,9 +60,10 @@ export const StyledSearchIcon = styled(IoSearchOutline)`
   position: absolute;
   font-size: 1.4rem !important;
   color: rgba(0, 0, 0, 0.5);
-  left: 10px;
-  top: 12px;
+  right: 15%;
+  top: 8%;
   display: ${(props) => (props.visible ? "block" : "none")};
+  cursor: pointer;
 `;
 
 export const StyledKeywordsDiv = styled.div`
@@ -99,9 +91,10 @@ export const StyledKeyword = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.55);
+  border: 2px solid rgba(255,255,255, 0.1);
   border-radius: 20px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.04);
   margin: 5px 20px;
   cursor: pointer;
 `;
