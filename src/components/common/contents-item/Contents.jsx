@@ -11,18 +11,21 @@ import {
   StyledContentsTag,
 } from "./Contents.style";
 import { formatCurrency } from "../../../lib/utils/utils";
+import Skeleton from "react-loading-skeleton";
+import { useSelector } from "react-redux";
 
 const fetchDailyPrice = async (symbol) => {
   const result = await axios.get("/api/daily-price", {
     params: {
       symbol: symbol,
-      period: 'D'
+      period: "D",
     },
   });
   return result.data;
 };
 
 export default function Contents(props) {
+  const darkMode = useSelector((state) => state.theme.darkMode);
   const { data, isLoading, error } = useQuery(
     ["dailyPrice", props.item.code],
     () => fetchDailyPrice(props.item.code),
@@ -32,7 +35,13 @@ export default function Contents(props) {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <StyledContentsDiv width={"280px"} height={"180px"}>
+        <Skeleton height={20} />
+        <Skeleton height={15} />
+        <Skeleton height={15} width="80%" />
+      </StyledContentsDiv>
+    );
   }
 
   if (error) {
@@ -60,12 +69,16 @@ export default function Contents(props) {
       height={props.height}
       isCheck={props.curCompanyId === props.id}
       onClick={onClickItem}
+      darkMode={darkMode}
     >
       <StyledContentsTitleGroup>
         <div>
           <StyledContentsTitle>{props.item.name}</StyledContentsTitle>
           <StyledContentsSubTitle>
-            {formatCurrency(Number(currentData.stck_oprc) + Number(currentData.prdy_vrss))} krw
+            {formatCurrency(
+              Number(currentData.stck_oprc) + Number(currentData.prdy_vrss)
+            )}{" "}
+            krw
           </StyledContentsSubTitle>
         </div>
         <StyledContentsMiniTitle isPriceIncrease={isPriceIncrease}>
@@ -77,16 +90,10 @@ export default function Contents(props) {
           {priceChangeIcon}
         </StyledContentsMiniTitle>
       </StyledContentsTitleGroup>
-      <StyledContentsTag>
-        <div style={{
-            display: "flex",
-            alignItems: "center",
-            backgroundColor: "rgba(0,0,0,0.04)",
-            padding: "10px",
-            borderRadius: "10px",
-            marginTop: "3px",
-        }}>
-          시가 <span style={{marginLeft:"5px"}}>{currentData.stck_oprc}</span>
+      <StyledContentsTag darkMode={darkMode}>
+        <div>
+          시가{" "}
+          <span style={{ marginLeft: "5px" }}>{currentData.stck_oprc}</span>
         </div>
       </StyledContentsTag>
     </StyledContentsDiv>
