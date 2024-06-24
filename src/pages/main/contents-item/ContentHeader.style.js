@@ -5,6 +5,7 @@ export const HeaderContentDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  width:100%;
 `;
 
 export const GlowIcon = styled.div`
