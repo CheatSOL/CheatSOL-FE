@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useQuery } from "react-query";
-
 import {
   StyledContentsDiv,
   StyledContentsTitle,
@@ -30,9 +29,36 @@ export default function Contents(props) {
     ["dailyPrice", props.item.code],
     () => fetchDailyPrice(props.item.code),
     {
-      refetchInterval: 10000,
+      refetchInterval: 60000,
     }
   );
+
+  const [highlightColor, setHighlightColor] = useState("");
+  const previousPriceRef = useRef(null);
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      const currentData = data.output[0];
+      const currentPrice =
+        Number(currentData.stck_oprc) + Number(currentData.prdy_vrss);
+
+      if (previousPriceRef.current !== null) {
+        if (currentPrice > previousPriceRef.current) {
+          setHighlightColor("#E24B38");
+        } else if (currentPrice < previousPriceRef.current) {
+          setHighlightColor("#4383F2");
+        }
+      }
+
+      previousPriceRef.current = currentPrice;
+
+      const timer = setTimeout(() => {
+        setHighlightColor("");
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [data, isLoading]);
 
   if (isLoading) {
     return (
@@ -74,7 +100,12 @@ export default function Contents(props) {
       <StyledContentsTitleGroup>
         <div>
           <StyledContentsTitle>{props.item.name}</StyledContentsTitle>
-          <StyledContentsSubTitle>
+          <StyledContentsSubTitle
+            isPriceIncrease={isPriceIncrease}
+            style={{
+              color: highlightColor,
+            }}
+          >
             {formatCurrency(
               Number(currentData.stck_oprc) + Number(currentData.prdy_vrss)
             )}{" "}
