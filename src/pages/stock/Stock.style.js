@@ -8,6 +8,7 @@ export const StyledStockDiv = styled.div`
 
 export const StyledStockRightDiv = styled.div`
   background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
+  overflow-y: scroll;
 `;
 
 export const StyledStockHeaderDiv = styled.div`
