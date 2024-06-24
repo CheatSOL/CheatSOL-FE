@@ -23,7 +23,7 @@ export const ChartSection = styled.div`
     justify-content: center;
     height: 335px;
     display: flex;
-    gap:140px;
+    gap:160px;
     align-items: center;
     position:relative;
     
