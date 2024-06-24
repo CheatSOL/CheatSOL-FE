@@ -26,7 +26,7 @@ export default function StockContent(props) {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `api/current-price?symbol=${companyCode}`
+          `/api/current-price?symbol=${companyCode}`
         );
         setRatePerYesterday(response.data.output.prdy_ctrt);
         setsignPerYesterday(response.data.output.prdy_vrss_sign - 3);
@@ -35,14 +35,17 @@ export default function StockContent(props) {
       }
     };
     fetchData();
-  }, []);
+  }, [props.companyCode]);
 
   return (
     // !! div에 key값 붙여주세요. (redux 구현 후)
     <StyledContentsDiv width={props.width} height={props.height}>
       <StyledContentsTitleGroup>
         <StyledContentsTitle>{companyName}</StyledContentsTitle>
-        <StyledContentsMiniTitle signPerYesterday={signPerYesterday}>
+        <StyledContentsMiniTitle
+          key={companyCode}
+          signperyesterday={signPerYesterday}
+        >
           <p>({ratePerYesterday}%)</p>
           {signPerYesterday > 0 ? (
             <p>▼</p>

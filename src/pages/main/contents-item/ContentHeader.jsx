@@ -16,10 +16,11 @@ export default function ContentHeader(props) {
         }}
       >
         <img style={{ width: "60px", height: "60px" }} src={props.imgUrl}></img>
-        <span style={{ fontSize: "24px", color: "#2E2E30" }}>
+        <span style={{ display: "flex", fontSize: "24px", color: "#2E2E30" }}>
           <strong
             style={{
               fontSize: "30px",
+              margin: "0 0.5rem",
             }}
           >
             "{props.keyword}"
@@ -35,7 +36,7 @@ export default function ContentHeader(props) {
           display: "flex",
         }}
       >
-        <Link to="/main/stock">
+        <a href={props.toLink}>
           <GlowIcon>
             <HiChevronDoubleRight
               style={{
@@ -46,7 +47,7 @@ export default function ContentHeader(props) {
               }}
             ></HiChevronDoubleRight>
           </GlowIcon>
-        </Link>
+        </a>
       </div>
     </HeaderContentDiv>
   );
