@@ -79,7 +79,7 @@ export default function StockDetail() {
 
   const renderPriceChange = () => {
     if (loading) {
-      return <img src="/assets/images/wsloading.png" style={{width:"180px"}}></img>
+      return <img src="/assets/images/wsloading.png" style={{width:"180px", marginLeft:"15px"}}></img>
     }
     if (!stockData) return null;
     return (
