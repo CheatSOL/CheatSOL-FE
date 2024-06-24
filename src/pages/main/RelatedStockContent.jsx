@@ -41,29 +41,36 @@ export default function RelatedStock({ keyword }) {
       ></ContentHeader>
       <Contents>
         {/* 내용이 들어오면 변경 */}
-        {companies.length === 0
-          ? Array.from({ length: STOCK_SIZE }).map((elem, index) => (
-              <StyledContentsDiv
-                width={STOCK_CONTENT_WIDTH}
-                height={STOCK_CONTENT_HEIGHT}
-              >
-                <Skeleton
-                  key={index}
-                  width={140}
-                  height={40}
-                  style={{ margin: "0.5rem" }}
-                />
-                <Skeleton width={70} height={15} />
-              </StyledContentsDiv>
-            ))
-          : companies.map((company) => (
-              <StockContent
-                key={company.id} // 고유한 key 속성을 사용하세요. 예를 들어 company.id 또는 company.name 등을 사용하세요.
-                company={company}
-                width={STOCK_CONTENT_WIDTH}
-                height={STOCK_CONTENT_HEIGHT}
+        {companies.length === 0 ? (
+          Array.from({ length: STOCK_SIZE }).map((elem, index) => (
+            <StyledContentsDiv
+              width={STOCK_CONTENT_WIDTH}
+              height={STOCK_CONTENT_HEIGHT}
+            >
+              <Skeleton
+                key={index}
+                width={140}
+                height={40}
+                style={{ margin: "0.5rem" }}
               />
-            ))}
+              <Skeleton width={70} height={15} />
+            </StyledContentsDiv>
+          ))
+        ) : companies[0].similarity == 0 ? (
+          <img
+            style={{ width: "952px", height: "227px" }}
+            src="/assets/images/no-search.svg"
+          ></img>
+        ) : (
+          companies.map((company) => (
+            <StockContent
+              key={company.id} // 고유한 key 속성을 사용하세요. 예를 들어 company.id 또는 company.name 등을 사용하세요.
+              company={company}
+              width={STOCK_CONTENT_WIDTH}
+              height={STOCK_CONTENT_HEIGHT}
+            />
+          ))
+        )}
       </Contents>
     </StyledMainContentDiv>
   );

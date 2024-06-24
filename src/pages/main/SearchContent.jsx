@@ -72,8 +72,6 @@ export default function SearchContent({ keyword }) {
     }
   }, [stockData]);
 
-  if (error) return <div>Error loading data</div>;
-
   return (
     <StyledMainContentDiv>
       <ContentHeader
@@ -143,7 +141,12 @@ export default function SearchContent({ keyword }) {
         toLink="/main/social"
       />
       <Contents>
-        {isLoading ? (
+        {error ? (
+          <img
+            style={{ width: "952px", height: "227px" }}
+            src="/assets/images/no-google-trends.svg"
+          ></img>
+        ) : isLoading ? (
           <div width="600px" height="400px">
             <ClipLoader color="#43d2ff"></ClipLoader>
           </div>
