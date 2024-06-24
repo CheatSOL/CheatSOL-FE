@@ -32,8 +32,8 @@ const InstagramIndex = ({ index, info, isFirst, isLast }) => {
   );
 };
 
-export default function InstagramIndexes() {
-  return (
+export default function InstagramIndexes({ tagInfo }) {
+  return tagInfo ? (
     <div
       style={{
         display: "flex",
@@ -43,8 +43,18 @@ export default function InstagramIndexes() {
         marginBottom: "10px",
       }}
     >
-      <InstagramIndex index="75.2K" info="포스트 수" isFirst />
-      <InstagramIndex index="37%" info="상위 비율" isLast />
+      <InstagramIndex index={tagInfo[0]} info="포스트 수" isFirst />
+      <InstagramIndex index={tagInfo[1]} info="상위 비율" isLast />
     </div>
+  ) : (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%",
+        marginBottom: "10px",
+      }}
+    ></div>
   );
 }
