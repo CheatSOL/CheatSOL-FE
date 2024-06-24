@@ -6,22 +6,18 @@ const service = axios.create({
 })
 
 //1. 연관키워드 가져오기
-export async function relatedKeywordAPI({keyword, scoringKeyword, startDate, endDate}) {
+export async function relatedKeywordAPI({keyword}) {
     try {
         const resp = await service.post("/",{
-            keyword: keyword,
-            scoringKeyword: scoringKeyword,
-            startDate: startDate,
-            endDate: endDate,
+            keyword: keyword,            
         })
-        console.log(resp)
 
     ;
     return resp.data;
 
     } catch(error) {        
-    if (!keyword || !scoringKeyword || !startDate || !endDate) {
-        return res.status(400).json({ error: 'keyword, scoringKeyword, startDate, and endDate are required' });
+    if (!keyword) {
+        return res.status(400).json({ error: 'keyword is required' });
     }
     else {
         return false;
@@ -31,24 +27,24 @@ export async function relatedKeywordAPI({keyword, scoringKeyword, startDate, end
 
 
 //2. 검색어-연관키워드 관련 뉴스 가져오기
-export async function relatedNewsAPI({ex, keyword, scoringKeyword, startDate, endDate}) {
+export async function relatedNewsAPI({exWord, keyword}) {
     try {
-        const resp = await service.post("/",{
-            ex: ex,
+        console.log("FE->BE 연관키워드 API 요청 수행")
+
+        const resp = await service.post("/news",{
+            exWord: exWord,
             keyword: keyword,
-            scoringKeyword: scoringKeyword,
-            startDate: startDate,
-            endDate: endDate,
         })
     ;
     return resp.data;
 
     } catch(error) {        
-    if (!ex || !keyword || !scoringKeyword || !startDate || !endDate) {
-        return res.status(400).json({ error: 'ex, keyword, scoringKeyword, startDate, and endDate are required' });
+    if (!exWord || !keyword) {
+        return res.status(400).json({ error: 'exWord and keyword are required' });
     }
     else {
         return false;
     }
-    }
+}
 };
+

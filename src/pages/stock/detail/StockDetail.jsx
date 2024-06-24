@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../../components/common/sidebar/Sidebar';
 import Nav from 'react-bootstrap/Nav';
-import { Container, Content, ChartSection, TabsSection, CustomTabs, StockStatus, PriceContent } from './StockDetail.style';
+import { Container, Content, ChartSection, TabsSection, CustomTabs, StockStatus, PriceContent, LinkTo } from './StockDetail.style';
 import {StyledPriceChange} from './pricetab/Pricetab.style';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Maintab from './maintab/Maintab';
@@ -11,7 +11,7 @@ import Pricetab from './pricetab/Pricetab';
 import Newstab from './newstab/Newstab';
 import Header from '../../../components/common/header/Header';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import ChartModal from './chart/ChartModal';
 
 export default function StockDetail() {
@@ -34,9 +34,8 @@ export default function StockDetail() {
     const currentDate = new Date();
     const hours = currentDate.getHours();
     const minutes = currentDate.getMinutes();
-
-    // Determine market status based on time
-    const isMarketClosed = (hours < 9) || (hours > 15) || (hours === 15 && minutes > 30);
+    const day = currentDate.getDay();
+    const isMarketClosed = (day === 0) || (day === 6) || (hours < 9) || (hours > 15) || (hours === 15 && minutes > 30);
 
     const fetchDailyData = async () => {
       try {
@@ -127,6 +126,10 @@ const numberWithCommas = (number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
+
+const handleLinkTo = () => {
+  window.location.href = "https://digitalshinhansec.com/stock";
+};
 const DateStatus = () => {
   const currentDate = new Date();
   const hours = currentDate.getHours();
@@ -173,8 +176,10 @@ const DateStatus = () => {
             <i class="bi bi-arrows-fullscreen" style={{color:"#0DAA5C", fontSize:"12px", fontWeight:"bold", cursor:"pointer"}} onClick={handleShowChart}></i>
             <span style={{fontSize:"12px", marginLeft:"10px", color:"#0DAA5C", cursor:"pointer"}} onClick={handleShowChart} >차트 자세히 보기</span>
             </div>
+            
             <ChartModal show={show} onHide={onHide} code={code} name={name}/>
           </div>
+          <LinkTo onClick={handleLinkTo}> <i class="bi bi-box-arrow-up-right" style={{marginRight:"3px", fontSize:"26px"}}></i><span style={{fontWeight:"bold", fontSize:"18px"}}><i style={{fontSize:"20px"}}>{name}</i>  투자하러 가기</span></LinkTo>
         </ChartSection>
         <TabsSection>
           <CustomTabs justify variant="underline" activeKey={activeTab} onSelect={handleTabSelect}>
