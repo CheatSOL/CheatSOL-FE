@@ -12,12 +12,14 @@ export const StyledSocialGoogleDiv = styled.div`
 `;
 
 export const StyledGoogleItemDiv = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
 `;
 export const StyledGoogleHeaderDiv = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-bottom: 20px;
 
   & > nav:first-child {
@@ -34,4 +36,13 @@ export const StyledGoogleChartNewsDiv = styled.div`
     font-size: 23px;
     color: rgba(0, 0, 0, 0.7);
   }
+`;
+
+export const StyledLoadingDiv = styled.div`
+  width: 600px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
 `;

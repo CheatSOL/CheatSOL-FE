@@ -22,7 +22,7 @@ export const NewsImage = styled.img`
   margin-left:10px;
   border-radius: 5px;
   margin-bottom:10px;
-
+  background-color:#ECFAFF;
 `;
 
 export const NewsDetails = styled.div`

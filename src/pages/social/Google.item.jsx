@@ -8,11 +8,40 @@ import {
   StyledGoogleItemDiv,
   StyledGoogleHeaderDiv,
   StyledGoogleChartNewsDiv,
+  StyledLoadingDiv,
 } from "./Google.style";
+import axios from "axios";
+import { useQuery } from "react-query";
+import { useSelector } from "react-redux";
+import { ClipLoader } from "react-spinners";
+
+const fetchStockData = async (keyword, startTime) => {
+  console.log("startTime : ", startTime);
+  const response = await axios.get("/api/trends", {
+    params: {
+      keyword: keyword,
+      startTime: startTime,
+    },
+  });
+  return JSON.parse(response.data);
+};
 
 export default function GoogleItem() {
   const scrollRef = useRef(null);
   const [isGraphVisible, setIsGraphVisible] = useState(false);
+  const keyword = useSelector((state) => state.keyword.keyword);
+  const [startTime, setStartTime] = useState(7);
+  const { data, isLoading, error } = useQuery(
+    ["stockData", keyword, startTime],
+    () =>
+      startTime ? fetchStockData(keyword, startTime) : Promise.resolve(null),
+    {
+      staleTime: Infinity,
+      enabled: !!keyword,
+    }
+  );
+
+  console.log(data);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -34,6 +63,18 @@ export default function GoogleItem() {
     };
   }, []);
 
+  const handlePeriodChange = (selectedPeriod) => {
+    let t = "";
+    if (selectedPeriod.includes("일")) {
+      let index = selectedPeriod.indexOf("일");
+      t = selectedPeriod.slice(0, index);
+    } else {
+      let index = selectedPeriod.indexOf("일");
+      t = Number(selectedPeriod.slice(0, index)) * 365;
+    }
+    setStartTime(t);
+  };
+
   return (
     <StyledSocialGoogleDiv>
       <StyledGoogleItemDiv>
@@ -41,18 +82,26 @@ export default function GoogleItem() {
           <img src="/assets/images/google.png" alt="Google" />
         </div>
         <StyledGoogleHeaderDiv>
-          <PeriodSelectBar />
-          <CountrySelectBar />
+          <PeriodSelectBar handlePeriodChange={handlePeriodChange} />
+          {/* <CountrySelectBar /> */}
         </StyledGoogleHeaderDiv>
         <div></div>
       </StyledGoogleItemDiv>
       <StyledGoogleChartNewsDiv ref={scrollRef}>
         <div>
           <span>
-            <strong>"불닭"</strong>이 이만큼 언급됐어요
+            <strong>{`"${keyword}"`}</strong>이 이만큼 언급됐어요
           </span>
           {isGraphVisible ? (
-            <GoogleGraph />
+            isLoading ? (
+              <StyledLoadingDiv>
+                <ClipLoader color={"#43D2FF"} loading={true} />
+              </StyledLoadingDiv>
+            ) : (
+              <GoogleGraph
+                data={data?.default?.timelineData || []} // 빈 배열로 전달
+              />
+            )
           ) : (
             <div
               style={{ marginTop: "20px", width: "600px", height: "400px" }}

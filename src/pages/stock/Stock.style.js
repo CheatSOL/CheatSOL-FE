@@ -6,10 +6,16 @@ export const StyledStockDiv = styled.div`
   height: 100%;
 `;
 
+export const StyledStockRightDiv = styled.div`
+  background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
+  overflow-y: scroll;
+`;
+
 export const StyledStockHeaderDiv = styled.div`
   margin-left: 50px;
   font-size: 18px;
   margin-bottom: 40px;
+  color: ${(props) => (props.darkMode ? "white" : "")};
 
   & strong {
     font-size: 22px;
@@ -38,7 +44,7 @@ export const StyledBodyCompanyDiv = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
-  height: 636px;
+  height: 630px;
   overflow-y: scroll;
   position: relative;
 
@@ -73,13 +79,6 @@ export const StyledHeaderChart = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 50px;
-  & > span {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    padding: 8px 80px;
-    border-radius: 50px;
-    background-color: white;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
-  }
 `;
 
 export const StyledSearchSpan = styled.span`
@@ -96,12 +95,32 @@ export const BlurDiv = styled.div`
   height: 70px;
   position: absolute;
   bottom: -26px;
-  background: linear-gradient(
+  background: ${(props) =>
+    props.darkMode
+      ? `linear-gradient(
+    to top,
+    transparent,
+    0%,
+    rgba(51, 51, 51, 0.9),
+    70%,
+    transparent
+  )`
+      : `linear-gradient(
     to top,
     transparent,
     0%,
     #fafcff,
     50%,
     transparent
-  );
+  )`};
+`;
+
+export const StyledTitleDiv = styled.div`
+  width: auto;
+  padding: 10px 50px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 50px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
+  color: ${(props) => (props.darkMode ? "white" : "")};
 `;

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { StyledTable, StyledChangeRate, StyledPriceChange } from './Pricetab.style';
+import { StyledTable, StyledChangeRate, StyledPriceChange, LoaderWrapper } from './Pricetab.style';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { ClipLoader } from 'react-spinners';
 export default function Pricetab({id}) {
     const [dailyPrice, setDailyPrice] = useState(null);
     useEffect(() => {
@@ -79,7 +80,9 @@ export default function Pricetab({id}) {
                     </tbody>
                 </StyledTable>
             ) : (
-                <p>Loading...</p>
+                <LoaderWrapper>
+                    <ClipLoader />
+                </LoaderWrapper>
             )}
         </div>
     );

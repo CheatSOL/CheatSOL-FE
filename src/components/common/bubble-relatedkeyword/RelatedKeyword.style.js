@@ -73,7 +73,7 @@ export const StyledBubbleContainer = styled.div`
 
 export const StyledCircleContainer = styled.div`
     position: relative;
-    top: 20px;
+    top: 90px;
     margin: 50px auto;
     ${props => props.move &&
     css`animation: ${animate_click} 1s ease-in-out forwards;

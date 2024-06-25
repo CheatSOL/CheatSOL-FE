@@ -37,6 +37,7 @@ export default function LandingSearch() {
   const onChangeText = (e) => {
     const { value } = e.target;
     setText(value);
+    dispatch(searchKeyword(e.target.value));
     if (e.target.value.length > 0) setFocus(true);
   };
 
@@ -50,7 +51,11 @@ export default function LandingSearch() {
       setText("");
       setFocus(false);
       dispatch(searchKeyword(text));
-      navigate("/main");
+
+      const params = new URLSearchParams({
+        name: keyword,
+      });
+      navigate(`/main/?${params.toString()}`);
     }
   };
 

@@ -9,6 +9,8 @@ import {
   StyledSearchSpan,
   StyledPriceSpan,
   BlurDiv,
+  StyledStockRightDiv,
+  StyledTitleDiv,
 } from "./Stock.style";
 
 import ContentsItem from "~/components/common/contents-item/Contents";
@@ -48,6 +50,7 @@ export default function StockPage() {
   const [curCompanyCode, setCurCompanyCode] = useState("");
   const [curCompanyId, setCurCompanyId] = useState(0);
   const [stockDetails, setStockDetails] = useState([]);
+  const darkMode = useSelector((state) => state.theme.darkMode);
 
   const {
     data: stockData,
@@ -84,12 +87,12 @@ export default function StockPage() {
           const result = await axios.get("/api/daily-price", {
             params: {
               symbol: companyData[0].code,
-              period:'D'
+              period: "D",
             },
           });
           console.log(result);
           setCurCompanyName(companyData[0].name);
-          setCurCompanyCode(companyData[0].code)
+          setCurCompanyCode(companyData[0].code);
           setCurCompanyPrice(
             result.data.output.map((e) => e.stck_oprc).reverse()
           );
@@ -124,9 +127,9 @@ export default function StockPage() {
   return (
     <StyledStockDiv>
       <Sidebar />
-      <div>
+      <StyledStockRightDiv darkMode={darkMode}>
         <Header />
-        <StyledStockHeaderDiv>
+        <StyledStockHeaderDiv darkMode={darkMode}>
           {keyword ? (
             <>
               최근 한달간 <strong>{`"${keyword}"`}</strong>
@@ -141,11 +144,11 @@ export default function StockPage() {
         <StyledStockBodyDiv>
           <div>
             <StyledHeaderChart>
-              <span>
+              <StyledTitleDiv darkMode={darkMode}>
                 {keyword}의{" "}
                 <StyledSearchSpan>검색 트랜드 추이</StyledSearchSpan>와{" "}
                 {curCompanyName}의<StyledPriceSpan> 시세 </StyledPriceSpan>비교
-              </span>
+              </StyledTitleDiv>
             </StyledHeaderChart>
             {isStockLoading ? (
               <StyledLoadingDiv>
@@ -165,10 +168,10 @@ export default function StockPage() {
           </div>
           <div style={{ height: "100%", position: "relative" }}>
             <StyledHeaderChart>
-              <span>
+              <StyledTitleDiv darkMode={darkMode}>
                 {keyword}의 <StyledSearchSpan>연관 기업 정보 </StyledSearchSpan>
                 확인하기
-              </span>
+              </StyledTitleDiv>
             </StyledHeaderChart>
             <StyledBodyCompanyDiv>
               {isCompanyLoading || !companyData ? (
@@ -199,10 +202,10 @@ export default function StockPage() {
                 </>
               )}
             </StyledBodyCompanyDiv>
-            <BlurDiv />
+            <BlurDiv darkMode={darkMode} />
           </div>
         </StyledStockBodyDiv>
-      </div>
+      </StyledStockRightDiv>
     </StyledStockDiv>
   );
 }
