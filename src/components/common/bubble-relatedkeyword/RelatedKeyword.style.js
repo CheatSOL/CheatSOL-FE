@@ -175,6 +175,7 @@ export const StyledGraphBox = styled.div`
     border-radius: 20px;
     box-shadow: 0px 10px 14px 0px rgb(0, 0, 0, 0.04);
     opacity: 0;
+    position: relative;
 
     ${(props) =>
       props.animate &&
@@ -184,6 +185,38 @@ export const StyledGraphBox = styled.div`
         animation-fill-mode: forwards; /* 애니메이션 후 상태 유지 */
       `}  
 `
+
+export const StyledInfoIcon = styled.div`
+  position: absolute;
+    right: 70px;
+    cursor: pointer;
+    z-index: 1;
+    top: -0.5px;
+
+  /* img 요소에 호버 시 #tag 요소가 보이도록 설정합니다. */
+  &:hover #tag {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  & #tag {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f0f0f0;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s;
+  
+    height: 100px;
+    width: 400px;
+    font-size: 0.9rem;
+  }
+`;
 
 export const StyledGraphKeyword = styled.div`
     display: flex;

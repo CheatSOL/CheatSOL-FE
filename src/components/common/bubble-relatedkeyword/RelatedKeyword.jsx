@@ -2,7 +2,7 @@ import { useState,useRef, useEffect } from "react";
 import Bubble from "../bubble/KeywordBubble";
 import RelatedNews from "./RelatedNews";
 import RelatedKeywordChart from "./RelatedKeyword.chart";
-import { StyledHeadTitleBox, StyledTitleBox, StyledGraphBox, StyledNaverbox, StyledNewsContainer, StyledNewsTab, StyledRelatedKeywordContainer, StyledBubbleContainer, StyledCircleContainer, StyledCircleItem, StyledMiniCircleItem, StyledKeyCircleItem} from "./RelatedKeyword.style";
+import { StyledHeadTitleBox, StyledTitleBox, StyledGraphBox, StyledNaverbox, StyledNewsContainer, StyledNewsTab, StyledRelatedKeywordContainer, StyledBubbleContainer, StyledCircleContainer, StyledCircleItem, StyledMiniCircleItem, StyledKeyCircleItem, StyledInfoIcon} from "./RelatedKeyword.style";
 import sns from "~/images/sns_mark.png"
 import { relatedKeywordAPI } from "~/apis/RelatedKeyword.js"
 import { useQuery } from "react-query";
@@ -174,7 +174,8 @@ export default function RelatedKeyword() {
                             <img src={sns} width={"50px"} height={"auto"}></img>                                 
                                 <span>{keyword}과 {currentword}의 검색량을 비교해보세요. </span>
                             </StyledTitleBox>
-                                <StyledGraphBox animate={clickedbubble}>                                
+                            <StyledGraphBox animate={clickedbubble}>  
+                                                          
                                 <RelatedKeywordChart keyword={keyword} related={currentword} ></RelatedKeywordChart>
                              </StyledGraphBox>
                         <StyledNaverbox animate={clickedbubble}>
