@@ -31,6 +31,7 @@ export const StyledNewsKeyword = styled.div`
 export const StyledNewsItemParentDiv = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   // gap: 5px;
 
   height: 480px;
@@ -49,6 +50,7 @@ export const StyledNewsItemParentDiv = styled.div`
 
 export const StyledNewsItemDiv = styled.div`
   display: flex;
+  justify-content: space-between;
   gap: 5px;
 
   width: 100%;
@@ -88,4 +90,15 @@ export const StyledImageDiv = styled.div`
     height: auto;
     border-radius: 10px;
   }
+`;
+
+export const StyledContentsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  background-color: white;
 `;
