@@ -14,11 +14,13 @@ export const StyledSocialYoutubeDiv = styled.div`
 export const StyledYoutubeItemDiv = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 100%;
 `;
 export const StyledYoutubeHeaderDiv = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-bottom: 20px;
+  width: 100%;
 
   & > nav:first-child {
     margin-right: 20px;
@@ -34,4 +36,13 @@ export const StyledYoutubeChartNewsDiv = styled.div`
     font-size: 23px;
     color: rgba(0, 0, 0, 0.7);
   }
+`;
+
+export const StyledLoadingDiv = styled.div`
+  width: 600px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
 `;
