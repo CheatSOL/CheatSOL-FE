@@ -1,6 +1,6 @@
-import styled, {keyframes,css}from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
-export const StyledNewsDiv = styled.div`   
+export const StyledNewsDiv = styled.div`
   width: ${(props) => props.width || "470px"};
   height: ${(props) => props.height || "600px"};
   background-color: white;

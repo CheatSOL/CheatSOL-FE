@@ -19,7 +19,7 @@ const pop = keyframes`
     opacity: 1;
   }
   100% {
-    transform: translate(-20%, -20%) scale(1.5);
+    transform: translate(-20%, -20%) scale(1.3);
     opacity: 0;
   }
 `;
@@ -34,9 +34,11 @@ export const StyledBubble = styled.div`
   background: linear-gradient(
     to top right,
     rgba(124, 224, 255, 0.32),
-    rgba(124, 224, 255, 0.06),
+    rgba(209, 252, 255, 0.26),
+    rgba(235, 231, 255, 0.4),
     rgba(235, 231, 255, 1)
   );
+  box-shadow: 10px 10px 10px 0px rgba(64, 163, 255, 0.06);
   opacity: 1;
   transform: translate(-50%, -50%);
   animation: ${(props) =>

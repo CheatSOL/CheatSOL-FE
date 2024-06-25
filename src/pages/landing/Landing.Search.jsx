@@ -11,23 +11,10 @@ import {
   StyledKeywordsDiv,
   StyledKeyword,
   HighlightedText,
+  StyledLandingDiv,
+  StyledHotKeyword,
 } from "./Landing.Search.style";
 import { useNavigate } from "react-router-dom";
-
-const Highlight = ({ text, highlight }) => {
-  const parts = text.split(new RegExp(`(${highlight})`, "gi"));
-  return (
-    <span>
-      {parts.map((part, index) =>
-        part.toLowerCase() === highlight.toLowerCase() ? (
-          <HighlightedText key={index}>{part}</HighlightedText>
-        ) : (
-          part
-        )
-      )}
-    </span>
-  );
-};
 
 export default function LandingSearch() {
   const [text, setText] = useState("");
@@ -43,6 +30,8 @@ export default function LandingSearch() {
     "투자신한",
     "신한투자증권",
     "신한투자증권",
+    "신한투자증권",
+
   ];
 
   const onChangeText = (e) => {
@@ -78,35 +67,44 @@ export default function LandingSearch() {
     setFocus(false);
   };
 
+  const handleClick = () => {
+    dispatch(searchKeyword(text));
+    navigate("/main");
+  }
+
   return (
-    <StyledSearchDiv>
+    <StyledLandingDiv>
+      {/* <StyledCenterDiv> */}
+      <StyledSearchDiv>
       <StyledSearchLogoImgDiv>
-        <img src="/assets/images/logo.png" alt="Logo" />
+        <img src="/assets/images/logo4 (2).png" alt="Logo" />
       </StyledSearchLogoImgDiv>
-      <StyledSearchInputDiv>
-        <StyledSearchInput
-          type="text"
-          value={text}
-          placeholder={focus ? "" : "Search"}
-          onChange={onChangeText}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          focus={focus}
-          onKeyDown={onKeyDownText}
-          ref={inputRef}
-        />
-        <StyledSearchIcon visible={!focus && text.length === 0} />
-      </StyledSearchInputDiv>
-      <StyledKeywordsDiv>
-        <div>연관 검색어</div>
-        <StyledKeywordsParentDiv>
-          {keywords.map((keyword, index) => (
-            <StyledKeyword key={index} onClick={onClickKeyword(keyword)}>
-              <Highlight text={keyword} highlight="신한" />
-            </StyledKeyword>
-          ))}
-        </StyledKeywordsParentDiv>
-      </StyledKeywordsDiv>
+        <StyledSearchInputDiv>
+          <StyledSearchInput
+            type="text"
+            value={text}
+            placeholder={focus ? "" : "관심있는 키워드를 입력하세요."}
+            onChange={onChangeText}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            focus={focus}
+            onKeyDown={onKeyDownText}
+            ref={inputRef}
+          />
+          <StyledSearchIcon visible={true} onClick={handleClick}/>
+          <StyledKeywordsDiv>
+            <StyledHotKeyword><p>이번 주 HOT</p></StyledHotKeyword>
+              <StyledKeywordsParentDiv>
+                {keywords.map((keyword, index) => (
+                  <StyledKeyword className="keyword" key={index} onClick={onClickKeyword(keyword)}>
+                    <span>{keyword}</span>
+                  </StyledKeyword>
+                ))}
+              </StyledKeywordsParentDiv>
+          </StyledKeywordsDiv>
+        </StyledSearchInputDiv>      
     </StyledSearchDiv>
+    {/* </StyledCenterDiv> */}
+  </StyledLandingDiv>
   );
 }

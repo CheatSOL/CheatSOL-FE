@@ -10,8 +10,6 @@ export default function ContentHeader(props) {
       <div
         style={{
           textAlign: "top",
-          alignItems: "center",
-          justifyContent: "center",
           display: "flex",
         }}
       >

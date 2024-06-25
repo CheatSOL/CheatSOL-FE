@@ -13,13 +13,14 @@ const fetchStockData = async (keyword) => {
   const response = await axios.get("/api/trends/google", {
     params: {
       keyword: keyword,
+      startTime: 30,
     },
   });
   return JSON.parse(response.data);
 };
 
 export default function SearchContent({ keyword }) {
-  const [percent, setPercent] = useState(0);
+  const [percent, setPercent] = useState(NaN);
   const [currentWeekData, setCurrentWeekData] = useState([]);
   const [currentWeekDates, setCurrentWeekDates] = useState([]);
 
@@ -33,6 +34,7 @@ export default function SearchContent({ keyword }) {
   });
 
   useEffect(() => {
+    setPercent(NaN);
     if (stockData) {
       const dayOfData = stockData.default.timelineData.sort((a, b) => {
         return b.time - a.time;
@@ -69,6 +71,8 @@ export default function SearchContent({ keyword }) {
       setPercent(Math.round(calculatedPercent * 100) / 100);
       setCurrentWeekData(currentWeekValues);
       setCurrentWeekDates(currentWeekTimes);
+
+      console.log(percent);
     }
   }, [stockData]);
 
@@ -79,7 +83,9 @@ export default function SearchContent({ keyword }) {
         keyword={keyword}
         description={
           !isLoading ? (
-            <>
+            <div
+              style={{ display: "flex", flexDirection: "row", width: "auto" }}
+            >
               {percent > 0 && (
                 <>
                   <p style={{marginTop:"10px"}}>
@@ -142,7 +148,8 @@ export default function SearchContent({ keyword }) {
                 </>
               )}
               {percent === 0 && <>의 이번주 검색량이 전 주와 동일해요.</>}
-            </>
+              {Number.isNaN(percent) && <>에 대한 검색량을 불러올 수 없어요.</>}
+            </div>
           ) : (
             <>
               <p>의 검색량을 불러오는 중이에요...</p>
@@ -152,24 +159,32 @@ export default function SearchContent({ keyword }) {
         toLink="/main/social"
       />
       <Contents>
-        {error ? (
-          <img
-            style={{ width: "952px", height: "227px" }}
-            src="/assets/images/no-google-trends.svg"
-          ></img>
-        ) : isLoading ? (
+        {error || !isLoading ? (
+          Number.isNaN(percent) ? (
+            <img
+              style={{ width: "952px", height: "227px" }}
+              src="/assets/images/no-data.svg"
+            ></img>
+          ) : error ? (
+            <img
+              style={{ width: "952px", height: "227px" }}
+              //다크모드 시 undefined-error-darkmode.svg
+              src="/assets/images/undefined-error.svg"
+            ></img>
+          ) : (
+            <NormalGraph
+              data={currentWeekData}
+              date={currentWeekDates}
+              color={[66, 133, 244]}
+              lineSpeed={0.05}
+              barSpeed={0.05}
+              width={600}
+            />
+          )
+        ) : (
           <div width="600px" height="400px">
             <ClipLoader color="#43d2ff"></ClipLoader>
           </div>
-        ) : (
-          <NormalGraph
-            data={currentWeekData}
-            date={currentWeekDates}
-            color={[66, 133, 244]}
-            lineSpeed={0.05}
-            barSpeed={0.05}
-            width={600}
-          />
         )}
       </Contents>
     </StyledMainContentDiv>

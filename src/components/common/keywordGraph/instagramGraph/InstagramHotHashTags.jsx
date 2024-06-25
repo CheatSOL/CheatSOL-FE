@@ -4,9 +4,7 @@ import {
   generateRandomGradient,
 } from "./InstagramHotHashTag.style";
 
-export default function InstagramHotHashTags() {
-  const [tags, setTags] = useState(["장원영", "스트레이키즈", "차은우"]);
-
+export default function InstagramHotHashTags({ topTags }) {
   return (
     <div
       style={{
@@ -15,14 +13,16 @@ export default function InstagramHotHashTags() {
         gap: "10px",
       }}
     >
-      {tags.map((item, index) => {
-        const gradient = generateRandomGradient();
-        return (
-          <StyledHotHashTag key={index} gradient={gradient}>
-            # {item}
-          </StyledHotHashTag>
-        );
-      })}
+      {topTags && topTags.length > 0
+        ? topTags.slice(0, 3).map((item, index) => {
+            const gradient = generateRandomGradient();
+            return (
+              <StyledHotHashTag key={index} gradient={gradient}>
+                # {item}
+              </StyledHotHashTag>
+            );
+          })
+        : null}
     </div>
   );
 }

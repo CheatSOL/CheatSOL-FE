@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyledBubble } from "./Bubble.style";
 
+
 export default function Bubble({ width, height, top, left, time }) {
   const [isPopped, setIsPopped] = useState(false);
 
