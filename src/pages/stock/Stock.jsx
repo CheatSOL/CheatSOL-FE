@@ -26,10 +26,10 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useEffect, useState } from "react";
 
 const fetchStockData = async (keyword) => {
-  const response = await axios.get("/api/trends", {
+  const response = await axios.get("/api/trends/google", {
     params: {
       keyword: keyword,
-      startTime: 31,
+      startTime: 30,
     },
   });
   return JSON.parse(response.data);
