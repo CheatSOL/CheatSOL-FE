@@ -8,21 +8,50 @@ import {
   StyledYoutubeItemDiv,
   StyledYoutubeHeaderDiv,
   StyledYoutubeChartNewsDiv,
+  StyledLoadingDiv,
 } from "./Youtube.style";
+import { useQuery } from "react-query";
+import { useSelector } from "react-redux";
+import { ClipLoader } from "react-spinners";
+import axios from "axios";
+
+const fetchYoutubeStockData = async (keyword, startTime) => {
+  console.log("startTime : ", startTime);
+  const response = await axios.get("/api/trends/youtube", {
+    params: {
+      keyword: keyword,
+      startTime: startTime,
+    },
+  });
+  return JSON.parse(response.data);
+};
 
 export default function YoutubeItem() {
   const scrollRef = useRef(null);
   const [isGraphVisible, setIsGraphVisible] = useState(false);
+  const keyword = useSelector((state) => state.keyword.keyword);
+  const [startTime, setStartTime] = useState(7);
+  const { data, isLoading, error } = useQuery(
+    ["youtubeStockData", keyword, startTime],
+    () =>
+      startTime
+        ? fetchYoutubeStockData(keyword, startTime)
+        : Promise.resolve(null),
+    {
+      staleTime: Infinity,
+      enabled: !!keyword,
+    }
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          setIsGraphVisible(entry.isIntersecting); // Toggle visibility state based on scroll event
+          setIsGraphVisible(entry.isIntersecting);
         });
       },
       {
-        threshold: 0.1, // Adjust the threshold as needed
+        threshold: 0.1,
       }
     );
 
@@ -33,6 +62,18 @@ export default function YoutubeItem() {
     };
   }, []);
 
+  const handlePeriodChange = (selectedPeriod) => {
+    let t = "";
+    if (selectedPeriod.includes("일")) {
+      let index = selectedPeriod.indexOf("일");
+      t = selectedPeriod.slice(0, index);
+    } else {
+      let index = selectedPeriod.indexOf("일");
+      t = Number(selectedPeriod.slice(0, index)) * 365;
+    }
+    setStartTime(t);
+  };
+
   return (
     <StyledSocialYoutubeDiv>
       <StyledYoutubeItemDiv>
@@ -40,18 +81,23 @@ export default function YoutubeItem() {
           <img src="/assets/images/youtube.png" alt="Youtube" />
         </div>
         <StyledYoutubeHeaderDiv>
-          <PeriodSelectBar />
-          <CountrySelectBar />
+          <PeriodSelectBar handlePeriodChange={handlePeriodChange} />
         </StyledYoutubeHeaderDiv>
         <div></div>
       </StyledYoutubeItemDiv>
       <StyledYoutubeChartNewsDiv ref={scrollRef}>
         <div>
           <span>
-            <strong>"불닭"</strong>이 이만큼 언급됐어요
+            <strong>{`"${keyword}"`}</strong>이 이만큼 언급됐어요
           </span>
           {isGraphVisible ? (
-            <YoutubeGraph />
+            isLoading ? (
+              <StyledLoadingDiv>
+                <ClipLoader color={"#43D2FF"} loading={true} />
+              </StyledLoadingDiv>
+            ) : (
+              <YoutubeGraph data={data?.default?.timelineData || []} />
+            )
           ) : (
             <div
               style={{ marginTop: "20px", width: "600px", height: "400px" }}
