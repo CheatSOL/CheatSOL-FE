@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Container, Image, Column, Number, Label } from './Instagram.style';
 
 const BASE_URL = "/api/social";
 
@@ -24,7 +25,7 @@ export const getInstagramSocialTrend = async function getInstagramSocialInfo(key
 export default function Instagram({ keyword }) {
   const [data, setData] = useState([]);
   const [topTags, setTopTags] = useState([]);
-  const [tagInfo, setTagInfo] = useState({});
+  const [tagInfo, setTagInfo] = useState([]);
 
   useEffect(() => {
     async function fetchData(keyword) {
@@ -35,14 +36,6 @@ export default function Instagram({ keyword }) {
         setData(instagramInfo.trendData);
         setTopTags(instagramInfo.topTags);
         setTagInfo(instagramInfo.tagInfo);
-
-        const labels = instagramInfo.trendData.map((item) => item.date);
-        const counts = instagramInfo.trendData.map((item) => item.posts);
-        const changes = instagramInfo.trendData.map((item, index) => {
-          if (index === 0) return 0;
-          return item.posts - instagramInfo.trendData[index - 1].posts;
-        });
-        // Do something with labels, counts, and changes if needed
       } catch (error) {
         console.error("Error fetching Instagram data", error);
       }
@@ -52,25 +45,16 @@ export default function Instagram({ keyword }) {
   }, [keyword]);
 
   return (
-    <div style={{display:"flex", flexDirection:"row", justifyContent:"space-around"}}>
-    <img src="/assets/images/instagram.png"/>
-    <div style={{display:"flex", flexDirection:"column"}}>
-        <span>
-            97K
-        </span>
-        <span>
-            포스터 수
-        </span>
-    </div>
-    <div style={{display:"flex", flexDirection:"column", justifyContent:"center", alignContent:"center"}}>
-        <span>
-            52%
-        </span>
-        <span>
-            상위 비율
-        </span>
-    
-    </div>
-    </div>
+    <Container>
+      <Image src="/assets/images/instagram.png" alt="Instagram" />
+      <Column>
+        <Number>{tagInfo[0]}</Number>
+        <Label>포스터 수</Label>
+      </Column>
+      <Column>
+        <Number>{tagInfo[1]}</Number>
+        <Label>상위 비율</Label>
+      </Column>
+    </Container>
   );
 }
