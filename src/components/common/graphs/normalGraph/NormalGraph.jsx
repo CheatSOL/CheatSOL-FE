@@ -293,7 +293,7 @@ const sketch = (p5) => {
       if (barProgress[data.length - 1] < data.length) {
         for (let ii = 0; ii <= barIndex; ii++) {
           barProgress[ii] += barStep;
-          if (barProgress[ii] >= 0.5) {
+          if (barProgress[ii] >= 1) {
             barProgress[ii] = 1;
             if (barProgress[barIndex] > 0.4) {
               barIndex++;
@@ -376,8 +376,19 @@ const NormalGraph = ({
       window.noLoop = true;
     };
   }, []);
-  console.log(data);
-  return (
+
+  return !data ? (
+    <div
+      style={{
+        width: "600px",
+        height: "400px",
+        textAlign: "center",
+        alignContent: "center",
+      }}
+    >
+      아무것도 없다.
+    </div>
+  ) : (
     <ChartContainer>
       <ReactP5Wrapper
         sketch={sketch}
