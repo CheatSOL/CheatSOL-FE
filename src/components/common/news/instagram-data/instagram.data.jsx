@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyledNewsKeyword } from "./instagram.data.style";
 import { StyledNewsDiv } from "./instagram.data.style";
 import {
@@ -11,9 +11,13 @@ import { weekTimeAgo } from "~/utils/utils";
 import insta from "~/images/instagram.png";
 import { StyledBlurDiv } from "./instagram.data.style";
 import InstagramIndexes from "../../keywordGraph/instagramGraph/InstagramIndexes";
-
-export default function InstagramData() {
+import { useSelector } from "react-redux";
+export default function InstagramData({ tagInfo }) {
+  const keyword = useSelector((state) => state.keyword.keyword);
   //!! 샘플 데이터입니다.
+  useEffect(() => {
+    console.log(tagInfo);
+  }, []);
   const insta_sample_data = [
     {
       caption:
@@ -59,9 +63,9 @@ export default function InstagramData() {
   return (
     <StyledNewsDiv>
       <StyledNewsKeyword>
-        <span>"kpop"</span>이 이렇게 언급됐어요
+        <span>"{keyword}"</span>이 이렇게 언급됐어요
       </StyledNewsKeyword>
-      <InstagramIndexes></InstagramIndexes>
+      <InstagramIndexes tagInfo={tagInfo}></InstagramIndexes>
       <StyledNewsItemParentDiv>
         {data.map((e, index) => (
           <>
