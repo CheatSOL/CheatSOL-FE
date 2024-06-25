@@ -233,12 +233,12 @@ export const StyledGraphKeyword = styled.div`
     border-radius: 20px;
     box-shadow: 8px 20px 30px 0px rgb(0, 0, 0, 0.04);
 & #related-news-count {
-  background-color: rgba(0,0,0,0.1);
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border-radius: 15px;
+background-color: rgb(41 239 140 / 76%);
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 40px;
 }
 
 `
