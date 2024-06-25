@@ -1,15 +1,16 @@
-import React from 'react';
-import Chart from 'react-apexcharts';
-import { useQuery } from 'react-query';
+import React from "react";
+import Chart from "react-apexcharts";
+import { useQuery } from "react-query";
 import axios from "axios";
-import Skeleton from 'react-loading-skeleton'; // Make sure you have this installed
-import 'react-loading-skeleton/dist/skeleton.css'; // Import CSS for the skeleton
+import Skeleton from "react-loading-skeleton"; // Make sure you have this installed
+import "react-loading-skeleton/dist/skeleton.css"; // Import CSS for the skeleton
 
 const googleTrendsAPI = async (keyword) => {
   try {
-    const response = await axios.get("/api/trends", {
+    const response = await axios.get("/api/trends/google", {
       params: {
         keyword: keyword,
+        startTime: 30,
       },
     });
     return JSON.parse(response.data);
@@ -19,31 +20,43 @@ const googleTrendsAPI = async (keyword) => {
 };
 
 export default function RelatedKeywordChart(props) {
-  const { data: GraphData1, isLoading: isLoadingGraph1, error: errorGraph1 } = useQuery(
-    ['GoogleTrendsData1', props.keyword],
+  const {
+    data: GraphData1,
+    isLoading: isLoadingGraph1,
+    error: errorGraph1,
+  } = useQuery(
+    ["GoogleTrendsData1", props.keyword],
     () => googleTrendsAPI(props.keyword),
     {
       staleTime: Infinity,
     }
   );
 
-  const { data: GraphData2, isLoading: isLoadingGraph2, error: errorGraph2 } = useQuery(
-    ['GoogleTrendsData2', props.related],
+  const {
+    data: GraphData2,
+    isLoading: isLoadingGraph2,
+    error: errorGraph2,
+  } = useQuery(
+    ["GoogleTrendsData2", props.related],
     () => googleTrendsAPI(props.related),
     {
       staleTime: Infinity,
     }
   );
 
-
   if (errorGraph1 || errorGraph2) {
-    return <div>Error loading related keywords: {errorGraph1?.message || errorGraph2?.message}</div>;
+    return (
+      <div>
+        Error loading related keywords:{" "}
+        {errorGraph1?.message || errorGraph2?.message}
+      </div>
+    );
   }
 
   if (!GraphData1 || !GraphData2) {
     return (
       <div style={{ margin: "0.8rem", padding: "10px", borderRadius: "10px" }}>
-            <Skeleton width={580} height={270} />
+        <Skeleton width={580} height={270} />
       </div>
     );
   }
@@ -59,7 +72,7 @@ export default function RelatedKeywordChart(props) {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     categories.push(`${month}/${day}`);
-    value1.push(e.value[0]); 
+    value1.push(e.value[0]);
   });
 
   data2.forEach((e) => {
@@ -68,19 +81,19 @@ export default function RelatedKeywordChart(props) {
 
   const options = {
     chart: {
-      type: 'line',
+      type: "line",
       height: 350,
       animations: {
         enabled: true,
-        easing: 'easeinout',
+        easing: "easeinout",
         speed: 1500,
         animateGradually: {
-        enabled: true,
-      },
-      dynamicAnimation: {
-        enabled: true,
-        speed: 150
-      }   
+          enabled: true,
+        },
+        dynamicAnimation: {
+          enabled: true,
+          speed: 150,
+        },
       },
       toolbar: {
         show: true,
@@ -92,16 +105,16 @@ export default function RelatedKeywordChart(props) {
           zoomout: true,
           pan: false,
           reset: false,
-          customIcons: []
+          customIcons: [],
         },
-      }
+      },
     },
     stroke: {
-      curve: 'smooth',
+      curve: "smooth",
     },
     title: {
       text: `${props.keyword} 및 ${props.related}의 Google 검색량 비교`,
-      align: 'center',
+      align: "center",
     },
     xaxis: {
       categories: categories,
@@ -109,7 +122,6 @@ export default function RelatedKeywordChart(props) {
         show: false,
       },
     },
-    
   };
 
   const series = [
@@ -123,13 +135,13 @@ export default function RelatedKeywordChart(props) {
     },
   ];
 
-  return(
-    <Chart 
+  return (
+    <Chart
       key={`${props.keyword}-${props.related}`} // 키를 이용해 컴포넌트 리렌더링
-      options={options} 
-      series={series} 
-      type="line" 
-      height={350} 
+      options={options}
+      series={series}
+      type="line"
+      height={350}
     />
   );
 }
