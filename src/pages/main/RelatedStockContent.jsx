@@ -59,7 +59,8 @@ export default function RelatedStock({ keyword }) {
         ) : companies[0].similarity == 0 ? (
           <img
             style={{ width: "952px", height: "227px" }}
-            src="/assets/images/no-search.svg"
+            // 다크 모드 시 no-data-darkmode.svg
+            src="/assets/images/no-data.svg"
           ></img>
         ) : (
           companies.map((company) => (

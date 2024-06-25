@@ -6,6 +6,7 @@ export const HeaderContentDiv = styled.div`
   align-items: center;
   padding: 10px;
   width:100%;
+  flex-wrap:wrap;
 `;
 
 export const GlowIcon = styled.div`
