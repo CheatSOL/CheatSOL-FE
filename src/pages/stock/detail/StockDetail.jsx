@@ -1,9 +1,7 @@
-// StockDetail.js
-
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../../components/common/sidebar/Sidebar';
 import Nav from 'react-bootstrap/Nav';
-import { Container, Content, ChartSection, TabsSection, CustomTabs, StockStatus, PriceContent } from './StockDetail.style';
+import { Container, Content, ChartSection, TabsSection, CustomTabs, StockStatus, PriceContent, LinkTo } from './StockDetail.style';
 import {StyledPriceChange} from './pricetab/Pricetab.style';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Maintab from './maintab/Maintab';
@@ -11,33 +9,42 @@ import Pricetab from './pricetab/Pricetab';
 import Newstab from './newstab/Newstab';
 import Header from '../../../components/common/header/Header';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import ChartModal from './chart/ChartModal';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+import ChartModal from './chart/ChartModal';
+import { ClipLoader } from "react-spinners";
+import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
+import { GlowIcon } from "./StockDetail.style";
 export default function StockDetail() {
-  const { code, name } = useParams();
-  
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const code = searchParams.get('code');
+  const name = searchParams.get('name');
   const [activeTab, setActiveTab] = useState('main'); 
   const [stockData, setStockData] = useState(null); 
   const [marketStatus, setMarketStatus] = useState(1);
-  const [timeoutId, setTimeoutId] = useState(null)
   const [lastPrice, setLastPrice] = useState();
   const [show, setShow] = useState(false);
-  const [ws, setWs] = useState(null);
+
+  const [loading, setLoading]=useState(true);
+  const navigate=useNavigate();
   const handleShowChart=()=>{
     setShow(true);
   }
   const onHide=()=>{
     setShow(false);
   }
+  const handleBackClick = () => {
+    navigate(-1); // This navigates back to the previous page
+  };
   useEffect(() => {
     const currentDate = new Date();
     const hours = currentDate.getHours();
     const minutes = currentDate.getMinutes();
-
-    // Determine market status based on time
-    const isMarketClosed = (hours < 9) || (hours > 15) || (hours === 15 && minutes > 30);
-
+    const day = currentDate.getDay();
+    const isMarketClosed = (day === 0) || (day === 6) || (hours < 9) || (hours > 15) || (hours === 15 && minutes > 30);
+    let ws;
     const fetchDailyData = async () => {
       try {
         const response = await axios.get(`/api/daily-price?symbol=${code}&period=D`);
@@ -45,12 +52,14 @@ export default function StockDetail() {
         setMarketStatus(0); // Market closed
       } catch (error) {
         console.error('API 요청 에러:', error);
+      }finally{
+        setLoading(false);
       }
     };
     if(isMarketClosed){
       fetchDailyData();
     }else{
-      const ws = new WebSocket('ws://localhost:3002');
+      ws = new WebSocket('ws://localhost:3002');
       ws.onopen = function() {
         console.log('WebSocket 연결이 열렸습니다.');
         ws.send(JSON.stringify({ id: code }));
@@ -60,19 +69,20 @@ export default function StockDetail() {
         console.log("받은 데이터!!", data);
         setStockData(data); 
         setMarketStatus(1);
+        setLoading(false);
       };
 
       ws.onclose = function(event) {
         console.log('WebSocket 연결이 닫혔습니다.');
       };
-
-      setWs(ws);
     }
 
-     return () => { 
-     
+    return () => {
+      if (ws) {
+        ws.close();
+        console.log('WebSocket 연결이 종료되었습니다.');
+      }
     };
-  
   }, [code]);
 
   const handleTabSelect = (eventKey) => {
@@ -80,6 +90,10 @@ export default function StockDetail() {
   };
 
   const renderPriceChange = () => {
+    if (loading) {
+      return <ClipLoader/>
+
+    }
     if (!stockData) return null;
     return (
       <PriceContent>
@@ -127,6 +141,10 @@ const numberWithCommas = (number) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
+
+const handleLinkTo = () => {
+  window.location.href = "https://digitalshinhansec.com/stock";
+};
 const DateStatus = () => {
   const currentDate = new Date();
   const hours = currentDate.getHours();
@@ -146,7 +164,20 @@ const DateStatus = () => {
     <Container>
       <Sidebar />
       <Content>
-      <Header></Header>
+      <div style={{fontSize:"20px", fontWeight:"bold"}}>
+     
+          <GlowIcon onClick={handleBackClick}>
+            <HiChevronDoubleLeft
+              style={{
+                cursor: "pointer",
+                width: "40px",
+                height: "40px",
+                color: "#00537A",
+              }}
+            ></HiChevronDoubleLeft>
+         </GlowIcon>
+         <LinkTo onClick={handleLinkTo}> <i class="bi bi-box-arrow-up-right" style={{marginRight:"3px", fontSize:"26px"}}></i><span style={{fontWeight:"bold", fontSize:"20px"}}><i style={{fontSize:"23px"}}>{name}</i>  투자하러 가기</span></LinkTo>
+      </div>
       <ChartSection>
           <div className="header-content">
             <div style={{fontSize:"24px", fontWeight:"bold"}}>{code}</div>
@@ -173,8 +204,10 @@ const DateStatus = () => {
             <i class="bi bi-arrows-fullscreen" style={{color:"#0DAA5C", fontSize:"12px", fontWeight:"bold", cursor:"pointer"}} onClick={handleShowChart}></i>
             <span style={{fontSize:"12px", marginLeft:"10px", color:"#0DAA5C", cursor:"pointer"}} onClick={handleShowChart} >차트 자세히 보기</span>
             </div>
+            
             <ChartModal show={show} onHide={onHide} code={code} name={name}/>
           </div>
+          
         </ChartSection>
         <TabsSection>
           <CustomTabs justify variant="underline" activeKey={activeTab} onSelect={handleTabSelect}>
@@ -191,7 +224,7 @@ const DateStatus = () => {
             <Nav.Link eventKey="financial" >재무</Nav.Link>
             </Nav.Item>
           </CustomTabs>
-          <div style={{height: 'calc(100vh - 406px)', overflowY: 'auto' }}>
+          <div style={{height: 'calc(100vh - 452px)', overflowY: 'auto' }}>
             {activeTab === 'main' && <Maintab id={code} />}
             {activeTab === 'news' && <Newstab id={code} />}
             {activeTab === 'price' && <Pricetab id={code} />}

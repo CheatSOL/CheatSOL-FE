@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const StyledStockParentDiv = styled.div`
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: white;
+  background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
   margin-left: 10px;
   display: flex;
   flex-direction: column;

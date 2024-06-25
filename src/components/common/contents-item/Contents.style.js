@@ -10,12 +10,8 @@ export const StyledContentsDiv = styled.div`
   border: ${(props) =>
     props.isCheck ? "2px solid #43D2FF" : "1px solid #d3d3d3;"};
   border-radius: 50px;
-  background-color: white;
-
-  /* &:hover {
-    background-color: ${(props) =>
-    props.isCheck ? "" : " rgba(0, 0, 0, 0.02)"};
-  } */
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
+  color: ${(props) => (props.darkMode ? "white" : "")};
   &:hover {
     border: ${(props) => (props.isCheck ? "" : "1px solid #43D2FF")};
   }
@@ -39,8 +35,7 @@ export const StyledContentsMiniTitle = styled.div`
   flex-direction: row;
   align-items: center;
 
-
-  & span{
+  & span {
     font-size: 0.7rem !important;
     font-weight: 400;
     color: ${(props) => (props.isPriceIncrease ? "tomato" : "#4284F3")};
@@ -56,7 +51,8 @@ export const StyledContentsTag = styled.div`
   display: flex;
   font-size: 0.7rem !important;
 
-  & .price-box {
+  & > div {
+    margin-top: 5px;
     display: flex;
     padding: 5px;
     background-color: rgb(211, 211, 211, 0.3);

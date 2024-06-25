@@ -21,10 +21,11 @@ export const Content = styled.div`
 export const ChartSection = styled.div`
     flex: 0 0 auto; 
     justify-content: center;
-    height: 230px;
+    height: 335px;
     display: flex;
-    gap:250px;
+    gap:160px;
     align-items: center;
+    position:relative;
     
     .header-content {
         display: flex;
@@ -84,3 +85,33 @@ export const PriceContent=styled.div`
   align-items: center;
   flex-direction: column;
 `
+export const LinkTo=styled.span`
+  position:absolute;
+  right:0;
+  top:0;
+  margin-top:30px;
+  margin-right:15px;
+  border-radius:10px;
+  padding:5px 10px;
+  cursor:pointer;
+  color: #00537a;
+  &:hover {
+    filter: drop-shadow(0 0 3px rgba(0, 83, 122, 0.8));
+  }
+
+`
+
+export const GlowIcon = styled.div`
+  display: flex;
+  margin-top:15px;
+  svg {
+    width: 40px;
+    height: 40px;
+    color: #00537a;
+    transition: filter 0.3s ease-in-out;
+
+    &:hover {
+      filter: drop-shadow(0 0 3px rgba(0, 83, 122, 0.8));
+    }
+  }
+`;

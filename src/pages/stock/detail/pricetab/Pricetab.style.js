@@ -42,3 +42,9 @@ export const StyledPriceChange = styled.span`
     font-weight: bold;
     ${({ color }) => `color: ${color};`}
 `;
+export const LoaderWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust based on your layout */
+`;

@@ -22,7 +22,7 @@ const sketch = (p5) => {
   const lineDelay = 0 * 60; // 0.3초 딜레이 (프레임 단위, 60fps 기준)
   let axisProgress = 0;
   let auxLine1Progress = 0;
-  const axisStep = 0.03;
+  const axisStep = 0.02;
   let auxLine1Length = 0;
   let auxLine2Length = 0;
   let auxLine3Length = 0;
@@ -31,14 +31,19 @@ const sketch = (p5) => {
   let drawnLines = 0;
   let zoom = 1;
   let color = [];
+  let width = 400;
   p5.setup = () => {
     p5.noLoop(); // 초기에는 멈춰 있는 상태로 설정
-    p5.createCanvas(600, 400);
+    p5.createCanvas(width + 200, 400);
   };
 
   p5.updateWithProps = (props) => {
     p5.noLoop(); // 초기에는 멈춰 있는 상태로 설정
-
+    if (props.width) {
+      width = props.width;
+    }
+    //todo 페이지 이동 시 새로고침되게 되면 createCanvas 주석처리 하기!
+    p5.createCanvas(width + 200, 400);
     if (props.data) {
       data = props.data;
       barProgress = Array(data.length).fill(0);
@@ -95,19 +100,19 @@ const sketch = (p5) => {
       for (let i = 1; i <= 4; i++) {
         const y = 350 - i * 62.5;
 
-        if (i == 4) p5.line(40, y, 40 + auxLine1Length, y);
+        if (i == 4) p5.line(40, y, width - 360 + auxLine1Length, y);
         else if (i == 3) {
-          p5.line(40, y, 40 + auxLine2Length, y);
+          p5.line(40, y, width - 360 + auxLine2Length, y);
         } else if (i == 2) {
-          p5.line(40, y, 40 + auxLine3Length, y);
+          p5.line(40, y, width - 360 + auxLine3Length, y);
         } else if (i == 1) {
-          p5.line(40, y, 40 + auxLine4Length, y);
+          p5.line(40, y, width - 360 + auxLine4Length, y);
         }
       }
     }
     if (axisProgress < 1) {
       if (axisProgress < 1) axisProgress += axisStep;
-      const xAxisLength = p5.lerp(0, 500, axisProgress);
+      const xAxisLength = p5.lerp(0, 100 + width, axisProgress);
       const yAxisLength = p5.lerp(0, 300, axisProgress);
       p5.strokeWeight(4);
       p5.stroke(color[0], color[1], color[2]);
@@ -142,10 +147,10 @@ const sketch = (p5) => {
       p5.strokeWeight(4);
       p5.stroke(color[0], color[1], color[2]);
       p5.fill(color[0], color[1], color[2]);
-      p5.line(30, 350, 550, 350);
+      p5.line(30, 350, width + 150, 350);
       p5.line(50, 370, 50, 50);
       p5.triangle(50, 45, 45, 53, 55, 53);
-      p5.triangle(555, 350, 547, 345, 547, 355);
+      p5.triangle(width + 155, 350, width + 147, 345, width + 147, 355);
 
       // 보조선 값 텍스트 표시
       p5.drawingContext.shadowBlur = 0;
@@ -163,17 +168,23 @@ const sketch = (p5) => {
       p5.stroke(color[0], color[1], color[2]);
 
       for (let i = 0; i < drawnLines; i++) {
-        const startX = p5.map(i, 0, data.length - 1, 100, 500);
+        const startX = p5.map(i, 0, data.length - 1, 100, width + 100);
         const startY = p5.map(data[i], 0, 100, 300, 50);
-        const endX = p5.map(i + 1, 0, data.length - 1, 100, 500);
+        const endX = p5.map(i + 1, 0, data.length - 1, 100, width + 100);
         const endY = p5.map(data[i + 1], 0, 100, 300, 50);
         p5.line(startX, startY, endX, endY);
       }
 
       if (drawnLines < data.length) {
-        const startX = p5.map(drawnLines, 0, data.length - 1, 100, 500);
+        const startX = p5.map(drawnLines, 0, data.length - 1, 100, width + 100);
         const startY = p5.map(data[drawnLines], 0, 100, 300, 50);
-        const endX = p5.map(drawnLines + 1, 0, data.length - 1, 100, 500);
+        const endX = p5.map(
+          drawnLines + 1,
+          0,
+          data.length - 1,
+          100,
+          width + 100
+        );
         const endY = p5.map(data[drawnLines + 1], 0, 100, 300, 50);
         // console.log(drawnLines, lineProgress);
         if (lineProgress == 1) {
@@ -196,13 +207,13 @@ const sketch = (p5) => {
 
       // 막대 그래프 그리기
       for (let i = 0; i < data.length; i++) {
-        const barHeight = p5.map(data[i], 0, Math.max(...data), 0, 125);
+        const barHeight = p5.map(data[i], 0, Math.max(...data), 0, 250);
         currentBarHeight[i] = p5.lerp(0, barHeight, barProgress[i]);
         if (
           p5.mouseX >
-            p5.map(i, 0, data.length - 1, 100, 500) - barWidth * 0.5 &&
+            p5.map(i, 0, data.length - 1, 100, width + 100) - barWidth * 0.5 &&
           p5.mouseX <
-            p5.map(i, 0, data.length - 1, 100, 500) + barWidth * 0.5 &&
+            p5.map(i, 0, data.length - 1, 100, width + 100) + barWidth * 0.5 &&
           p5.mouseY > 350 - currentBarHeight[i] &&
           p5.mouseY < 350
         ) {
@@ -214,9 +225,9 @@ const sketch = (p5) => {
         p5.fill(color[0], color[1], color[2], 100);
         if (
           p5.mouseX >
-            p5.map(i, 0, data.length - 1, 100, 500) - barWidth * 0.5 &&
+            p5.map(i, 0, data.length - 1, 100, width + 100) - barWidth * 0.5 &&
           p5.mouseX <
-            p5.map(i, 0, data.length - 1, 100, 500) + barWidth * 0.5 &&
+            p5.map(i, 0, data.length - 1, 100, width + 100) + barWidth * 0.5 &&
           p5.mouseY > 350 - currentBarHeight[i] &&
           p5.mouseY < 350
         ) {
@@ -226,15 +237,15 @@ const sketch = (p5) => {
         }
         if (
           p5.mouseX >
-            p5.map(i, 0, data.length - 1, 100, 500) - barWidth * 0.5 &&
+            p5.map(i, 0, data.length - 1, 100, width + 100) - barWidth * 0.5 &&
           p5.mouseX <
-            p5.map(i, 0, data.length - 1, 100, 500) + barWidth * 0.5 &&
+            p5.map(i, 0, data.length - 1, 100, width + 100) + barWidth * 0.5 &&
           p5.mouseY > 350 - currentBarHeight[i] &&
           p5.mouseY < 350
         ) {
           p5.fill(255, 255, 255, 20);
           p5.rect(
-            p5.map(i, 0, data.length - 1, 100, 500) - 35,
+            p5.map(i, 0, data.length - 1, 100, width + 100) - 35,
             350 - barHeight - 12 - 25,
             70,
             35,
@@ -246,19 +257,19 @@ const sketch = (p5) => {
           if (data[i] == 100)
             p5.text(
               data[i],
-              p5.map(i, 0, data.length - 1, 100, 500) - 9,
+              p5.map(i, 0, data.length - 1, 100, width + 100) - 9,
               350 - barHeight - 18
             );
           else {
             p5.text(
               data[i],
-              p5.map(i, 0, data.length - 1, 100, 500) - 6,
+              p5.map(i, 0, data.length - 1, 100, width + 100) - 6,
               350 - barHeight - 21
             );
             p5.fill(100, 100, 100, 255);
             p5.text(
               date[i],
-              p5.map(i, 0, data.length - 1, 100, 500) - 22,
+              p5.map(i, 0, data.length - 1, 100, width + 100) - 22,
               350 - barHeight - 8
             );
           }
@@ -267,7 +278,7 @@ const sketch = (p5) => {
           p5.fill(color[0], color[1], color[2], 50);
         }
         p5.rect(
-          p5.map(i, 0, data.length - 1, 100, 500) - barWidth * 0.5,
+          p5.map(i, 0, data.length - 1, 100, width + 100) - barWidth * 0.5,
           350 - currentBarHeight[i],
           barWidth,
           currentBarHeight[i],
@@ -350,13 +361,22 @@ const sketch = (p5) => {
   };
 };
 
-const NormalGraph = ({ data, date, lineSpeed, barSpeed, color, zoom }) => {
+const NormalGraph = ({
+  data,
+  date,
+  lineSpeed,
+  barSpeed,
+  color,
+  zoom,
+  width,
+}) => {
   useEffect(() => {
     window.noLoop = false;
     return () => {
       window.noLoop = true;
     };
   }, []);
+  console.log(data);
   return (
     <ChartContainer>
       <ReactP5Wrapper
@@ -367,6 +387,7 @@ const NormalGraph = ({ data, date, lineSpeed, barSpeed, color, zoom }) => {
         barSpeed={barSpeed}
         color={color}
         zoom={zoom}
+        width={width}
       />
     </ChartContainer>
   );

@@ -64,9 +64,9 @@ export const StyledContentsMiniTitle = styled.div`
     font-size: 0.9rem !important;
     font-weight: 500;
     color: ${(props) =>
-      props.signPerYesterday > 0
+      props.signperyesterday > 0
         ? "blue"
-        : props.signPerYesterday < 0
+        : props.signperyesterday < 0
         ? "orangered"
         : "black"};
   }

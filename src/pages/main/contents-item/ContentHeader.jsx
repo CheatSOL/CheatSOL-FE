@@ -10,22 +10,37 @@ export default function ContentHeader(props) {
       <div
         style={{
           textAlign: "top",
-          alignItems: "center",
-          justifyContent: "center",
           display: "flex",
         }}
       >
         <img style={{ width: "60px", height: "60px" }} src={props.imgUrl}></img>
-        <span style={{ fontSize: "24px", color: "#2E2E30" }}>
-          <strong
+        <div
+          style={{
+            display: "flex",
+            fontSize: "24px",
+            color: "#2E2E30",
+          }}
+        >
+          <div
             style={{
-              fontSize: "30px",
+              display: "inline-flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              whiteSpace: "normal",
+              wordWrap: "break-word",
             }}
           >
-            "{props.keyword}"
-          </strong>
-          {props.description}
-        </span>
+            <span
+              style={{
+                fontSize: "30px",
+                margin: "0 0.5rem",
+              }}
+            >
+              <strong>"{props.keyword}"</strong>
+            </span>
+            {props.description}
+          </div>
+        </div>
       </div>
       <div
         style={{
@@ -35,7 +50,7 @@ export default function ContentHeader(props) {
           display: "flex",
         }}
       >
-        <Link to="/main/stock">
+        <a href={props.toLink}>
           <GlowIcon>
             <HiChevronDoubleRight
               style={{
@@ -46,7 +61,7 @@ export default function ContentHeader(props) {
               }}
             ></HiChevronDoubleRight>
           </GlowIcon>
-        </Link>
+        </a>
       </div>
     </HeaderContentDiv>
   );

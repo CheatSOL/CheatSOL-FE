@@ -24,5 +24,7 @@ export const StyledNavItem = styled.a`
 
   &:hover {
     background-color: ${(props) => (props.active ? "" : "rgba(0, 0, 0, 0.04)")};
+    text-decoration: none;
+    color: black;
   }
 `;

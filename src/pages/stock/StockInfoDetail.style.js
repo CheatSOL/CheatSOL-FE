@@ -3,7 +3,7 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 
 export const StyledStockDetailDiv = styled.div`
   width: 800px;
-  background-color: white;
+  background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
   padding: 10px;
   padding-bottom: 30px;
   display: flex;
@@ -15,9 +15,9 @@ export const StyledInfoDetailDiv = styled.div`
   min-width: 200px;
   width: auto;
   height: 110px;
-  background-color: #fafafb;
+  background-color: ${(props) =>
+    props.darkMode ? "#333333" : "rgba(0,0,0,0.02)"};
   border-radius: 10px;
-  color: black;
   padding: 10px;
   margin-right: 10px;
 
@@ -35,8 +35,9 @@ export const StyledInfoDetailDiv = styled.div`
     color: gray;
   }
 
-  p{
-  margin-bottom:0px}
+  p {
+    margin-bottom: 0px;
+  }
 `;
 
 export const StyledTitleStockDetail = styled.p`
@@ -46,6 +47,7 @@ export const StyledTitleStockDetail = styled.p`
   margin-bottom: 5px;
   display: flex;
   align-items: center;
+  color: ${(props) => (props.darkMode ? "darkgray" : "")};
 `;
 
 export const StyledStockDetailTime = styled.span`
@@ -53,13 +55,14 @@ export const StyledStockDetailTime = styled.span`
   border-radius: 5px;
   font-size: 12px;
   margin-left: 10px;
-  color: black !important;
   font-weight: 600 !important;
+  color: ${(props) => (props.darkMode ? "darkgray" : "blaxk")};
 `;
 
 export const StyledMoveDetailDiv = styled.div`
   width: 800px;
-  background-color: white;
+  background-color: ${(props) => (props.darkMode ? "#333333" : "")};
+  color: ${(props) => (props.darkMode ? "white" : "")};
   display: flex;
   justify-content: center;
   align-items: center;

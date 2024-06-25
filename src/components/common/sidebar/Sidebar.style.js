@@ -13,8 +13,9 @@ export const StyledSidebarDiv = styled.div`
   align-items: center;
   min-width: 250px;
   height: 100%;
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
-  background-color: white;
+  border-right: ${(props) =>
+    props.darkMode ? "none" : "1px solid rgba(0, 0, 0, 0.2)"};
+  background-color: ${(props) => (props.darkMode ? "rgb(35,35,35)" : "white")};
   padding-top: 20px;
 `;
 
@@ -43,7 +44,6 @@ export const StyledSidebarItemDiv = styled.div`
   margin-bottom: 20px;
   padding: 10px 60px;
   cursor: pointer;
-
   background-color: ${({ active }) => (active ? "#43d2ff" : "transparent")};
   border-radius: ${({ active }) => (active ? "50px" : "0")};
 
@@ -51,10 +51,12 @@ export const StyledSidebarItemDiv = styled.div`
     margin-left: 15px;
     transition: color 0.1s;
     color: ${({ active }) => (active ? "white" : "rgba(0, 0, 0, 0.5)")};
+    color: ${(props) => (props.darkMode ? "white" : "")};
   }
 
   & svg {
     color: ${({ active }) => (active ? "white" : "")};
+    color: ${(props) => (props.darkMode ? "white" : "")};
   }
 
   &:hover {
@@ -105,7 +107,7 @@ export const StyledHeaderFillMoonIcon = styled(IoMoon)`
 
 export const StyledHeaderFillSunIcon = styled(IoSunny)`
   ${DarkModeIconStyles}
-  color: ${({ darkmode }) => (darkmode ? "rgba(0,0,0,0.3)" : "#F87315")};
+  color: ${({ darkmode }) => (darkmode ? "darkgray" : "#F87315")};
 `;
 
 export const StyledToggleIcon = styled(MdToggleOff)`
@@ -128,7 +130,7 @@ export const StyledToggleContainer = styled.div`
   width: 40px;
   height: 25px;
   border-radius: 15px;
-  background-color: ${({ isDarkMode }) => (isDarkMode ? "#333" : "#ddd")};
+  background-color: ${({ isDarkMode }) => (isDarkMode ? "#47484A" : "#ddd")};
   display: flex;
   align-items: center;
   padding: 0 5px;

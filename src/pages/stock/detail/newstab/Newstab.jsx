@@ -55,7 +55,16 @@ export default function Newstab({id}) {
       {news.map((item, key) => (
         <StyledLink key={key} to={`https://n.news.naver.com/article/${item.officeId}/${item.articleId}`}>
           <NewsItem key={key}>
-            <NewsImage src={item.imageOriginLink} alt="No image." />
+          <NewsImage
+          src={item.imageOriginLink}
+          alt="No image."
+          onError={(e) => {
+            if (e.target.src !== `/assets/images/bubbleimg.png`) {
+              e.target.onerror = null;
+              e.target.src = `/assets/images/bubbleimg.png`;
+            }
+          }}
+        />
             <NewsDetails>
               <NewsTitle>{decodeHtmlEntities(item.title)}</NewsTitle>
               <NewsContent>{decodeHtmlEntities(item.body)}</NewsContent>
