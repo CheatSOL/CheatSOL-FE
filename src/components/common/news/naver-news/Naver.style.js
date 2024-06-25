@@ -8,6 +8,7 @@ export const StyledNewsDiv = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 15px;
+  position: relative;
 `;
 
 export const StyledNewsKeyword = styled.div`

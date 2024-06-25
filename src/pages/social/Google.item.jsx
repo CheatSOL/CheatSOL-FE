@@ -43,14 +43,15 @@ export default function GoogleItem() {
     }
   );
 
-  console.log(data);
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         console.log(entries);
         entries.forEach((entry) => {
-          setIsGraphVisible(entry.isIntersecting); // Toggle visibility state based on scroll event
+          if (entry.isIntersecting) {
+            setIsGraphVisible(true); // Set visibility state to true if intersecting
+            observer.disconnect(); // Disconnect observer once graph is visible
+          }
         });
       },
       {
@@ -61,7 +62,7 @@ export default function GoogleItem() {
     observer.observe(scrollRef.current);
 
     return () => {
-      observer.disconnect();
+      observer.disconnect(); // Cleanup function to disconnect observer on unmount
     };
   }, []);
 

@@ -1,6 +1,4 @@
 import React, { useRef, useState, useEffect } from "react";
-import CountrySelectBar from "../../components/common/chart-select-bar/country/Country.select.bar";
-import PeriodSelectBar from "../../components/common/chart-select-bar/period/Period.select.bar";
 import InstagramGraph from "../../components/common/keywordGraph/instagramGraph/InstagramGraph";
 import InstagramData from "../../components/common/news/instagram-data/instagram.data";
 import InstagramHotHashTags from "../../components/common/keywordGraph/instagramGraph/InstagramHotHashTags";
@@ -20,6 +18,7 @@ export default function InstagramItem() {
   const [topTags, setTopTags] = useState([]);
   const [tagInfo, setTagInfo] = useState([]);
   const keyword = useSelector((state) => state.keyword.keyword);
+
   useEffect(() => {
     async function fetchData(word) {
       try {
@@ -132,16 +131,13 @@ export default function InstagramItem() {
 
   const scrollRef = useRef(null);
   const [isGraphVisible, setIsGraphVisible] = useState(false);
+  const observerRef = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    observerRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsGraphVisible(true);
-          } else {
-            setIsGraphVisible(false);
-          }
+          setIsGraphVisible(entry.isIntersecting);
         });
       },
       {
@@ -149,10 +145,12 @@ export default function InstagramItem() {
       }
     );
 
-    observer.observe(scrollRef.current);
+    observerRef.current.observe(scrollRef.current);
 
     return () => {
-      observer.disconnect();
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
     };
   }, []);
 
