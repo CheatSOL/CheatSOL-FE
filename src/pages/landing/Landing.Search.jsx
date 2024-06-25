@@ -12,23 +12,9 @@ import {
   StyledKeyword,
   HighlightedText,
   StyledLandingDiv,
+  StyledHotKeyword,
 } from "./Landing.Search.style";
 import { useNavigate } from "react-router-dom";
-
-const Highlight = ({ text, highlight }) => {
-  const parts = text.split(new RegExp(`(${highlight})`, "gi"));
-  return (
-    <span>
-      {parts.map((part, index) =>
-        part.toLowerCase() === highlight.toLowerCase() ? (
-          <HighlightedText key={index}>{part}</HighlightedText>
-        ) : (
-          part
-        )
-      )}
-    </span>
-  );
-};
 
 export default function LandingSearch() {
   const [text, setText] = useState("");
@@ -44,6 +30,8 @@ export default function LandingSearch() {
     "투자신한",
     "신한투자증권",
     "신한투자증권",
+    "신한투자증권",
+
   ];
 
   const onChangeText = (e) => {
@@ -90,7 +78,7 @@ export default function LandingSearch() {
           <StyledSearchInput
             type="text"
             value={text}
-            placeholder={focus ? "" : "관심있는 키워드가 입력하세요."}
+            placeholder={focus ? "" : "관심있는 키워드를 입력하세요."}
             onChange={onChangeText}
             onFocus={handleFocus}
             onBlur={handleBlur}
@@ -100,14 +88,15 @@ export default function LandingSearch() {
           />
           <StyledSearchIcon visible={true} onClick={handleClick}/>
           <StyledKeywordsDiv>
-          <StyledKeywordsParentDiv>
-            {keywords.map((keyword, index) => (
-              <StyledKeyword key={index} onClick={onClickKeyword(keyword)}>
-                <Highlight text={keyword} highlight="신한" />
-              </StyledKeyword>
-            ))}
-          </StyledKeywordsParentDiv>
-        </StyledKeywordsDiv>
+            <StyledHotKeyword><p>이번 주 HOT</p></StyledHotKeyword>
+              <StyledKeywordsParentDiv>
+                {keywords.map((keyword, index) => (
+                  <StyledKeyword className="keyword" key={index} onClick={onClickKeyword(keyword)}>
+                    <span>{keyword}</span>
+                  </StyledKeyword>
+                ))}
+              </StyledKeywordsParentDiv>
+          </StyledKeywordsDiv>
         </StyledSearchInputDiv>      
     </StyledSearchDiv>
     {/* </StyledCenterDiv> */}
