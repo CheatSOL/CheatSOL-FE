@@ -7,7 +7,7 @@ import RelatedKeyword from "./RelatedKeyword";
 import SearchContent from "./SearchContent";
 import { useState } from "react";
 import ScrollToTopButton from "../../components/common/scroll-top-button/Scroll.top.button";
-
+import RelatedSns from "./RelatedSns";
 export default function MainPage() {
   const keyword = useSelector((state) => state.keyword.keyword);
 
@@ -19,7 +19,10 @@ export default function MainPage() {
           <Header />
           <RelatedStockContent keyword={keyword}></RelatedStockContent>
           <SearchContent keyword={keyword}></SearchContent>
+          <div style={{display:"flex",flexDirection:"row", gap:"50px" }}>
           <RelatedKeyword keyword={keyword}></RelatedKeyword>
+          <RelatedSns keyword={keyword}></RelatedSns>
+          </div>
         </MainBody>
       </MainContent>
     </StyledMainDiv>
