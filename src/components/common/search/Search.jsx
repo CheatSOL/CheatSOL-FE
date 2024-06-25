@@ -37,7 +37,7 @@ export default function Search(props) {
       const params = new URLSearchParams({
         name: e.target.value,
       });
-      navigate(`./?${params.toString()}`);
+      navigate(`.?${params.toString()}`);
     }
   };
 

@@ -55,7 +55,7 @@ export default function LandingSearch() {
       const params = new URLSearchParams({
         name: keyword,
       });
-      navigate(`/main/?${params.toString()}`);
+      navigate(`/main?${params.toString()}`);
     }
   };
 

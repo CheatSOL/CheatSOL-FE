@@ -10,6 +10,7 @@ import { ClipLoader } from "react-spinners";
 
 const fetchStockData = async (keyword) => {
   console.log(`Fetching data for keyword: ${keyword}`);
+
   const response = await axios.get("/api/trends/google", {
     params: {
       keyword: keyword,

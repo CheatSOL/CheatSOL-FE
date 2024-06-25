@@ -27,7 +27,7 @@ export const StyledBubbleDiv = styled.div`
   height: ${(props) => props.height || "100px"};
   /* opacity 값 설정 */
   opacity: ${(props) => (props.iscurrent ? "1" : props.opacity || "1")};
-  
+
   /* ${(props) =>
     props.iscurrent &&
     css`
@@ -88,4 +88,9 @@ export const StyledBubbleDiv = styled.div`
     opacity: 1; 
   }
   
+  #content {
+    flex-wrap: wrap;
+    padding: 10px;
+    text-align: center
+  }
 `;
