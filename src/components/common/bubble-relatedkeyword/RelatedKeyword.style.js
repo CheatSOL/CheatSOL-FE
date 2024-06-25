@@ -204,9 +204,9 @@ export const StyledInfoIcon = styled.div`
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #f0f0f0;
+    background-color: #F5F6F8;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(187,195,192,1);
     border-radius: 5px;
     visibility: hidden;
     opacity: 0;
