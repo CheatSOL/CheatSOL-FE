@@ -29,7 +29,7 @@ const fetchStockData = async (keyword) => {
   const response = await axios.get("/api/trends", {
     params: {
       keyword: keyword,
-      startTime: 31,
+      startTime: 30,
     },
   });
   return JSON.parse(response.data);

@@ -58,36 +58,36 @@ export default function Sidebar() {
       </div>
       <StyledSidebarInfoDiv>
         <div>
-          <Link to={`/main/?${params}`}>
+          <Link to={`/main?${params}`}>
             <StyledSidebarItemDiv
-              active={isActive(`/main/?${params}`)}
+              active={isActive(`/main?${params}`)}
               darkMode={darkMode}
             >
               <StyledHomeIcon />
               <span>한눈에 보기</span>
             </StyledSidebarItemDiv>
           </Link>
-          <Link to={`/main/social/?${params}`}>
+          <Link to={`/main/social?${params}`}>
             <StyledSidebarItemDiv
-              active={isActive(`/main/social/?${params}`)}
+              active={isActive(`/main/social?${params}`)}
               darkMode={darkMode}
             >
               <StyledAnalyzeIcon />
               <span>소셜 분석</span>
             </StyledSidebarItemDiv>
           </Link>
-          <Link to={`/main/stock/?${params}`}>
+          <Link to={`/main/stock?${params}`}>
             <StyledSidebarItemDiv
-              active={isActive(`/main/stock/?${params}`)}
+              active={isActive(`/main/stock?${params}`)}
               darkMode={darkMode}
             >
               <StyledRelateIcon />
               <span>연관 주식</span>
             </StyledSidebarItemDiv>
           </Link>
-          <Link to={`/main/keyword/?${params}`}>
+          <Link to={`/main/keyword?${params}`}>
             <StyledSidebarItemDiv
-              active={isActive(`/main/keyword/?${params}`)}
+              active={isActive(`/main/keyword?${params}`)}
               darkMode={darkMode}
             >
               <StyledKeywordIcon />

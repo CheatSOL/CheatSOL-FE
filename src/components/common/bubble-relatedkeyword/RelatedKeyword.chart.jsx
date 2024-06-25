@@ -92,7 +92,9 @@ export default function RelatedKeywordChart(props) {
           zoomout: true,
           pan: false,
           reset: false,
-          customIcons: []
+          customButton: {
+            
+          }
         },
       }
     },
@@ -100,7 +102,7 @@ export default function RelatedKeywordChart(props) {
       curve: 'smooth',
     },
     title: {
-      text: `${props.keyword} 및 ${props.related}의 Google 검색량 비교`,
+      text: `지난 30일 간의 ${props.keyword} 및 ${props.related} 구글 검색량 비교`,
       align: 'center',
     },
     xaxis: {

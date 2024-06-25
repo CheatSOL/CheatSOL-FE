@@ -15,7 +15,7 @@ const animate_click = keyframes`
     transform: translateX(0) scale(1);
   }
   100% {
-    transform: translateX(-380px) scale(0.5);
+    transform: translateX(-400px) translateY(80px) scale(0.75);
   }
 `;
 
@@ -61,14 +61,14 @@ export const StyledRelatedKeywordContainer = styled.div`
     width: 100%;
     height: 100%;
     flex-direction: column;
-    position: relative;
+    position: relative;    
 `
 
 export const StyledBubbleContainer = styled.div`
     display: flex;
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 70%;
 `
 
 export const StyledCircleContainer = styled.div`
@@ -173,7 +173,7 @@ export const StyledGraphBox = styled.div`
     background-color: white;
     padding: 20px;
     border-radius: 20px;
-    box-shadow: 8px 20px 30px 0px rgb(0, 0, 0, 0.04);
+    box-shadow: 0px 10px 14px 0px rgb(0, 0, 0, 0.04);
     opacity: 0;
 
     ${(props) =>
@@ -186,13 +186,28 @@ export const StyledGraphBox = styled.div`
 `
 
 export const StyledGraphKeyword = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 2%;
+    padding: 5px;
+    width: 100%;
     background-color: rgb(67,210,255,1);
     text-align: center;
     font-size: 1.1rem;
     color: white;
-    padding: 10px;
     border-radius: 20px;
     box-shadow: 8px 20px 30px 0px rgb(0, 0, 0, 0.04);
+& #related-news-count {
+  background-color: rgba(0,0,0,0.1);
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 15px;
+}
+
 `
 
 export const StyledRelatedKeyword = styled.div`
