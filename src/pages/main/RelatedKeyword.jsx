@@ -6,12 +6,12 @@ import Bubble from '../../components/common/bubble/KeywordBubble';
 import { useQuery } from "react-query";
 import { StyledMainContentDiv, StyledBubbleContainer } from "./RelatedKeyword.style";
 export default function RelatedKeyword({ keyword }) {
-    const big_radius = 120; // 반지름
-    const sml_radius = 130;
+    const big_radius = 145; // 반지름
+    const sml_radius = 95;
     const angleStep = 360 / 6;
-    const key_bubble_size = "90px";
-    const bubble_size = "110px";
-    const mini_bubble_size = "60px";
+    const key_bubble_size = "100px";
+    const bubble_size = "120px";
+    const mini_bubble_size = "80px";
     const { data: relatedKeywordData, isLoading: isLoadingKeyword, error: errorKeyword } = useQuery(
         ["relatedkeywordData", keyword],
         () => relatedKeywordAPI({ keyword }),
@@ -29,7 +29,7 @@ export default function RelatedKeyword({ keyword }) {
                 <ContentHeader
                     imgUrl="/assets/images/bell.svg"
                     keyword={keyword}
-                    description="과 함께 언급되는 단어에요"
+                    description="과 함께 언급되는 단어에요."
                      toLink="/main/keyword"
                 />
                 <StyledBubbleContainer>
