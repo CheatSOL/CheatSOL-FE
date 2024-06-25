@@ -26,7 +26,7 @@ export const InstagramContent=styled.div`
     align-content:center;
 `
 export const StyledMainContentDiv = styled.div`
-  width: 36vw;
+  width: 37vw;
   height:600px;
   background-color: white;
   display: flex;

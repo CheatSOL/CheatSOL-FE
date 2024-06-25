@@ -17,12 +17,12 @@ import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
 export default function RelatedKeyword({ keyword }) {
-    const big_radius = 145; // 반지름
-    const sml_radius = 95;
+    const big_radius = 160; // 반지름
+    const sml_radius = 93;
     const angleStep = 360 / 6;
-    const key_bubble_size = "100px";
+    const key_bubble_size = "90px";
     const bubble_size = "120px";
-    const mini_bubble_size = "80px";
+    const mini_bubble_size = "70px";
     const { data: relatedKeywordData, isLoading: isLoadingKeyword, error: errorKeyword } = useQuery(
         ["relatedkeywordData", keyword],
         () => relatedKeywordAPI({ keyword }),
