@@ -26,7 +26,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useEffect, useState } from "react";
 
 const fetchStockData = async (keyword) => {
-  const response = await axios.get("/api/trends", {
+  const response = await axios.get("/api/trends/google", {
     params: {
       keyword: keyword,
       startTime: 31,
@@ -104,7 +104,7 @@ export default function StockPage() {
       }
     };
     fetchDailyPrice();
-  }, [companyData]);
+  }, [companyData, keyword]);
 
   useEffect(() => {
     const test = async () => {
