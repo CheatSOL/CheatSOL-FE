@@ -15,9 +15,9 @@ import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
 
-const fetchStockData = async (keyword, startTime) => {
+const fetchGoogleStockData = async (keyword, startTime) => {
   console.log("startTime : ", startTime);
-  const response = await axios.get("/api/trends", {
+  const response = await axios.get("/api/trends/google", {
     params: {
       keyword: keyword,
       startTime: startTime,
@@ -32,9 +32,11 @@ export default function GoogleItem() {
   const keyword = useSelector((state) => state.keyword.keyword);
   const [startTime, setStartTime] = useState(7);
   const { data, isLoading, error } = useQuery(
-    ["stockData", keyword, startTime],
+    ["googleStockData", keyword, startTime],
     () =>
-      startTime ? fetchStockData(keyword, startTime) : Promise.resolve(null),
+      startTime
+        ? fetchGoogleStockData(keyword, startTime)
+        : Promise.resolve(null),
     {
       staleTime: Infinity,
       enabled: !!keyword,

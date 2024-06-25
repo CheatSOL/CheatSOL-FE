@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledNewsDiv = styled.div`
-  width: calc(100% - 700px);
+  width: calc(100% - 600px);
   height: 470px;
 
   display: flex;
