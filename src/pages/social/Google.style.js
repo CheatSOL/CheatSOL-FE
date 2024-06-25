@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledSocialGoogleDiv = styled.div`
   width: 90%;
-  background-color: white;
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -34,7 +34,7 @@ export const StyledGoogleChartNewsDiv = styled.div`
 
   & > div > span:first-child {
     font-size: 23px;
-    color: rgba(0, 0, 0, 0.7);
+    color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
   }
 `;
 
