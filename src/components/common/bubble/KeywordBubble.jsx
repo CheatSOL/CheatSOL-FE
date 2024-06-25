@@ -12,7 +12,7 @@ export default function Bubble(props) {
       iscurrent={props.iscurrent}
       id={props.id}
     >
-      {props.content}
+    <span id="content">{props.content}</span> 
     </StyledBubbleDiv>
   );
 }

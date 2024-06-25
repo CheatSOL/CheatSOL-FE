@@ -17,7 +17,7 @@ import { ClipLoader } from "react-spinners";
 
 const fetchGoogleStockData = async (keyword, startTime) => {
   console.log("startTime : ", startTime);
-  const response = await axios.get("/api/trends/google", {
+  const response = await axios.get("/api/trends", {
     params: {
       keyword: keyword,
       startTime: startTime,

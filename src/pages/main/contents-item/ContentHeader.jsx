@@ -14,33 +14,19 @@ export default function ContentHeader(props) {
         }}
       >
         <img style={{ width: "60px", height: "60px" }} src={props.imgUrl}></img>
-        <div
-          style={{
-            display: "flex",
-            fontSize: "24px",
-            color: "#2E2E30",
-          }}
-        >
-          <div
+        <span style={{ display: "flex", fontSize: "22px", color: "#2E2E30", alignItems:"center" }}>
+          <strong
             style={{
-              display: "inline-flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              whiteSpace: "normal",
-              wordWrap: "break-word",
+              fontSize: "28px",
+              margin: "0 0.3rem",
             }}
           >
-            <span
-              style={{
-                fontSize: "30px",
-                margin: "0 0.5rem",
-              }}
-            >
-              <strong>"{props.keyword}"</strong>
-            </span>
-            {props.description}
-          </div>
-        </div>
+            "{props.keyword}"
+          </strong>
+          <span style={{marginTop:"5px", display:"flex"}}>
+          {props.description}
+          </span>
+        </span>
       </div>
       <div
         style={{
@@ -55,8 +41,7 @@ export default function ContentHeader(props) {
             <HiChevronDoubleRight
               style={{
                 cursor: "pointer",
-                width: "40px",
-                height: "40px",
+                width: "38px",
                 color: "#00537A",
               }}
             ></HiChevronDoubleRight>

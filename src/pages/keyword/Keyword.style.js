@@ -6,5 +6,6 @@ export const StyledKeywordDiv = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: scroll;  
+  gap: 2vh;
 `

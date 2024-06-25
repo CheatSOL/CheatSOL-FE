@@ -172,7 +172,7 @@ const StockInfoDetail = (props) => {
       name: props.curCompanyName,
     });
 
-    navigate(`/main/stocks/detail/?${params.toString()}`);
+    navigate(`/main/stocks/detail?${params.toString()}`);
   };
 
   return (
