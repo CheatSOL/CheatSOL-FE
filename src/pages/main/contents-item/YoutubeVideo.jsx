@@ -25,29 +25,42 @@ export default function YoutubeVideo({ keyword }) {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get('/api/youtube', {
-          params: { word: keyword}
+        const response = await axios.get("/api/youtube", {
+          params: { word: keyword },
         });
         const videoData = response.data.slice(0, 5);
         setVideos(videoData);
         console.log(videos);
-        console.log('Fetched Videos:', videoData);
-        
+        console.log("Fetched Videos:", videoData);
+
         if (videoData.length > 0) {
-          console.log('Video ID:', videoData[0].videoRenderer.videoId);
-          console.log('URL:', `https://www.youtube.com${videoData[0].videoRenderer.inlinePlaybackEndpoint.commandMetadata.webCommandMetadata.url}`);
-          console.log('Thumbnail:', videoData[0].videoRenderer.thumbnail.thumbnails[0].url);
-          console.log('Title:', videoData[0].videoRenderer.title.accessibility.accessibilityData.label);
-          console.log('Channel:', videoData[0].videoRenderer.longBylineText.runs[0].text);
+          console.log("Video ID:", videoData[0].videoRenderer.videoId);
+          console.log(
+            "URL:",
+            `https://www.youtube.com${videoData[0].videoRenderer.inlinePlaybackEndpoint.commandMetadata.webCommandMetadata.url}`
+          );
+          console.log(
+            "Thumbnail:",
+            videoData[0].videoRenderer.thumbnail.thumbnails[0].url
+          );
+          console.log(
+            "Title:",
+            videoData[0].videoRenderer.title.accessibility.accessibilityData
+              .label
+          );
+          console.log(
+            "Channel:",
+            videoData[0].videoRenderer.longBylineText.runs[0].text
+          );
         }
-  
+
         setLoading(false);
       } catch (err) {
         setError(err);
         setLoading(false);
       }
     };
-  
+
     fetchVideos();
   }, [keyword]);
   const settings = {
@@ -83,7 +96,7 @@ export default function YoutubeVideo({ keyword }) {
 
   return (
     <SliderContainer>
-      <Slider {...settings}
+      {/* <Slider {...settings}
         {videos.map((video, index) => (
           <Slide key={video.videoRenderer.videoId}>
             
@@ -104,7 +117,7 @@ export default function YoutubeVideo({ keyword }) {
               </CenteredSlideWrapper>
             </Slide>
           ))}
-      </Slider>
+      </Slider> */}
     </SliderContainer>
   );
 }
