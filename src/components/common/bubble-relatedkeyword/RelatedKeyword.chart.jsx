@@ -2,10 +2,9 @@ import React from "react";
 import Chart from "react-apexcharts";
 import { useQuery } from "react-query";
 import axios from "axios";
-import Skeleton from 'react-loading-skeleton'; // Make sure you have this installed
-import 'react-loading-skeleton/dist/skeleton.css'; // Import CSS for the skeleton
-import { StyledInfoIcon } from './RelatedKeyword.style';
-
+import Skeleton from "react-loading-skeleton"; // Make sure you have this installed
+import "react-loading-skeleton/dist/skeleton.css"; // Import CSS for the skeleton
+import { StyledInfoIcon } from "./RelatedKeyword.style";
 
 const googleTrendsAPI = async (keyword) => {
   try {
@@ -58,6 +57,7 @@ export default function RelatedKeywordChart(props) {
   if (!GraphData1 || !GraphData2) {
     return (
       <div style={{ margin: "0.8rem", padding: "10px", borderRadius: "10px" }}>
+        <Skeleton width={580} height={270} />
         <Skeleton width={580} height={270} />
       </div>
     );
@@ -116,14 +116,14 @@ export default function RelatedKeywordChart(props) {
     },
     title: {
       text: `지난 30일 간의 ${props.keyword} 및 ${props.related} 구글 검색량 비교`,
-      align: 'center',
+      align: "center",
     },
     xaxis: {
       categories: categories,
       labels: {
         show: false,
       },
-    },    
+    },
   };
 
   const series = [
@@ -137,23 +137,27 @@ export default function RelatedKeywordChart(props) {
     },
   ];
 
-
-  return(
-    <div style={{ zIndex: -1 },{position: 'relative'}}>
+  return (
+    <div style={{ zIndex: -1, position: "relative" }}>
       <StyledInfoIcon>
-        <img id="tooltip" src="/assets/images/question_mark.png" width={"21px"}></img>
-        <div id="tag">Google에서 한 달 동안의 검색된 추이를 보여줍니다.
-            가장 많이 검색된 날을 100으로 고정하여 상대값을 보여주며, 연관키워드 역시 한 달 중 최고치를 기준으로 상대값을 보여줍니다.
+        <img
+          id="tooltip"
+          src="/assets/images/question_mark.png"
+          width={"21px"}
+        ></img>
+        <div id="tag">
+          Google에서 한 달 동안의 검색된 추이를 보여줍니다. 가장 많이 검색된
+          날을 100으로 고정하여 상대값을 보여주며, 연관키워드 역시 한 달 중
+          최고치를 기준으로 상대값을 보여줍니다.
         </div>
-      </StyledInfoIcon>          
-    <Chart 
-      key={`${props.keyword}-${props.related}`} // 키를 이용해 컴포넌트 리렌더링
-      options={options}
-      series={series}
-      type="line"
-      height={350}
-    />
-    
+      </StyledInfoIcon>
+      <Chart
+        key={`${props.keyword}-${props.related}`} // 키를 이용해 컴포넌트 리렌더링
+        options={options}
+        series={series}
+        type="line"
+        height={350}
+      />
     </div>
   );
 }
