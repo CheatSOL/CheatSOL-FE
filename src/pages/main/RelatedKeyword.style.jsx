@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const StyledMainContentDiv = styled.div`
-  width: 537px;
-  height:470px;
+  width:37vw;
+  height:600px;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -10,10 +10,9 @@ export const StyledMainContentDiv = styled.div`
   padding: 15px;
   border-radius: 20px;
   margin-bottom: 30px;
-  justify-content:center;
-  align-items:center;
+  
   white-space: nowrap;
-  gap:30px;
+  gap:70px;
 `;
 
 export const StyledBubbleContainer = styled.div`

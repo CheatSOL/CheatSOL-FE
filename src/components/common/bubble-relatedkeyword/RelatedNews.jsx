@@ -1,6 +1,7 @@
 import NaverNews from "../news/naver-news/Naver.news";
 import { relatedNewsAPI } from "~/apis/RelatedKeyword.js"
 import { useQuery } from "react-query";
+import { StyledGraphKeyword } from "./RelatedKeyword.style";
 import { StyledNewsDiv,
     StyledNewsKeyword,
     StyledNewsItemDiv,
@@ -70,13 +71,16 @@ export default function RelatedNews(props) {
         
     // <NaverNews data={relatedNewsData} width={"680px"} Hfontsize={"0.8rem"} Cfontsize={"0.7rem"}></NaverNews>
     <StyledNewsDiv backgroundcol={props.backgroundcol} width={"680px"} height={props.height}>
-
+          <StyledGraphKeyword>
+          <span>관련 뉴스 </span>                           
+          <span id="related-news-count">{relatedNewsData?relatedNewsData.data.length:' -- '}건</span>
+          </StyledGraphKeyword>
         <StyledNewsItemPatentDiv isscroll={props.isscroll} >
         
         {relatedNewsData
           ? 
           relatedNewsData.data.map((e, index) => (
-            <StyledNewsItemDiv key={index} Hfontsize={"0.8rem"}>
+            <StyledNewsItemDiv key={index} Hfontsize={"1rem"}>
             <a
                 href={e.url}
                 target="_blank"
@@ -88,7 +92,7 @@ export default function RelatedNews(props) {
                 <span>{e.writer}</span> | <span>{timeAgo(e.documentDate)}</span>
                 </StyledNewsItemHeaderDiv>
                 <div>{e.title}</div>
-                <StyledNewsItemContentDiv Cfontsize={"0.7rem"}>
+                <StyledNewsItemContentDiv Cfontsize={"0.8rem"}>
                 {highlightedText(e.maxSentence, e.highlight)}
                 </StyledNewsItemContentDiv>
             </a>

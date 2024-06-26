@@ -10,6 +10,7 @@ export const StyledSocialNaverDiv = styled.div`
   border-radius: 20px;
   margin-bottom: 30px;
   font-size: 23px;
+  // position: relative;
 `;
 
 export const StyledNaverItemDiv = styled.div`

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import {
   StyledContentsDiv,
   StyledContentsTitleGroup,
@@ -9,6 +9,7 @@ import {
 import axios from "axios";
 
 export default function StockContent(props) {
+  const navigate=useNavigate();
   const company = props.company;
   const companyCode = company.code;
   const companyName = company.name;
@@ -37,9 +38,12 @@ export default function StockContent(props) {
     fetchData();
   }, [props.companyCode]);
 
+  const handleDivClick = () => {
+    navigate(`/main/stocks/detail/?code=${companyCode}&name=${companyName}`);
+  };
   return (
     // !! div에 key값 붙여주세요. (redux 구현 후)
-    <StyledContentsDiv width={props.width} height={props.height}>
+    <StyledContentsDiv width={props.width} height={props.height} onClick={handleDivClick}>
       <StyledContentsTitleGroup>
         <StyledContentsTitle>{companyName}</StyledContentsTitle>
         <StyledContentsMiniTitle

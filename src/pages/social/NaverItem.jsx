@@ -74,11 +74,11 @@ const NaverItem = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
+        console.log(entries);
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsGraphVisible(true);
-          } else {
-            setIsGraphVisible(false);
+            setIsGraphVisible(true); // Set visibility state to true if intersecting
+            observer.disconnect(); // Disconnect observer once graph is visible
           }
         });
       },
@@ -90,7 +90,7 @@ const NaverItem = () => {
     observer.observe(scrollRef.current);
 
     return () => {
-      observer.disconnect();
+      observer.disconnect(); // Cleanup function to disconnect observer on unmount
     };
   }, []);
 
@@ -113,7 +113,6 @@ const NaverItem = () => {
     setEndDate(new Date().toISOString().split("T")[0]);
     setPeriodOffset(t);
   };
-
   return (
     <StyledSocialNaverDiv darkMode={darkMode}>
       <StyledNaverItemDiv>
