@@ -41,6 +41,7 @@ const sketch = (p5) => {
   p5.updateWithProps = (props) => {
     p5.noLoop(); // 초기에는 멈춰 있는 상태로 설정
 
+    darkMode = props.darkMode;
     if (props.width) {
       width = props.width;
     }
