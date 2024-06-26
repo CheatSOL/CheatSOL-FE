@@ -15,6 +15,7 @@ import {
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ClipLoader } from "react-spinners";
+import { useSelector } from "react-redux";
 
 export default function YoutubeVideo({ keyword }) {
   const [videos, setVideos] = useState([]);
@@ -22,6 +23,7 @@ export default function YoutubeVideo({ keyword }) {
   const [error, setError] = useState(null);
   const [centerSlideIndex, setCenterSlideIndex] = useState(1);
 
+  const darkMode = useSelector((state) => state.theme.darkMode);
   useEffect(() => {
     const fetchVideos = async () => {
       try {
@@ -86,38 +88,52 @@ export default function YoutubeVideo({ keyword }) {
   };
 
   if (loading) return <ClipLoader color="#43d2ff"></ClipLoader>;
-  if (!loading && (error || videos.length !== 0))
-    return (
+  if (!loading && (error || videos.length === 0))
+    return !darkMode ? (
       <img
         style={{ marginLeft: "2rem", width: "100%", height: "100%" }}
         src="/assets/images/undefined-error.svg"
       />
+    ) : (
+      <img
+        style={{ marginLeft: "2rem", width: "100%", height: "100%" }}
+        src="/assets/images/undefined-error-darkmode.svg"
+      />
     );
 
   return (
-    <SliderContainer>
-      {/* <Slider {...settings}
-        {videos.map((video, index) => (
-          <Slide key={video.videoRenderer.videoId}>
-            
-              <CenteredSlideWrapper>
-              <a href={`https://www.youtube.com${video.videoRenderer.inlinePlaybackEndpoint.commandMetadata.webCommandMetadata.url}`} target="_blank" rel="noopener noreferrer">
-                <CenteredSlideImage
-                  src={video.videoRenderer.thumbnail.thumbnails[0].url}
-                  alt="썸네일"
-                  isCenter={index === centerSlideIndex}
-                />
-              </a>
-                <CenteredSlideContent isCenter={index === centerSlideIndex}>
-
-                    <Title>{video.videoRenderer.title.accessibility.accessibilityData.label}</Title>
-                    <Channel>| {video.videoRenderer.longBylineText.runs[0].text} |</Channel>
-
-                </CenteredSlideContent>
-              </CenteredSlideWrapper>
-            </Slide>
-          ))}
-      </Slider> */}
-    </SliderContainer>
+    <></>
+    // <SliderContainer>
+    //   <Slider {...settings}>
+    //     {videos.map((video, index) => (
+    //       <Slide key={video.videoRenderer.videoId}>
+    //         <CenteredSlideWrapper>
+    //           <a
+    //             href={`https://www.youtube.com${video.videoRenderer.inlinePlaybackEndpoint.commandMetadata.webCommandMetadata.url}`}
+    //             target="_blank"
+    //             rel="noopener noreferrer"
+    //           >
+    //             <CenteredSlideImage
+    //               src={video.videoRenderer.thumbnail.thumbnails[0].url}
+    //               alt="썸네일"
+    //               isCenter={index === centerSlideIndex}
+    //             />
+    //           </a>
+    //           <CenteredSlideContent isCenter={index === centerSlideIndex}>
+    //             <Title>
+    //               {
+    //                 video.videoRenderer.title.accessibility.accessibilityData
+    //                   .label
+    //               }
+    //             </Title>
+    //             <Channel>
+    //               | {video.videoRenderer.longBylineText.runs[0].text} |
+    //             </Channel>
+    //           </CenteredSlideContent>
+    //         </CenteredSlideWrapper>
+    //       </Slide>
+    //     ))}
+    //   </Slider>
+    // </SliderContainer>
   );
 }

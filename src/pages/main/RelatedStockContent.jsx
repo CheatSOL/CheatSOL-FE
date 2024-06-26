@@ -53,7 +53,7 @@ export default function RelatedStock({ keyword }) {
               <Skeleton
                 key={index}
                 width={140}
-                height={40}
+                height={20}
                 style={{ margin: "0.5rem" }}
               />
               <Skeleton width={70} height={15} />
