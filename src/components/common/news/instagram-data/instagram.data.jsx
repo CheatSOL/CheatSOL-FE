@@ -14,6 +14,7 @@ import InstagramIndexes from "../../keywordGraph/instagramGraph/InstagramIndexes
 import { useSelector } from "react-redux";
 export default function InstagramData({ tagInfo }) {
   const keyword = useSelector((state) => state.keyword.keyword);
+  const darkMode = useSelector((state) => state.theme.darkMode);
   //!! 샘플 데이터입니다.
   useEffect(() => {
     console.log(tagInfo);
@@ -62,16 +63,16 @@ export default function InstagramData({ tagInfo }) {
 
   return (
     <StyledNewsDiv>
-      <StyledNewsKeyword>
+      <StyledNewsKeyword darkMode={darkMode}>
         <span>"{keyword}"</span>이 이렇게 언급됐어요
       </StyledNewsKeyword>
       <InstagramIndexes tagInfo={tagInfo}></InstagramIndexes>
       <StyledNewsItemParentDiv>
         {data.map((e, index) => (
           <>
-            <StyledNewsItemDiv key={index}>
+            <StyledNewsItemDiv key={index} darkMode={darkMode}>
               <section>
-                <StyledNewsItemHeaderDiv>
+                <StyledNewsItemHeaderDiv darkMode={darkMode}>
                   <img src={insta}></img>
                   <div className="insta-title">
                     <span>{e.channel}</span> |
@@ -84,8 +85,17 @@ export default function InstagramData({ tagInfo }) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <p>{e.caption}...</p>
-                  <p id="hashtags">{e.hashtag}...</p>
+                  <p
+                    style={{ color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)" }}
+                  >
+                    {e.caption}...
+                  </p>
+                  <p
+                    id="hashtags"
+                    style={{ color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)" }}
+                  >
+                    {e.hashtag}...
+                  </p>
                 </a>
               </section>
               <StyledImageDiv>
@@ -97,7 +107,7 @@ export default function InstagramData({ tagInfo }) {
           </>
         ))}
       </StyledNewsItemParentDiv>
-      <StyledBlurDiv />
+      <StyledBlurDiv darkMode={darkMode} />
     </StyledNewsDiv>
   );
 }

@@ -15,35 +15,41 @@ import {
 } from "./RelatedKeyword.style";
 import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import { useSelector } from "react-redux";
 
 export default function RelatedKeyword({ keyword }) {
-    const big_radius = 160; // 반지름
-    const sml_radius = 93;
-    const angleStep = 360 / 6;
-    const key_bubble_size = "90px";
-    const bubble_size = "120px";
-    const mini_bubble_size = "70px";
-    const { data: relatedKeywordData, isLoading: isLoadingKeyword, error: errorKeyword } = useQuery(
-        ["relatedkeywordData", keyword],
-        () => relatedKeywordAPI({ keyword }),
-        {
-            staleTime: Infinity,
-        }
-    );
+  const big_radius = 160; // 반지름
+  const sml_radius = 93;
+  const angleStep = 360 / 6;
+  const key_bubble_size = "90px";
+  const bubble_size = "120px";
+  const mini_bubble_size = "70px";
+  const darkMode = useSelector((state) => state.theme.darkMode);
+  const {
+    data: relatedKeywordData,
+    isLoading: isLoadingKeyword,
+    error: errorKeyword,
+  } = useQuery(
+    ["relatedkeywordData", keyword],
+    () => relatedKeywordAPI({ keyword }),
+    {
+      staleTime: Infinity,
+    }
+  );
 
-    if (isLoadingKeyword) return <div>Loading...</div>;
-    if (errorKeyword) return <div>Error loading data</div>;
+  if (isLoadingKeyword) return <div>Loading...</div>;
+  if (errorKeyword) return <div>Error loading data</div>;
 
   return (
     <>
-      <StyledMainContentDiv>
+      <StyledMainContentDiv darkMode={darkMode}>
         <ContentHeader
           imgUrl="/assets/images/bell.svg"
           keyword={keyword}
           description="과 함께 언급되는 단어에요"
           toLink="/main/keyword"
         />
-        <StyledBubbleContainer>
+        <StyledBubbleContainer darkMode={darkMode}>
           {isLoadingKeyword ? (
             <div
               style={{

@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import NormalGraph from "../../graphs/normalGraph/NormalGraph";
-
+import { useSelector } from "react-redux";
 const formatDate = (dateStr) => {
   let datePart = dateStr.includes("–") ? dateStr.split("–")[0].trim() : dateStr;
   const parts = datePart.split(" ");
+  const darkMode = useSelector((state) => state.theme.darkMode);
 
   const month = parts[0];
   const day = parts[1].replace(",", "");
-
   // monthMap 정의
   const monthMap = {
     Jan: "01",
@@ -52,6 +52,7 @@ export default function YoutubeGraph(props) {
           color={[255, 0, 0]}
           lineSpeed={0.05}
           barSpeed={0.05}
+          darkMode={darkMode}
         />
       ) : (
         <NormalGraph
@@ -62,6 +63,7 @@ export default function YoutubeGraph(props) {
           color={[255, 0, 0]}
           lineSpeed={0.2}
           barSpeed={0.11}
+          darkMode={darkMode}
         />
       )}
     </div>

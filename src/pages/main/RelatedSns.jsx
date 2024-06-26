@@ -9,9 +9,11 @@ import {
 import ContentHeader from "./contents-item/ContentHeader";
 import YoutubeVideo from "./contents-item/YoutubeVideo";
 import Instagram from "./contents-item/Instagram";
+import { useSelector } from "react-redux";
 export default function RelatedSns({ keyword }) {
+  const darkMode = useSelector((state) => state.theme.darkMode);
   return (
-    <StyledMainContentDiv>
+    <StyledMainContentDiv darkMode={darkMode}>
       <div
         style={{
           display: "flex",
@@ -27,7 +29,7 @@ export default function RelatedSns({ keyword }) {
           toLink="/main/social"
         />
         <StyledTitleDiv>"{keyword}" 에 대한 유튜브 반응</StyledTitleDiv>
-        <YoutubeContent>
+        <YoutubeContent darkMode={darkMode}>
           <YoutubeVideo keyword={keyword} />
         </YoutubeContent>
       </div>
@@ -40,7 +42,7 @@ export default function RelatedSns({ keyword }) {
         }}
       >
         <StyledTitleDiv>"{keyword}" 에 대한 인스타그램 반응</StyledTitleDiv>
-        <InstagramContent>
+        <InstagramContent darkMode={darkMode}>
           <Instagram keyword={keyword} />
         </InstagramContent>
       </div>

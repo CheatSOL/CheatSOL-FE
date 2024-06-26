@@ -1,6 +1,8 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const InstagramIndex = ({ index, info, isFirst, isLast }) => {
+  const darkMode = useSelector((state) => state.theme.darkMode);
   return (
     <div
       style={{
@@ -11,6 +13,10 @@ const InstagramIndex = ({ index, info, isFirst, isLast }) => {
         borderLeft: !isFirst ? "none" : "1px solid black",
         borderRight: "1px solid black",
         alignContent: "center",
+        backgroundColor: darkMode ? "" : "white", // fallback color for non-dark mode
+        backgroundImage: darkMode
+          ? "linear-gradient(to right, rgba(137, 134, 134, 0.3), rgba(135, 100, 138, 0.3)"
+          : "",
       }}
     >
       <div
@@ -26,7 +32,9 @@ const InstagramIndex = ({ index, info, isFirst, isLast }) => {
         {index}
       </div>
       <div style={{ textAlign: "center", fontSize: "14px", marginTop: "5px" }}>
-        {info}
+        <span style={{ color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)" }}>
+          {info}
+        </span>
       </div>
     </div>
   );
