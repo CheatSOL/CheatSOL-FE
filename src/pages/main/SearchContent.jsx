@@ -156,7 +156,7 @@ export default function SearchContent({ keyword }) {
         }
         toLink="/main/social"
       />
-      <Contents>
+      <Contents darkMode={darkMode}>
         {error || !isLoading ? (
           Number.isNaN(percent) ? (
             <div
@@ -167,10 +167,17 @@ export default function SearchContent({ keyword }) {
                 justifyContent: "center",
               }}
             >
-              <img
-                style={{ width: "750px", height: "165px" }}
-                src="/assets/images/no-data.svg"
-              ></img>
+              {darkMode ? (
+                <img
+                  style={{ width: "750px", height: "165px" }}
+                  src="/assets/images/no-data-darkmode.svg"
+                ></img>
+              ) : (
+                <img
+                  style={{ width: "750px", height: "165px" }}
+                  src="/assets/images/no-data.svg"
+                ></img>
+              )}
             </div>
           ) : error ? (
             <div
@@ -181,11 +188,17 @@ export default function SearchContent({ keyword }) {
                 justifyContent: "center",
               }}
             >
-              <img
-                style={{ width: "750px", height: "165px" }}
-                //다크모드 시 undefined-error-darkmode.svg
-                src="/assets/images/undefined-error.svg"
-              ></img>
+              {darkMode ? (
+                <img
+                  style={{ width: "750px", height: "165px" }}
+                  src="/assets/images/undefined-error-darkmode.svg"
+                ></img>
+              ) : (
+                <img
+                  style={{ width: "750px", height: "165px" }}
+                  src="/assets/images/undefined-error.svg"
+                ></img>
+              )}
             </div>
           ) : (
             <NormalGraph

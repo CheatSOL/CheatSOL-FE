@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledContentsDiv = styled.div`
-  background-color: ${(props) => (props.darkMode ? "#333333" : "white")};
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
   color: ${(props) => (props.darkMode ? "white" : "black")};
   display: flex;
   flex-direction: column;
@@ -65,9 +65,9 @@ export const StyledContentsMiniTitle = styled.div`
     font-weight: 500;
     color: ${(props) =>
       props.signperyesterday > 0
-        ? "#077DF3"
+        ? "#43d2ff"
         : props.signperyesterday < 0
-        ? "#ED3738"
+        ? "#ec4b3b"
         : props.darkMode
         ? "white"
         : "black"};
