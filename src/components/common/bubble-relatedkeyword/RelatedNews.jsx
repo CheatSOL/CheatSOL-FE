@@ -10,6 +10,7 @@ import { StyledNewsDiv,
     StyledNewsItemContentDiv } from "../news/naver-news/Naver.style";
 import { StyledBlurDiv } from "../news/naver-news/Naver.style";
 import Skeleton from 'react-loading-skeleton';
+import { useSelector } from "react-redux";
 
 function timeAgo(dateString) {
     const now = new Date();
@@ -51,6 +52,7 @@ function timeAgo(dateString) {
 
 
 export default function RelatedNews(props) {
+  const darkMode = useSelector((state) => state.theme.darkMode);
     const { data: relatedNewsData, isLoading: isLoadingNews, error: errorNews } = useQuery(
       ["relatednewsData", props.params2],
         () => relatedNewsAPI(props.params2),
@@ -70,8 +72,8 @@ export default function RelatedNews(props) {
     else return (
         
     // <NaverNews data={relatedNewsData} width={"680px"} Hfontsize={"0.8rem"} Cfontsize={"0.7rem"}></NaverNews>
-    <StyledNewsDiv backgroundcol={props.backgroundcol} width={"680px"} height={props.height}>
-          <StyledGraphKeyword>
+    <StyledNewsDiv darkMode={darkMode} width={"680px"} height={props.height}>
+          <StyledGraphKeyword darkMode={darkMode}>
           <span>관련 뉴스 </span>                           
           <span id="related-news-count">{relatedNewsData?relatedNewsData.data.length:' -- '}건</span>
           </StyledGraphKeyword>
@@ -80,7 +82,7 @@ export default function RelatedNews(props) {
         {relatedNewsData
           ? 
           relatedNewsData.data.map((e, index) => (
-            <StyledNewsItemDiv key={index} Hfontsize={"1rem"}>
+            <StyledNewsItemDiv darkMode={darkMode} key={index} Hfontsize={"1rem"}>
             <a
                 href={e.url}
                 target="_blank"
@@ -92,7 +94,7 @@ export default function RelatedNews(props) {
                 <span>{e.writer}</span> | <span>{timeAgo(e.documentDate)}</span>
                 </StyledNewsItemHeaderDiv>
                 <div>{e.title}</div>
-                <StyledNewsItemContentDiv Cfontsize={"0.8rem"}>
+                <StyledNewsItemContentDiv darkMode={darkMode} Cfontsize={"0.8rem"}>
                 {highlightedText(e.maxSentence, e.highlight)}
                 </StyledNewsItemContentDiv>
             </a>

@@ -10,13 +10,14 @@ import Newstab from './newstab/Newstab';
 import Header from '../../../components/common/header/Header';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 import ChartModal from './chart/ChartModal';
 import { ClipLoader } from "react-spinners";
-import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
+import { HiChevronDoubleLeft } from "react-icons/hi";
 import { GlowIcon } from "./StockDetail.style";
 export default function StockDetail() {
 
+  const darkMode = useSelector((state) => state.theme.darkMode);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const code = searchParams.get('code');
@@ -38,6 +39,11 @@ export default function StockDetail() {
   const handleBackClick = () => {
     navigate(-1); // This navigates back to the previous page
   };
+
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const formattedTime = `${hours}:${minutes}`;
   useEffect(() => {
     const currentDate = new Date();
     const hours = currentDate.getHours();
@@ -96,7 +102,7 @@ export default function StockDetail() {
     }
     if (!stockData) return null;
     return (
-      <PriceContent>
+      <PriceContent darkMode={darkMode}>
       <div style={{fontSize:"35px", fontWeight:"bold"}}>{parseInt(stockData.주식현재가).toLocaleString()}<span style={{fontSize:"15px", marginLeft:"3px"}}>원</span></div>
       <div style={{ display: "flex", gap: "7px" }}>
                     {formatPC(stockData.전일대비)}
@@ -104,7 +110,7 @@ export default function StockDetail() {
       </div>
       <StockStatus>
       <>
-      {new Date().getHours()}:{new Date().getMinutes()}
+      {formattedTime}
       <i class="bi bi-circle-fill" style={{ color: '#4BFF3B' , fontSize:"8px", marginLeft:"15px", marginRight:"5px"}}></i>실시간
       </>
       </StockStatus>
@@ -163,29 +169,24 @@ const DateStatus = () => {
   return (
     <Container>
       <Sidebar />
-      <Content>
+      <Content darkMode={darkMode}>
       <div style={{fontSize:"20px", fontWeight:"bold"}}>
      
-          <GlowIcon onClick={handleBackClick}>
-            <HiChevronDoubleLeft
-              style={{
-                cursor: "pointer",
-                width: "40px",
-                height: "40px",
-                color: "#00537A",
-              }}
-            ></HiChevronDoubleLeft>
+          <GlowIcon onClick={handleBackClick} darkMode={darkMode} >
+            <HiChevronDoubleLeft/>
+            <span>뒤로가기</span>
          </GlowIcon>
-         <LinkTo onClick={handleLinkTo}> <i class="bi bi-box-arrow-up-right" style={{marginRight:"3px", fontSize:"26px"}}></i><span style={{fontWeight:"bold", fontSize:"20px"}}><i style={{fontSize:"23px"}}>{name}</i>  투자하러 가기</span></LinkTo>
+         <LinkTo onClick={handleLinkTo} darkMode={darkMode}> <i class="bi bi-box-arrow-up-right" style={{marginRight:"3px", fontSize:"26px"}}></i><span style={{fontWeight:"bold", fontSize:"20px"}}><i style={{fontSize:"23px"}}>{name}</i>  투자하러 가기</span></LinkTo>
       </div>
       <ChartSection>
           <div className="header-content">
-            <div style={{fontSize:"24px", fontWeight:"bold"}}>{code}</div>
-            <h4>{name}</h4> 
+          <div style={{ fontSize: "24px", fontWeight: "bold", color: darkMode ? "white" : "black" }}>{code}</div>
+
+            <h4 style={{color: darkMode ? "white" : "black" }}>{name}</h4> 
             <div>
               {marketStatus === 1 && renderPriceChange()}
               {marketStatus === 0 && lastPrice && (
-                <PriceContent>
+                <PriceContent darkMode={darkMode}>
                   <div style={{fontSize:"35px", fontWeight:"bold"}}>{numberWithCommas(lastPrice.stck_clpr)}<span style={{fontSize:"15px", marginLeft:"3px"}}>원</span></div>
                   <div style={{ display: "flex", gap: "7px" }}>
                     {formatPC(lastPrice.prdy_vrss)}
@@ -199,7 +200,7 @@ const DateStatus = () => {
             </div>
           </div>
           <div className="chart-image">
-            <img src="/assets/images/chart.png" alt="chart" onDoubleClick={handleShowChart} style={{width:"150px", marginBottom:"10pxs", cursor:"pointer"}}/>
+            <img src="/assets/images/chart.png" alt="chart" onClick={handleShowChart} style={{width:"150px", marginBottom:"10pxs", cursor:"pointer"}}/>
             <div>
             <i class="bi bi-arrows-fullscreen" style={{color:"#0DAA5C", fontSize:"12px", fontWeight:"bold", cursor:"pointer"}} onClick={handleShowChart}></i>
             <span style={{fontSize:"12px", marginLeft:"10px", color:"#0DAA5C", cursor:"pointer"}} onClick={handleShowChart} >차트 자세히 보기</span>
@@ -210,7 +211,7 @@ const DateStatus = () => {
           
         </ChartSection>
         <TabsSection>
-          <CustomTabs justify variant="underline" activeKey={activeTab} onSelect={handleTabSelect}>
+          <CustomTabs justify variant="underline" activeKey={activeTab} onSelect={handleTabSelect} darkMode={darkMode}>
             <Nav.Item>
               <Nav.Link eventKey="main" >종합</Nav.Link>
             </Nav.Item>

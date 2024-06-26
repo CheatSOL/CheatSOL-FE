@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import axios from 'axios';
 import Nav from 'react-bootstrap/Nav';
+import { useSelector } from 'react-redux';
 import {StyledInput, FlexContainer, Label, CustomTabs} from './StockChart.style';
 const getTodayDate = () => {
   const today = new Date();
   const offsetDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000);
   return offsetDate.toISOString().split('T')[0];
 };
+
+
 const getMonthsAgo = (months) => {
   const today = new Date(getTodayDate());
   today.setMonth(today.getMonth() - months);
@@ -16,6 +19,7 @@ const getMonthsAgo = (months) => {
 };
 
 export const StockChart = ({symbol}) => {
+  const darkMode = useSelector((state) => state.theme.darkMode);
   const startDateBusinessDaysAgo = getMonthsAgo(5);
   const [startDate, setStartDate] = useState(startDateBusinessDaysAgo);
   const [endDate, setEndDate] = useState(getTodayDate());
@@ -59,6 +63,7 @@ export const StockChart = ({symbol}) => {
     chart: {
       type: 'candlestick',
       height: "600px",
+      background: darkMode ? '#333333' : 'white',
     },
     plotOptions: {
         candlestick: {
@@ -66,11 +71,33 @@ export const StockChart = ({symbol}) => {
             upward: '#ED3738', // 증가할 때의 색상
             downward: '#077DF3', // 감소할 때의 색상
           },
+          
         },
       },
       xaxis: {
         type: 'datetime',
+        labels: {
+          style: {
+            colors: darkMode ? '#fff' : '#000', // x-axis labels color based on dark mode
+          }
+      },
+      axisBorder: {
+        color: darkMode ? '#ddd' : '#333', 
+      },
+      axisTicks: {
+        color: darkMode ? '#ddd' : '#333', 
       }
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: darkMode ? '#fff' : '#000', 
+        }
+      },
+    },
+    theme: {
+      mode: darkMode ? 'dark' : 'light' 
+    }
   };
 
   const series = [
@@ -95,22 +122,26 @@ export const StockChart = ({symbol}) => {
      
      <FlexContainer>
       <span >
-        <Label>시작 날짜:</Label>
+        <Label darkMode={darkMode}>시작 날짜:</Label>
         <StyledInput 
           type="date" 
           value={startDate} 
           onChange={handleStartDateChange} 
           max={endDate}
+          darkMode={darkMode}
+         
+
         />
         </span>
         <span>
-        <Label>종료 날짜:</Label>
+        <Label darkMode={darkMode}>종료 날짜:</Label>
         <StyledInput 
           type="date" 
           value={endDate} 
           onChange={handleEndDateChange}
           min={startDate}
           max={getTodayDate()}
+          darkMode={darkMode}
         />
         
         </span>
@@ -119,7 +150,7 @@ export const StockChart = ({symbol}) => {
       </FlexContainer>
       <div style={{fontSize:"14px", display:"flex", justifyContent:"end", marginBottom:"35px"}}><i class="bi bi-info-circle" style={{marginRight:"5px"}}></i>일별 / 주별 / 월별 / 연별로 현재 날짜로부터 최대 100개의 정보를 제공합니다.</div>
 
-      <CustomTabs justify variant='tabs' activeKey={activeTab} onSelect={handleTabChange}>
+      <CustomTabs justify variant='tabs' activeKey={activeTab} onSelect={handleTabChange} darkMode={darkMode}>
         <Nav.Item>
           <Nav.Link  eventKey="D">일별</Nav.Link>
         </Nav.Item>

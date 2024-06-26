@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { StyledTable, StyledChangeRate, StyledPriceChange, LoaderWrapper } from './Pricetab.style';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
+import { useSelector } from 'react-redux';
 export default function Pricetab({id}) {
+    const darkMode = useSelector((state) => state.theme.darkMode);
     const [dailyPrice, setDailyPrice] = useState(null);
     useEffect(() => {
         const fetchData = async () => {
@@ -51,7 +52,7 @@ export default function Pricetab({id}) {
     return (
         <div>
             {dailyPrice ? (
-                <StyledTable>
+                <StyledTable darkMode={darkMode}>
                     <thead>
                         <tr>
                             <th>날짜</th>

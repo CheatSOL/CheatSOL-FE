@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const StyledContentsDiv = styled.div`
+  background-color: ${(props) => (props.darkMode ? "#333333" : "white")};
+  color: ${(props) => (props.darkMode ? "white" : "black")};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,7 +14,6 @@ export const StyledContentsDiv = styled.div`
   cursor: pointer;
   border: 2px solid #d3d3d3;
   border-radius: 20px;
-  background-color: white;
   margin: 4px;
 
   &:hover {
@@ -27,14 +28,13 @@ export const StyledContentsTitleGroup = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
-
   font-weight: 800;
   font-size: 1.5rem;
 `;
 
 export const Contents = styled.div`
+  background-color: ${(props) => (props.darkMode ? "#333333" : "white")};
   flex: 1;
-  background-color: white;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -65,11 +65,12 @@ export const StyledContentsMiniTitle = styled.div`
     font-weight: 500;
     color: ${(props) =>
       props.signperyesterday > 0
-        ? "blue"
+        ? "#077DF3"
         : props.signperyesterday < 0
-        ? "orangered"
+        ? "#ED3738"
+        : props.darkMode
+        ? "white"
         : "black"};
-  }
 
   & img {
     height: 10px;
