@@ -205,9 +205,9 @@ export const StyledInfoIcon = styled.div`
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #F5F6F8;
+    background-color: ${props => props.darkMode ? '#000000ad' : '#f0f1f3'};
     padding: 8px;
-    border: 1px solid rgba(187,195,192,1);
+    border: ${props => props.darkMode ? '1px solid rgb(0 0 0 / 62%)' : '1px solid rgba(187,195,192,1)'};
     border-radius: 5px;
     visibility: hidden;
     opacity: 0;
@@ -217,6 +217,8 @@ export const StyledInfoIcon = styled.div`
     width: 400px;
     font-size: 0.9rem;
   }
+
+
 `;
 
 export const StyledGraphKeyword = styled.div`
