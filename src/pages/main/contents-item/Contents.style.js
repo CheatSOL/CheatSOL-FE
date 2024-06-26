@@ -15,7 +15,7 @@ export const StyledContentsDiv = styled.div`
   border: 2px solid #d3d3d3;
   border-radius: 20px;
   margin: 4px;
-
+  
   &:hover {
     border-color: #43d2ff;
   }
@@ -23,11 +23,12 @@ export const StyledContentsDiv = styled.div`
 
 // TitleGroup
 export const StyledContentsTitleGroup = styled.div`
+  margin-top:15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   font-weight: 800;
   font-size: 1.5rem;
 `;

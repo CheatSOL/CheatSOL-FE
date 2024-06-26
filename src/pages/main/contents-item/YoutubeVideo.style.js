@@ -20,6 +20,7 @@ export const SlideContent = styled.div`
   text-align: center;
 `;
 export const Title = styled.div`
+color: ${(props) => (props.darkMode ? "white" : "black")};
 margin-left:-12.7px;
 width:120%;  
 font-size: 12px;
@@ -31,6 +32,7 @@ font-size: 12px;
 export const Channel = styled.div`
   font-size: 10px;
   color: #666;
+  color: ${(props) => (props.darkMode ? "#ddd" : "#666")};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

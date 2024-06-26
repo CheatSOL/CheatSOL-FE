@@ -95,8 +95,8 @@ export default function YoutubeVideo({ keyword }) {
                   />
                 </a>
                 <CenteredSlideContent isCenter={index === centerSlideIndex}>
-                  <Title>{video.title}</Title>
-                  <Channel>| {video.channel} |</Channel>
+                  <Title darkMode={darkMode}>{video.title}</Title>
+                  <Channel darkMode={darkMode}>| {video.channel} |</Channel>
                 </CenteredSlideContent>
               </CenteredSlideWrapper>
             </Slide>
