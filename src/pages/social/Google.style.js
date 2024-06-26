@@ -44,5 +44,5 @@ export const StyledLoadingDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
 `;

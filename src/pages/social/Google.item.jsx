@@ -15,8 +15,7 @@ import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
 
-const fetchGoogleStockData = async (keyword, startTime, setLoadError) => {
-  setLoadError(false);
+const fetchGoogleStockData = async (keyword, startTime) => {
   const response = await axios.get("/api/trends/google", {
     params: {
       keyword: keyword,
@@ -28,7 +27,7 @@ const fetchGoogleStockData = async (keyword, startTime, setLoadError) => {
 
 export default function GoogleItem() {
   const darkMode = useSelector((state) => state.theme.darkMode);
-  const [loadError, setLoadError] = useState(false);
+  /* const [loadError, setLoadError] = useState(false); */
   const scrollRef = useRef(null);
   const [isGraphVisible, setIsGraphVisible] = useState(false);
   const keyword = useSelector((state) => state.keyword.keyword);
@@ -36,8 +35,8 @@ export default function GoogleItem() {
   const { data, isLoading, error } = useQuery(
     ["googleStockData", keyword, startTime],
     () =>
-      startTime
-        ? fetchGoogleStockData(keyword, startTime, setLoadError)
+      keyword
+        ? fetchGoogleStockData(keyword, startTime)
         : Promise.resolve(null),
     {
       staleTime: Infinity,
@@ -52,22 +51,29 @@ export default function GoogleItem() {
         console.log(entries);
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsGraphVisible(true); // Set visibility state to true if intersecting
-            observer.disconnect(); // Disconnect observer once graph is visible
+            setIsGraphVisible(true);
+            observer.disconnect();
           }
         });
       },
       {
-        threshold: 0.1, // Adjust the threshold as needed
+        threshold: 0.1,
       }
     );
 
     observer.observe(scrollRef.current);
 
     return () => {
-      observer.disconnect(); // Cleanup function to disconnect observer on unmount
+      observer.disconnect();
     };
   }, []);
+
+  /* useEffect(() => {
+    if (keyword) {
+      setLoadError(false);
+      refetch();
+    }
+  }, [keyword, refetch]); */
 
   const handlePeriodChange = (selectedPeriod) => {
     let t = "";
@@ -89,12 +95,11 @@ export default function GoogleItem() {
         </div>
         <StyledGoogleHeaderDiv>
           <PeriodSelectBar handlePeriodChange={handlePeriodChange} />
-          {/* <CountrySelectBar /> */}
         </StyledGoogleHeaderDiv>
         <div></div>
       </StyledGoogleItemDiv>
       <StyledGoogleChartNewsDiv ref={scrollRef} darkMode={darkMode}>
-        {loadError || error ? (
+        {error ? (
           <div
             style={{
               width: "100%",
@@ -103,11 +108,19 @@ export default function GoogleItem() {
               alignItems: "center",
             }}
           >
-            <img
-              src="/assets/images/no-search.svg"
-              width={"70%"}
-              height={"400px"}
-            />
+            {darkMode ? (
+              <img
+                src="/assets/images/no-data-darkmode.svg"
+                width={"70%"}
+                height={"400px"}
+              />
+            ) : (
+              <img
+                src="/assets/images/no-data.svg"
+                width={"70%"}
+                height={"400px"}
+              />
+            )}
           </div>
         ) : (
           <>
@@ -117,7 +130,7 @@ export default function GoogleItem() {
               </span>
               {isGraphVisible ? (
                 isLoading ? (
-                  <StyledLoadingDiv>
+                  <StyledLoadingDiv darkMode={darkMode}>
                     <ClipLoader color={"#43D2FF"} loading={true} />
                   </StyledLoadingDiv>
                 ) : (
@@ -127,11 +140,15 @@ export default function GoogleItem() {
                 )
               ) : (
                 <div
-                  style={{ marginTop: "20px", width: "600px", height: "400px" }}
+                  style={{
+                    marginTop: "20px",
+                    width: "600px",
+                    height: "400px",
+                  }}
                 ></div>
               )}
             </div>
-            <GoogleNews setLoadError={setLoadError} loadError={loadError} />
+            <GoogleNews />
           </>
         )}
       </StyledGoogleChartNewsDiv>
