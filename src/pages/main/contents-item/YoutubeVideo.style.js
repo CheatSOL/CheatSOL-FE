@@ -90,10 +90,10 @@ export const CustomArrow = styled.div`
   }
 
   &.slick-prev {
-    left: -15px;
+    left: -30px;
   }
 
   &.slick-next {
-    right: -15px;
+    right: -30px;
   }
 `;
