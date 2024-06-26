@@ -4,7 +4,7 @@ import styled from "styled-components";
 // import p5 from "p5";
 // window.p5 = p5;
 const ChartContainer = styled.div`
-  background: #fff;
+  // background: #fff;
   padding: 10px;
   box-shadow: 0 4px 8px rgba(color[0], color[1], color[2], 0.1);
   border-radius: 10px;
@@ -32,6 +32,7 @@ const sketch = (p5) => {
   let zoom = 1;
   let color = [];
   let width = 400;
+  let darkMode = false;
   p5.setup = () => {
     p5.noLoop(); // 초기에는 멈춰 있는 상태로 설정
     p5.createCanvas(width + 200, 400);
@@ -39,6 +40,9 @@ const sketch = (p5) => {
 
   p5.updateWithProps = (props) => {
     p5.noLoop(); // 초기에는 멈춰 있는 상태로 설정
+    if (props.darkMode) {
+      darkMode = props.darkMode;
+    }
     if (props.width) {
       width = props.width;
     }
@@ -67,12 +71,18 @@ const sketch = (p5) => {
       color = props.color;
     }
     zoom = props.zoom;
+    p5.loop(); // props가 업데이트되면 다시 시작
   };
+  console.log(p5);
 
   p5.draw = () => {
+    p5.loop();
     p5.scale;
-    p5.loop(); // props가 업데이트되면 다시 시작
-    p5.background(255);
+    // console.log(darkMode);
+    // p5.loop(); // props가 업데이트되면 다시 시작
+    if (darkMode) p5.background(71, 72, 74);
+    else p5.background(255);
+
     p5.stroke(color[0], color[1], color[2]);
 
     p5.strokeWeight(5);
@@ -243,6 +253,7 @@ const sketch = (p5) => {
           p5.mouseY > 350 - currentBarHeight[i] &&
           p5.mouseY < 350
         ) {
+          if (darkMode) p5.fill(71, 72, 74, 50);
           p5.fill(255, 255, 255, 20);
           p5.rect(
             p5.map(i, 0, data.length - 1, 100, width + 100) - 35,
@@ -369,6 +380,7 @@ const NormalGraph = ({
   color,
   zoom,
   width,
+  darkMode,
 }) => {
   useEffect(() => {
     window.noLoop = false;
@@ -399,6 +411,7 @@ const NormalGraph = ({
         color={color}
         zoom={zoom}
         width={width}
+        darkMode={darkMode}
       />
     </ChartContainer>
   );

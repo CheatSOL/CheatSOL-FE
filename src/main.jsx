@@ -4,8 +4,4 @@ import App from "./App.jsx";
 import "./index.css";
 import StockInfoDetail from "./components/common/StockInfoDetail.jsx";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App></App>
-  </React.StrictMode>
-);
+ReactDOM.createRoot(document.getElementById("root")).render(<App></App>);

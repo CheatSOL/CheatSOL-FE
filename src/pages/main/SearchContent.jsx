@@ -87,13 +87,13 @@ export default function SearchContent({ keyword }) {
             >
               {percent > 0 && (
                 <>
-                  <p style={{marginTop:"10px"}}>
+                  <p style={{ marginTop: "10px" }}>
                     의 검색량이 전 주에 비해
                     <strong
                       style={{
                         fontSize: "30px",
                         margin: "0 0.5rem",
-                        marginTop:"2px"
+                        marginTop: "2px",
                       }}
                     >
                       {Math.abs(Math.round(percent))}%
@@ -104,27 +104,23 @@ export default function SearchContent({ keyword }) {
                       width: "40px",
                       height: "40px",
                       margin: "-0.5rem 0.5rem",
-                      marginTop:"10px"
+                      marginTop: "10px",
                     }}
                     src="/assets/images/increase.svg"
                     alt="increase"
                   />
-                  <span style={{marginTop:"18px"}}>
-                  증가했어요.
-                  </span>
-                
+                  <span style={{ marginTop: "18px" }}>증가했어요.</span>
                 </>
-
               )}
               {percent < 0 && (
                 <>
-                  <p  style={{marginTop:"10px"}}>
+                  <p style={{ marginTop: "10px" }}>
                     의 검색량이 전 주에 비해
                     <strong
                       style={{
                         fontSize: "30px",
                         marginLeft: "0.5rem",
-                        marginTop:"2px"
+                        marginTop: "2px",
                       }}
                     >
                       {Math.abs(percent)}%
@@ -135,15 +131,13 @@ export default function SearchContent({ keyword }) {
                       width: "40px",
                       height: "40px",
                       margin: "-0.5rem 0.5rem",
-                      marginTop:"10px"
+                      marginTop: "10px",
                     }}
                     src="/assets/images/decrease.svg"
                     alt="decrease"
                   />
-                  
-                  <span style={{marginTop:"18px"}}>
-                  감소했어요.
-                  </span>
+
+                  <span style={{ marginTop: "18px" }}>감소했어요.</span>
                 </>
               )}
               {percent === 0 && <>의 이번주 검색량이 전 주와 동일해요.</>}
