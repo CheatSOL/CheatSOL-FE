@@ -102,37 +102,38 @@ export default function YoutubeVideo({ keyword }) {
     );
 
   return (
-    <SliderContainer>
-      <Slider {...settings}>
-        {videos.map((video, index) => (
-          <Slide key={video.videoRenderer.videoId}>
-            <CenteredSlideWrapper>
-              <a
-                href={`https://www.youtube.com${video.videoRenderer.inlinePlaybackEndpoint.commandMetadata.webCommandMetadata.url}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <CenteredSlideImage
-                  src={video.videoRenderer.thumbnail.thumbnails[0].url}
-                  alt="썸네일"
-                  isCenter={index === centerSlideIndex}
-                />
-              </a>
-              <CenteredSlideContent isCenter={index === centerSlideIndex}>
-                <Title>
-                  {
-                    video.videoRenderer.title.accessibility.accessibilityData
-                      .label
-                  }
-                </Title>
-                <Channel>
-                  | {video.videoRenderer.longBylineText.runs[0].text} |
-                </Channel>
-              </CenteredSlideContent>
-            </CenteredSlideWrapper>
-          </Slide>
-        ))}
-      </Slider>
-    </SliderContainer>
+    <></>
+    // <SliderContainer>
+    //   <Slider {...settings}>
+    //     {videos.map((video, index) => (
+    //       <Slide key={video.videoRenderer.videoId}>
+    //         <CenteredSlideWrapper>
+    //           <a
+    //             href={`https://www.youtube.com${video.videoRenderer.inlinePlaybackEndpoint.commandMetadata.webCommandMetadata.url}`}
+    //             target="_blank"
+    //             rel="noopener noreferrer"
+    //           >
+    //             <CenteredSlideImage
+    //               src={video.videoRenderer.thumbnail.thumbnails[0].url}
+    //               alt="썸네일"
+    //               isCenter={index === centerSlideIndex}
+    //             />
+    //           </a>
+    //           <CenteredSlideContent isCenter={index === centerSlideIndex}>
+    //             <Title>
+    //               {
+    //                 video.videoRenderer.title.accessibility.accessibilityData
+    //                   .label
+    //               }
+    //             </Title>
+    //             <Channel>
+    //               | {video.videoRenderer.longBylineText.runs[0].text} |
+    //             </Channel>
+    //           </CenteredSlideContent>
+    //         </CenteredSlideWrapper>
+    //       </Slide>
+    //     ))}
+    //   </Slider>
+    // </SliderContainer>
   );
 }

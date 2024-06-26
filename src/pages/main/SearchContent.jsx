@@ -208,6 +208,7 @@ export default function SearchContent({ keyword }) {
               lineSpeed={0.05}
               barSpeed={0.05}
               width={600}
+              darkMode={darkMode}
             />
           )
         ) : (

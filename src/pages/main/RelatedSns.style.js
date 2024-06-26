@@ -7,7 +7,7 @@ export const StyledTitleDiv = styled.div`
   border-radius: 50px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 
-  background-color: #43d2ff;
+  background-color: #9badb3;
   color: white;
   font-weight: bold;
 `;
