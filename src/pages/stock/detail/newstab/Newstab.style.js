@@ -32,20 +32,21 @@ export const NewsDetails = styled.div`
 `;
 
 export const NewsTitle = styled.h2`
+  color: ${(props) => (props.darkMode ? "white" : "black")};
   font-size: 16px;
   margin: 0;
 `;
 
 export const NewsDateOffice = styled.div`
+  color: ${(props) => (props.darkMode ? "#555" : "#9FA4A6")};
   margin-top:5px;
   font-size: 13px;
-  color: #9FA4A6;
-
 `;
 
 export const NewsContent=styled.div`
     font-size:14px;
     color:#555;
+    color: ${(props) => (props.darkMode ? "#9FA4A6" : "#555")};
 `
 
 export const StyledLink = styled(Link)`
@@ -53,7 +54,10 @@ export const StyledLink = styled(Link)`
   color: inherit; 
   &:hover {
     text-decoration: none; 
-    color:#43D2FF;
     opacity: 0.8; 
+    ${NewsTitle} {
+      color: #43D2FF;
+    }
+
   }
 `;
