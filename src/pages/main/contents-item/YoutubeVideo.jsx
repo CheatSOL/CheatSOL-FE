@@ -16,11 +16,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ClipLoader } from "react-spinners";
 
-const defaultImage = "/assets/images/bubbleimg.png";
-const defaultUrl = "#";
-const defaultTitle = "<제목>";
-const defaultChannel = "채널";
-
 export default function YoutubeVideo({ keyword }) {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,74 +25,10 @@ export default function YoutubeVideo({ keyword }) {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get('/api/youtube', {
-          params: { word: keyword }
+        const response = await axios.get("/api/youtube", {
+          params: { word: keyword, limit: 5 },
         });
-        
-        // 영상 데이터를 가져온 후 thumbnail이나 url이 없는 항목을 기본 데이터로 채움
-        let videoData = response.data.slice(0, 5).map(video => {
-          const videoRenderer = video.videoRenderer || {};
-          const thumbnail = videoRenderer.thumbnail?.thumbnails?.[0]?.url || defaultImage;
-          const videoUrl = videoRenderer.inlinePlaybackEndpoint?.commandMetadata?.webCommandMetadata?.url ? 
-            `https://www.youtube.com${videoRenderer.inlinePlaybackEndpoint.commandMetadata.webCommandMetadata.url}` : 
-            defaultUrl;
-          const title = videoRenderer.title?.accessibility?.accessibilityData?.label || defaultTitle;
-          const channel = videoRenderer.longBylineText?.runs?.[0]?.text || defaultChannel;
-
-          return {
-            videoRenderer: {
-              ...videoRenderer,
-              thumbnail: { thumbnails: [{ url: thumbnail }] },
-              inlinePlaybackEndpoint: {
-                commandMetadata: {
-                  webCommandMetadata: {
-                    url: videoUrl
-                  }
-                }
-              },
-              title: {
-                accessibility: {
-                  accessibilityData: {
-                    label: title
-                  }
-                }
-              },
-              longBylineText: {
-                runs: [{ text: channel }]
-              }
-            }
-          };
-        });
-
-        // Ensure we always have 5 items
-        while (videoData.length < 5) {
-          videoData.push({
-            videoRenderer: {
-              videoId: `default-${Math.random()}`,
-              thumbnail: { thumbnails: [{ url: defaultImage }] },
-              inlinePlaybackEndpoint: {
-                commandMetadata: {
-                  webCommandMetadata: {
-                    url: defaultUrl
-                  }
-                }
-              },
-              title: {
-                accessibility: {
-                  accessibilityData: {
-                    label: defaultTitle
-                  }
-                }
-              },
-              longBylineText: {
-                runs: [{ text: defaultChannel }]
-              }
-            }
-          });
-        }
-
-        setVideos(videoData);
-        console.log('Fetched Videos:', videoData);
+        setVideos(response.data);
         setLoading(false);
       } catch (err) {
         setError(err);
@@ -130,8 +61,8 @@ export default function YoutubeVideo({ keyword }) {
     ],
   };
 
-  if (loading) return <ClipLoader color="#43d2ff" />;
-  if (error || videos.length === 0) 
+  if (loading) return <ClipLoader color="#43d2ff"></ClipLoader>;
+  if (!loading && (error || videos.length === 0))
     return (
       <img
         style={{ marginLeft: "2rem", width: "100%", height: "100%" }}
@@ -142,34 +73,26 @@ export default function YoutubeVideo({ keyword }) {
   return (
     <SliderContainer>
       <Slider {...settings}>
-        {videos.map((videoData, index) => {
-          const video = videoData.videoRenderer;
-          const videoUrl = video.inlinePlaybackEndpoint?.commandMetadata?.webCommandMetadata?.url ? 
-            `https://www.youtube.com${video.inlinePlaybackEndpoint.commandMetadata.webCommandMetadata.url}` : 
-            defaultUrl;
-          const thumbnail = video.thumbnail?.thumbnails?.[0]?.url || defaultImage;
-          const title = video.title?.accessibility?.accessibilityData?.label || defaultTitle;
-          const channel = video.longBylineText?.runs?.[0]?.text || defaultChannel;
-          const isDefaultImage = thumbnail === defaultImage;
-          return (
-            <Slide key={video.videoId}>
+        {!error &&
+          videos.length !== 0 &&
+          videos.map((video, index) => (
+            <Slide key={video.url}>
               <CenteredSlideWrapper>
-                <a href={videoUrl} target="_blank" rel="noopener noreferrer">
+                <a href={video.url} target="_blank" rel="noopener noreferrer">
                   <CenteredSlideImage
-                    src={thumbnail}
-                    alt="썸네일"
+                    src={video.thumbnail_url}
+                    alt={video.title}
                     isCenter={index === centerSlideIndex}
-                    style={isDefaultImage ? { width: '130px', height: '90px' } : {}}
+                    
                   />
                 </a>
                 <CenteredSlideContent isCenter={index === centerSlideIndex}>
-                  <Title>{title}</Title>
-                  <Channel>| {channel} |</Channel>
+                  <Title>{video.title}</Title>
+                  <Channel>| {video.channel} |</Channel>
                 </CenteredSlideContent>
               </CenteredSlideWrapper>
             </Slide>
-          );
-        })}
+          ))}
       </Slider>
     </SliderContainer>
   );

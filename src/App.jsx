@@ -22,6 +22,7 @@ function App() {
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
           <Router>
+            <ErrorBoundaryWrapper>
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/main" element={<MainPage />} />
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/error" element={<ErrorPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
+            </ErrorBoundaryWrapper>
           </Router>
         </QueryClientProvider>
       </Provider>
