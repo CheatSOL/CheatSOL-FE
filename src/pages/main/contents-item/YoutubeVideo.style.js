@@ -49,8 +49,10 @@ export const CenteredSlideImage = styled(SlideImage)`
   height: auto;
   border-radius: 10px;
   transition: transform 0.3s, opacity 0.3s;
-  margin-bottom:5px;
-
+  margin-bottom:7px;
+  img{
+    height:100px;
+  }
   ${props => props.isCenter && css`
     transform: scale(1.05);
     opacity: 1;
