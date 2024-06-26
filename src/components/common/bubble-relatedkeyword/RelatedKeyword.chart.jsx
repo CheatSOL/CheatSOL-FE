@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { useQuery } from "react-query";
 import axios from "axios";
@@ -22,9 +22,23 @@ const googleTrendsAPI = async (keyword) => {
 };
 
 export default function RelatedKeywordChart(props) {
+  console.log(props.darkMode)
   const darkMode = useSelector((state) => state.theme.darkMode);
-  const color = darkMode? ["rgba(0, 170, 255, 0.9)", "rgba(31, 255, 154, 0.9)"] : ["rgba(26, 175, 255, 0.9)", "rgba(46, 233, 183, 0.9)"]
+  const [color, setColor] = useState([]);
+  const [backcolor, setBackColor] = useState("")
+  
+  useEffect(() => {
+    if (props.darkMode) {
+      setColor(["rgba(0, 170, 255, 0.9)", "rgba(31, 255, 154, 0.9)"])
+      setBackColor("#282828")
+    } else {
+      setColor(["rgba(26, 175, 255, 0.9)", "rgba(46, 233, 183, 0.9)"])
+      setBackColor("transparent")
+    }
+    // 필요한 다른 로직 수행
+  }, [props.darkMode]);
 
+  
   const {
     data: GraphData1,
     isLoading: isLoadingGraph1,
@@ -113,6 +127,7 @@ export default function RelatedKeywordChart(props) {
           customIcons: [],
         },
       },
+      background: backcolor,  
     },
     theme: {
       mode: darkMode ? "dark" : "light",
@@ -130,8 +145,8 @@ export default function RelatedKeywordChart(props) {
         show: false,
       },
     }, 
-    colors: color,
-   
+     colors: color,
+  
   };
 
   const series = [

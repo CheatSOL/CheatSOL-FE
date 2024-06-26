@@ -227,7 +227,8 @@ export const StyledGraphKeyword = styled.div`
     gap: 2%;
     padding: 5px;
     width: 100%;
-    background-color: ${(props) => (props.darkMode ? "#333333" : "rgb(67,210,255,1)")};
+    background-color: ${(props) => (props.darkMode ? "#323842" : "rgb(67,210,255,1)")};
+    box-shadow: ${(props) => (props.darkMode ? "0 0 0 5px rgba(0, 0, 0, 0.15)" : "0 0 0 5px rgb(45,202,255)")};
     text-align: center;
     font-size: 1.1rem;
     color: white;

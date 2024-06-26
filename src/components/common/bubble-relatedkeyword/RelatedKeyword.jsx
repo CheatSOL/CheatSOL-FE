@@ -180,7 +180,7 @@ export default function RelatedKeyword() {
                             </StyledTitleBox>
                             <StyledGraphBox darkMode={darkMode} animate={clickedbubble}>  
                                                           
-                                <RelatedKeywordChart keyword={keyword} related={currentword} ></RelatedKeywordChart>
+                                <RelatedKeywordChart darkMode={darkMode} keyword={keyword} related={currentword} ></RelatedKeywordChart>
                              </StyledGraphBox>
                         <StyledNaverbox darkMode={darkMode} animate={clickedbubble}>
                             {/* <NaverNews data={relatedNewsData} width={"680px"} Hfontsize={"0.8rem"} Cfontsize={"0.7rem"}></NaverNews> */}
