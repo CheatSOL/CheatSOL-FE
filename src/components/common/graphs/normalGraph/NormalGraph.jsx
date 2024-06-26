@@ -19,7 +19,7 @@ const sketch = (p5) => {
   let lineProgress = 0;
   let lineStep = 0.3;
   let isAnimating = true;
-  const lineDelay = 0 * 60; // 0.3초 딜레이 (프레임 단위, 60fps 기준)
+  const lineDelay = 0.3 * 60; // 0.3초 딜레이 (프레임 단위, 60fps 기준)
   let axisProgress = 0;
   let auxLine1Progress = 0;
   const axisStep = 0.02;
@@ -40,22 +40,17 @@ const sketch = (p5) => {
 
   p5.updateWithProps = (props) => {
     p5.noLoop(); // 초기에는 멈춰 있는 상태로 설정
-    if (props.darkMode) {
-      darkMode = props.darkMode;
-    }
+
     if (props.width) {
       width = props.width;
     }
     //todo 페이지 이동 시 새로고침되게 되면 createCanvas 주석처리 하기!
     p5.createCanvas(width + 200, 400);
-    if (props.data) {
+    if (props) {
       data = props.data;
       barProgress = Array(data.length).fill(0);
       currentBarHeight = Array(data.length).fill(0);
-      lineProgress = 0;
-      barIndex = 0;
-      isAnimating = true;
-      axisProgress = 0;
+
       // console.log(props);
     }
     if (props.date) {
@@ -63,9 +58,11 @@ const sketch = (p5) => {
     }
     if (props.lineSpeed) {
       lineStep = props.lineSpeed;
+      // console.log(lineStep);
     }
     if (props.barSpeed) {
       barStep = props.barSpeed;
+      // console.log(barStep);
     }
     if (props.color) {
       color = props.color;
@@ -202,7 +199,7 @@ const sketch = (p5) => {
         } else if (lineProgress + lineStep >= 1) {
           lineProgress = 1;
           drawnLines++;
-          lineStep = lineStep + 0.01;
+
           // console.log("asdf:", drawnLines);
         } else {
           lineProgress += lineStep;
@@ -382,13 +379,35 @@ const NormalGraph = ({
   width,
   darkMode,
 }) => {
+  const p5Instance = useRef(null);
   useEffect(() => {
-    window.noLoop = false;
-    return () => {
-      window.noLoop = true;
-    };
-  }, []);
+    // p5.js 스케치 초기화 및 캔버스 생성
+    if (!p5Instance.current) {
+      p5Instance.current = new window.p5(sketch);
+    }
 
+    // 속성 업데이트
+    if (p5Instance.current) {
+      p5Instance.current.updateWithProps({
+        data,
+        date,
+        lineSpeed,
+        barSpeed,
+        color,
+        zoom,
+        width,
+        darkMode,
+      });
+    }
+
+    return () => {
+      // 컴포넌트 언마운트 시 p5.js 인스턴스 제거
+      if (p5Instance.current) {
+        p5Instance.current.remove();
+        p5Instance.current = null;
+      }
+    };
+  }, [data, date, lineSpeed, barSpeed, color, zoom, width, darkMode]);
   return !data ? (
     <div
       style={{
@@ -403,7 +422,10 @@ const NormalGraph = ({
   ) : (
     <ChartContainer>
       <ReactP5Wrapper
-        sketch={sketch}
+        sketch={(p5) => {
+          p5Instance.current = p5;
+          sketch(p5);
+        }}
         data={data}
         date={date}
         lineSpeed={lineSpeed}
