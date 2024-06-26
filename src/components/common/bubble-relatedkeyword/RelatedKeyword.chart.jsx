@@ -5,7 +5,7 @@ import axios from "axios";
 import Skeleton from 'react-loading-skeleton'; // Make sure you have this installed
 import 'react-loading-skeleton/dist/skeleton.css'; // Import CSS for the skeleton
 import { StyledInfoIcon } from './RelatedKeyword.style';
-
+import { useSelector } from "react-redux";
 
 const googleTrendsAPI = async (keyword) => {
   try {
@@ -22,6 +22,9 @@ const googleTrendsAPI = async (keyword) => {
 };
 
 export default function RelatedKeywordChart(props) {
+  const darkMode = useSelector((state) => state.theme.darkMode);
+  const color = darkMode? ["rgba(0, 170, 255, 0.9)", "rgba(31, 255, 154, 0.9)"] : ["rgba(26, 175, 255, 0.9)", "rgba(46, 233, 183, 0.9)"]
+
   const {
     data: GraphData1,
     isLoading: isLoadingGraph1,
@@ -111,6 +114,9 @@ export default function RelatedKeywordChart(props) {
         },
       },
     },
+    theme: {
+      mode: darkMode ? "dark" : "light",
+    },
     stroke: {
       curve: "smooth",
     },
@@ -123,7 +129,9 @@ export default function RelatedKeywordChart(props) {
       labels: {
         show: false,
       },
-    },    
+    }, 
+    colors: color,
+   
   };
 
   const series = [
