@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyledNewsDiv,
   StyledNewsKeyword,
@@ -36,7 +36,8 @@ function timeAgo(dateString) {
   }
 }
 
-const fetchGoogleNews = async (keyword) => {
+const fetchGoogleNews = async (keyword, props) => {
+  props.setLoadError(false);
   const result = await axios.get("/api/news/google", {
     params: {
       keyword: keyword,
@@ -45,29 +46,33 @@ const fetchGoogleNews = async (keyword) => {
   return result.data.slice(0, 20);
 };
 
-export default function GoogleNews() {
+export default function GoogleNews(props) {
   const keyword = useSelector((state) => state.keyword.keyword);
+  const darkMode = useSelector((state) => state.theme.darkMode);
 
   const {
     data = [],
     error,
     isLoading,
-  } = useQuery(["googleNews", keyword], () => fetchGoogleNews(keyword), {
+  } = useQuery(["googleNews", keyword], () => fetchGoogleNews(keyword, props), {
     enabled: !!keyword,
     staleTime: Infinity,
+    retry: false,
   });
 
-  if (error) {
-    return <div>Error fetching Google news</div>;
-  }
+  useEffect(() => {
+    if (!isLoading && data.length === 0) {
+      props.setLoadError(true);
+    } else props.setLoadError(false);
+  }, [isLoading, data, props.loadError]);
 
   return (
     <StyledNewsDiv>
-      <StyledNewsKeyword>
+      <StyledNewsKeyword darkMode={darkMode}>
         <span>{`"${keyword}"`}</span>이 이렇게 언급됐어요
       </StyledNewsKeyword>
       <StyledNewsItemPatentDiv>
-        {isLoading || !data ? (
+        {isLoading ? (
           Array.from({ length: 20 }).map((_, index) => (
             <StyledContentsDiv key={index}>
               <Skeleton height={20} />
@@ -75,6 +80,12 @@ export default function GoogleNews() {
               <Skeleton height={15} width="75%" />
             </StyledContentsDiv>
           ))
+        ) : data.length === 0 ? (
+          <img
+            src="/assets/images/no-search.svg"
+            width={"700px"}
+            alt="No search result"
+          />
         ) : (
           <>
             {data.map((e, index) => (
@@ -85,8 +96,8 @@ export default function GoogleNews() {
                 style={{ textDecoration: "none", color: "inherit" }}
                 key={index}
               >
-                <StyledNewsItemDiv>
-                  <StyledNewsItemHeaderDiv>
+                <StyledNewsItemDiv darkMode={darkMode}>
+                  <StyledNewsItemHeaderDiv darkMode={darkMode}>
                     <span>{e.source}</span> | <span>{timeAgo(e.pubDate)}</span>
                   </StyledNewsItemHeaderDiv>
                   <div>{e.title}</div>
@@ -96,7 +107,7 @@ export default function GoogleNews() {
           </>
         )}
       </StyledNewsItemPatentDiv>
-      <StyledBlurDiv></StyledBlurDiv>
+      <StyledBlurDiv darkMode={darkMode}></StyledBlurDiv>
     </StyledNewsDiv>
   );
 }

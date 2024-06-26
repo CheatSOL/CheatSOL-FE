@@ -15,9 +15,9 @@ import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
 
-const fetchGoogleStockData = async (keyword, startTime) => {
-  console.log("startTime : ", startTime);
-  const response = await axios.get("/api/trends", {
+const fetchGoogleStockData = async (keyword, startTime, setLoadError) => {
+  setLoadError(false);
+  const response = await axios.get("/api/trends/google", {
     params: {
       keyword: keyword,
       startTime: startTime,
@@ -27,6 +27,8 @@ const fetchGoogleStockData = async (keyword, startTime) => {
 };
 
 export default function GoogleItem() {
+  const darkMode = useSelector((state) => state.theme.darkMode);
+  const [loadError, setLoadError] = useState(false);
   const scrollRef = useRef(null);
   const [isGraphVisible, setIsGraphVisible] = useState(false);
   const keyword = useSelector((state) => state.keyword.keyword);
@@ -35,11 +37,12 @@ export default function GoogleItem() {
     ["googleStockData", keyword, startTime],
     () =>
       startTime
-        ? fetchGoogleStockData(keyword, startTime)
+        ? fetchGoogleStockData(keyword, startTime, setLoadError)
         : Promise.resolve(null),
     {
       staleTime: Infinity,
       enabled: !!keyword,
+      retry: false,
     }
   );
 
@@ -79,7 +82,7 @@ export default function GoogleItem() {
   };
 
   return (
-    <StyledSocialGoogleDiv>
+    <StyledSocialGoogleDiv darkMode={darkMode}>
       <StyledGoogleItemDiv>
         <div>
           <img src="/assets/images/google.png" alt="Google" />
@@ -90,28 +93,47 @@ export default function GoogleItem() {
         </StyledGoogleHeaderDiv>
         <div></div>
       </StyledGoogleItemDiv>
-      <StyledGoogleChartNewsDiv ref={scrollRef}>
-        <div>
-          <span>
-            <strong>{`"${keyword}"`}</strong>이 이만큼 언급됐어요
-          </span>
-          {isGraphVisible ? (
-            isLoading ? (
-              <StyledLoadingDiv>
-                <ClipLoader color={"#43D2FF"} loading={true} />
-              </StyledLoadingDiv>
-            ) : (
-              <GoogleGraph
-                data={data?.default?.timelineData || []} // 빈 배열로 전달
-              />
-            )
-          ) : (
-            <div
-              style={{ marginTop: "20px", width: "600px", height: "400px" }}
-            ></div>
-          )}
-        </div>
-        <GoogleNews />
+      <StyledGoogleChartNewsDiv ref={scrollRef} darkMode={darkMode}>
+        {loadError || error ? (
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src="/assets/images/no-search.svg"
+              width={"70%"}
+              height={"400px"}
+            />
+          </div>
+        ) : (
+          <>
+            <div>
+              <span>
+                <strong>{`"${keyword}"`}</strong>이 이만큼 언급됐어요
+              </span>
+              {isGraphVisible ? (
+                isLoading ? (
+                  <StyledLoadingDiv>
+                    <ClipLoader color={"#43D2FF"} loading={true} />
+                  </StyledLoadingDiv>
+                ) : (
+                  <GoogleGraph
+                    data={data?.default?.timelineData || []} // 빈 배열로 전달
+                  />
+                )
+              ) : (
+                <div
+                  style={{ marginTop: "20px", width: "600px", height: "400px" }}
+                ></div>
+              )}
+            </div>
+            <GoogleNews setLoadError={setLoadError} loadError={loadError} />
+          </>
+        )}
       </StyledGoogleChartNewsDiv>
     </StyledSocialGoogleDiv>
   );

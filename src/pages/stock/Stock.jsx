@@ -104,7 +104,7 @@ export default function StockPage() {
       }
     };
     fetchDailyPrice();
-  }, [companyData]);
+  }, [companyData, keyword]);
 
   useEffect(() => {
     const test = async () => {
