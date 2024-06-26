@@ -9,6 +9,7 @@ import axios from "axios";
 import { ClipLoader } from "react-spinners";
 
 const fetchStockData = async (keyword) => {
+  console.log(`Fetching data for keyword: ${keyword}`);
   const response = await axios.get("/api/trends/google", {
     params: {
       keyword: keyword,
@@ -85,15 +86,15 @@ export default function SearchContent({ keyword }) {
             <div
               style={{ display: "flex", flexDirection: "row", width: "auto" }}
             >
-              {percent > 0 && (
+              {Math.round(percent) > 0 && (
                 <>
-                  <p style={{marginTop:"10px"}}>
+                  <p style={{ marginTop: "10px" }}>
                     의 검색량이 전 주에 비해
                     <strong
                       style={{
                         fontSize: "30px",
                         margin: "0 0.5rem",
-                        marginTop:"2px"
+                        marginTop: "2px",
                       }}
                     >
                       {Math.abs(Math.round(percent))}%
@@ -104,27 +105,23 @@ export default function SearchContent({ keyword }) {
                       width: "40px",
                       height: "40px",
                       margin: "-0.5rem 0.5rem",
-                      marginTop:"10px"
+                      marginTop: "10px",
                     }}
                     src="/assets/images/increase.svg"
                     alt="increase"
                   />
-                  <span style={{marginTop:"18px"}}>
-                  증가했어요.
-                  </span>
-                
+                  <span style={{ marginTop: "18px" }}>증가했어요.</span>
                 </>
-
               )}
-              {percent < 0 && (
+              {Math.round(percent) < 0 && (
                 <>
-                  <p  style={{marginTop:"10px"}}>
+                  <p style={{ marginTop: "10px" }}>
                     의 검색량이 전 주에 비해
                     <strong
                       style={{
                         fontSize: "30px",
                         marginLeft: "0.5rem",
-                        marginTop:"2px"
+                        marginTop: "2px",
                       }}
                     >
                       {Math.abs(percent)}%
@@ -135,18 +132,18 @@ export default function SearchContent({ keyword }) {
                       width: "40px",
                       height: "40px",
                       margin: "-0.5rem 0.5rem",
-                      marginTop:"10px"
+                      marginTop: "10px",
                     }}
                     src="/assets/images/decrease.svg"
                     alt="decrease"
                   />
-                  
-                  <span style={{marginTop:"18px"}}>
-                  감소했어요.
-                  </span>
+
+                  <span style={{ marginTop: "18px" }}>감소했어요.</span>
                 </>
               )}
-              {percent === 0 && <>의 이번주 검색량이 전 주와 동일해요.</>}
+              {Math.round(percent) === 0 && (
+                <>의 이번주 검색량이 전 주와 동일해요.</>
+              )}
               {Number.isNaN(percent) && <>에 대한 검색량을 불러올 수 없어요.</>}
             </div>
           ) : (
@@ -160,16 +157,34 @@ export default function SearchContent({ keyword }) {
       <Contents>
         {error || !isLoading ? (
           Number.isNaN(percent) ? (
-            <img
-              style={{ width: "952px", height: "227px" }}
-              src="/assets/images/no-data.svg"
-            ></img>
+            <div
+              style={{
+                height: "400px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <img
+                style={{ width: "750px", height: "165px" }}
+                src="/assets/images/no-data.svg"
+              ></img>
+            </div>
           ) : error ? (
-            <img
-              style={{ width: "952px", height: "227px" }}
-              //다크모드 시 undefined-error-darkmode.svg
-              src="/assets/images/undefined-error.svg"
-            ></img>
+            <div
+              style={{
+                height: "400px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <img
+                style={{ width: "750px", height: "165px" }}
+                //다크모드 시 undefined-error-darkmode.svg
+                src="/assets/images/undefined-error.svg"
+              ></img>
+            </div>
           ) : (
             <NormalGraph
               data={currentWeekData}
@@ -181,7 +196,15 @@ export default function SearchContent({ keyword }) {
             />
           )
         ) : (
-          <div width="600px" height="400px">
+          <div
+            style={{
+              width: "600px",
+              height: "400px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <ClipLoader color="#43d2ff"></ClipLoader>
           </div>
         )}

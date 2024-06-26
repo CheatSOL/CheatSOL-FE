@@ -19,9 +19,9 @@ export default function MainPage() {
           <Header />
           <RelatedStockContent keyword={keyword}></RelatedStockContent>
           <SearchContent keyword={keyword}></SearchContent>
-          <div style={{display:"flex",flexDirection:"row", gap:"50px" }}>
-          <RelatedKeyword keyword={keyword}></RelatedKeyword>
-          <RelatedSns keyword={keyword}></RelatedSns>
+          <div style={{ display: "flex", flexDirection: "row", gap: "50px" }}>
+            <RelatedKeyword keyword={keyword}></RelatedKeyword>
+            <RelatedSns keyword={keyword}></RelatedSns>
           </div>
         </MainBody>
       </MainContent>
