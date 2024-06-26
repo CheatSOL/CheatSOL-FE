@@ -1,6 +1,6 @@
 import React from "react";
 import NormalGraph from "../../graphs/normalGraph/NormalGraph";
-
+import { useSelector } from "react-redux";
 const formatDate = (dateStr) => {
   let datePart = dateStr.includes("–") ? dateStr.split("–")[0].trim() : dateStr;
   const parts = datePart.split(" ");
@@ -35,6 +35,7 @@ const formatDate = (dateStr) => {
 export default function GoogleGraph(props) {
   const date = props.data.map((e) => e.formattedAxisTime) || []; // 유효성 검사
   const data = props.data.map((e) => e.formattedValue[0]) || []; // 유효성 검사
+  const darkMode = useSelector((state) => state.theme.darkMode);
 
   return (
     <div style={{ marginTop: "20px" }}>
@@ -47,6 +48,7 @@ export default function GoogleGraph(props) {
           color={[66, 133, 244]}
           lineSpeed={0.05}
           barSpeed={0.05}
+          darkMode={darkMode}
         />
       ) : (
         <NormalGraph
@@ -57,6 +59,7 @@ export default function GoogleGraph(props) {
           color={[66, 133, 244]}
           lineSpeed={0.2}
           barSpeed={0.11}
+          darkMode={darkMode}
         />
       )}
     </div>
