@@ -37,7 +37,7 @@ function timeAgo(dateString) {
 }
 
 const fetchGoogleNews = async (keyword, props) => {
-  props.setLoadError(false);
+  /* props.setLoadError(false); */
   const result = await axios.get("/api/news/google", {
     params: {
       keyword: keyword,
@@ -60,12 +60,6 @@ export default function GoogleNews(props) {
     retry: false,
   });
 
-  useEffect(() => {
-    if (!isLoading && data.length === 0) {
-      props.setLoadError(true);
-    } else props.setLoadError(false);
-  }, [isLoading, data, props.loadError]);
-
   return (
     <StyledNewsDiv>
       <StyledNewsKeyword darkMode={darkMode}>
@@ -74,18 +68,26 @@ export default function GoogleNews(props) {
       <StyledNewsItemPatentDiv>
         {isLoading ? (
           Array.from({ length: 20 }).map((_, index) => (
-            <StyledContentsDiv key={index}>
+            <StyledContentsDiv key={index} darkMode={darkMode}>
               <Skeleton height={20} />
               <Skeleton height={15} />
               <Skeleton height={15} width="75%" />
             </StyledContentsDiv>
           ))
         ) : data.length === 0 ? (
-          <img
-            src="/assets/images/no-search.svg"
-            width={"700px"}
-            alt="No search result"
-          />
+          darkMode ? (
+            <img
+              src="/assets/images/no-data-box-darkmode.svg"
+              alt="No search result"
+              style={{ marginTop: "40px", width: "600px" }}
+            />
+          ) : (
+            <img
+              src="/assets/images/no-data-box.svg"
+              alt="No search result"
+              style={{ marginTop: "40px", width: "600px" }}
+            />
+          )
         ) : (
           <>
             {data.map((e, index) => (

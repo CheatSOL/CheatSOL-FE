@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Container, Image, Column, Number, Label } from "./Instagram.style";
 import { ClipLoader } from "react-spinners";
+import { useSelector } from "react-redux";
 
 const BASE_URL = "/api/social";
 
@@ -32,6 +33,7 @@ export default function Instagram({ keyword }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  const darkMode = useSelector((state) => state.theme.darkMode);
   useEffect(() => {
     async function fetchData(keyword) {
       try {
@@ -60,7 +62,12 @@ export default function Instagram({ keyword }) {
       topTags === undefined ||
       tagInfo === undefined)
   )
-    return (
+    return darkMode ? (
+      <img
+        style={{ marginLeft: "2rem", width: "100%", height: "100%" }}
+        src="/assets/images/undefined-error-darkmode.svg"
+      />
+    ) : (
       <img
         style={{ marginLeft: "2rem", width: "100%", height: "100%" }}
         src="/assets/images/undefined-error.svg"

@@ -48,9 +48,9 @@ export default function ContentHeader(props) {
           <GlowIcon>
             <HiChevronDoubleRight
               style={{
+                color: darkMode ? "#F2F2F2" : "#00537A",
                 cursor: "pointer",
                 width: "38px",
-                color: "#00537A",
               }}
             ></HiChevronDoubleRight>
           </GlowIcon>

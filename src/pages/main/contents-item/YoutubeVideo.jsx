@@ -15,6 +15,7 @@ import {
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ClipLoader } from "react-spinners";
+import { useSelector } from "react-redux";
 
 export default function YoutubeVideo({ keyword }) {
   const [videos, setVideos] = useState([]);
@@ -22,10 +23,12 @@ export default function YoutubeVideo({ keyword }) {
   const [error, setError] = useState(null);
   const [centerSlideIndex, setCenterSlideIndex] = useState(1);
 
+  const darkMode = useSelector((state) => state.theme.darkMode);
   useEffect(() => {
     const fetchVideos = async () => {
       try {
         const response = await axios.get("/api/youtube", {
+
           params: { word: keyword, limit: 5 },
         });
         setVideos(response.data);
@@ -62,11 +65,16 @@ export default function YoutubeVideo({ keyword }) {
   };
 
   if (loading) return <ClipLoader color="#43d2ff"></ClipLoader>;
-  if (!loading && (error || videos.length === 0))
-    return (
+  if (!loading && (error || videos.length === 0))   
+    return !darkMode ? (
       <img
         style={{ marginLeft: "2rem", width: "100%", height: "100%" }}
         src="/assets/images/undefined-error.svg"
+      />
+    ) : (
+      <img
+        style={{ marginLeft: "2rem", width: "100%", height: "100%" }}
+        src="/assets/images/undefined-error-darkmode.svg"
       />
     );
 
@@ -95,5 +103,6 @@ export default function YoutubeVideo({ keyword }) {
           ))}
       </Slider>
     </SliderContainer>
+   
   );
 }

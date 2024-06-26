@@ -54,7 +54,7 @@ const NaverItem = () => {
 
   const keywords = [keyword];
 
-  const { data, isLoading, error } = useQuery(
+  const { data, isLoading, error, refetch } = useQuery(
     ["naverKeywordData", { keywords, startDate, endDate, periodOffset }],
     () =>
       fetchNaverStockData(
@@ -93,6 +93,13 @@ const NaverItem = () => {
       observer.disconnect(); // Cleanup function to disconnect observer on unmount
     };
   }, []);
+
+  useEffect(() => {
+    if (keyword) {
+      setLoadError(false);
+      refetch();
+    }
+  }, [keyword, refetch]);
 
   const handlePeriodChange = (selectedPeriod) => {
     let t = "";
@@ -134,11 +141,19 @@ const NaverItem = () => {
               alignItems: "center",
             }}
           >
-            <img
-              src="/assets/images/no-search.svg"
-              width={"70%"}
-              height={"400px"}
-            />
+            {darkMode ? (
+              <img
+                src="/assets/images/no-data-darkmode.svg"
+                width={"70%"}
+                height={"400px"}
+              />
+            ) : (
+              <img
+                src="/assets/images/no-data.svg"
+                width={"70%"}
+                height={"400px"}
+              />
+            )}
           </div>
         ) : (
           <>

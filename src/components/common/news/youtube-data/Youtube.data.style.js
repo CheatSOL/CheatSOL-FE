@@ -8,15 +8,19 @@ export const StyledNewsDiv = styled.div`
 
   flex-direction: column;
   align-items: center;
-  padding: 15px;
+
   padding-top: 0px;
 `;
 export const StyledBlurDiv = styled.div`
-  width: calc(100% - 30px);
+  width: calc(100%);
   height: 70px;
   position: absolute;
-  bottom: 0px;
-  background: linear-gradient(to top, transparent, 0%, white, 50%, transparent);
+  left: 0px;
+  bottom: -1px;
+  background: ${(props) =>
+    props.darkMode
+      ? `linear-gradient(to top, transparent, 0%, #47484A, 50%, transparent)`
+      : `linear-gradient(to top, transparent, 0%, white, 50%, transparent)`};
 `;
 
 export const StyledNewsKeyword = styled.div`
