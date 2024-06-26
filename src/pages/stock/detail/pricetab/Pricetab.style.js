@@ -5,19 +5,18 @@ export const StyledTable = styled.table`
     border-collapse: collapse;
     margin-top: 10px;
     th, td {
-        
+        color:${(props) => (props.darkMode ? "white" : "black")};
         padding: 10px;
         text-align: center;
         
     }
     th {
-        background-color: #F1FCFF;
-        border-bottom: 1.5px solid #ddd
+        background-color:${(props) => (props.darkMode ? "#47484A" : "#F1FCFF")};
         
     }
     td{
         line-height: 40px;
-        border-bottom: 0.5px solid #ddd
+        border-bottom:${(props) => (props.darkMode ? "1.5px solid #ADAEAE" : "1.5px solid #ddd")};
     }
    
 `;
@@ -29,7 +28,7 @@ export const StyledChangeRate = styled.span`
     border-radius: 4px;
     font-weight: 600;
     line-height: 32px;
-    color: #fff;
+    
     /* background-color: #909aab; */
     vertical-align: top;
     text-align: center;

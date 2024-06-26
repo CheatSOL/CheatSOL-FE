@@ -2,8 +2,10 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'; // Import Modal from react-bootstrap
 import StockChart from './StockChart';
-
-function ChartModal({ show, onHide, code, name}) { // Destructure props correctly
+import { useSelector } from 'react-redux';
+import { CustomCloseButton } from './ChartModal.style';
+function ChartModal({ show, onHide, code, name}) { 
+  const darkMode = useSelector((state) => state.theme.darkMode);
   return (
     <>
       <Modal
@@ -13,14 +15,17 @@ function ChartModal({ show, onHide, code, name}) { // Destructure props correctl
         size="xl"
         aria-labelledby="example-custom-modal-styling-title"
         centered
+        
       >
-          <Modal.Header closeButton>
+          <Modal.Header  style={{backgroundColor:darkMode ? "#282828" : "white"}}>
           <div style={{ marginLeft:"20px"}}>
-        <span style={{fontSize:"30px"}}>{code}</span><span style={{fontSize:"20px", marginLeft:"15px"}}>{name}</span>
+        <span style={{fontSize:"30px", color:darkMode ? "white" : "black"}}>{code}</span><span style={{fontSize:"20px", marginLeft:"15px",color:darkMode ? "white" : "black" }}>{name}</span>
         </div>
+        <CustomCloseButton darkMode={darkMode} onClick={onHide}>&times;</CustomCloseButton>
         </Modal.Header>
 
-        <Modal.Body>
+        <Modal.Body
+        style={{backgroundColor:darkMode ? "#282828" : "white"}}>
          
         
           

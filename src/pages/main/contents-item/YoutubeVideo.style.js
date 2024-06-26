@@ -16,19 +16,20 @@ export const SlideImage = styled.img`
 `;
 
 export const SlideContent = styled.div`
-  padding: 10px;
+  padding: 8px;
   text-align: center;
 `;
 export const Title = styled.div`
+margin-left:-12.7px;
 width:120%;  
-font-size: 11px;
+font-size: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 
 export const Channel = styled.div`
-  font-size: 8px;
+  font-size: 10px;
   color: #666;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -48,14 +49,15 @@ export const CenteredSlideImage = styled(SlideImage)`
   height: auto;
   border-radius: 10px;
   transition: transform 0.3s, opacity 0.3s;
+  margin-bottom:5px;
 
   ${props => props.isCenter && css`
-    transform: scale(1.1);
+    transform: scale(1.05);
     opacity: 1;
   `}
 
   ${props => !props.isCenter && css`
-    transform: scale(0.7);
+    transform: scale(0.65);
     opacity: 0.5;
   `}
 `;
