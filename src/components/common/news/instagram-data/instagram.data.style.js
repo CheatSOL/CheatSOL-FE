@@ -27,19 +27,20 @@ export const StyledNewsItemParentDiv = styled.div`
   gap: 5px;
   height: 450px;
   overflow-y: scroll;
-  padding: 20px 0px;
+
   padding-top: 0px;
   position: relative;
 `;
 
 export const StyledBlurDiv = styled.div`
-  width: calc(100% - 30px);
+  width: calc(100%);
   height: 70px;
   position: absolute;
-  bottom: 0px;
+  left: 0px;
+  bottom: -1px;
   background: ${(props) =>
     props.darkMode
-      ? `linear-gradient(to top, transparent, 0%, #444547, 50%, transparent)`
+      ? `linear-gradient(to top, transparent, 0%, #47484A, 50%, transparent)`
       : `linear-gradient(to top, transparent, 0%, white, 50%, transparent)`};
 `;
 export const StyledNewsItemDiv = styled.div`
