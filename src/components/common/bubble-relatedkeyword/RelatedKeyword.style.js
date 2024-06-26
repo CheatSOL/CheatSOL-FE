@@ -57,6 +57,7 @@ ${(props) =>
 `
 
 export const StyledRelatedKeywordContainer = styled.div`
+    color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
     display: flex;
     width: 100%;
     height: 100%;
@@ -152,12 +153,12 @@ ${(props) =>
 
 export const StyledNaverbox = styled.div`
     opacity: 0; /* 처음에 숨김 */
+    background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
     
     border-radius: 20px;
     box-shadow: 8px 20px 30px 0px rgb(0, 0, 0, 0.04);
     margin-bottom: 10vh;
     padding: 5px;
-    background-color: white;
 
     ${(props) =>
       props.animate &&
@@ -170,7 +171,7 @@ export const StyledNaverbox = styled.div`
 `
 
 export const StyledGraphBox = styled.div`
-    background-color: white;
+    background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0px 10px 14px 0px rgb(0, 0, 0, 0.04);
@@ -226,7 +227,7 @@ export const StyledGraphKeyword = styled.div`
     gap: 2%;
     padding: 5px;
     width: 100%;
-    background-color: rgb(67,210,255,1);
+    background-color: ${(props) => (props.darkMode ? "#333333" : "rgb(67,210,255,1)")};
     text-align: center;
     font-size: 1.1rem;
     color: white;

@@ -12,6 +12,7 @@ const googleTrendsAPI = async (keyword) => {
     const response = await axios.get("/api/trends/google", {
       params: {
         keyword: keyword,
+        startTime: 30,
       },
     });
     return JSON.parse(response.data);
@@ -138,7 +139,7 @@ export default function RelatedKeywordChart(props) {
 
 
   return(
-    <div style={{ zIndex: -1 },{position: 'relative'}}>
+    <div style={{ zIndex: -1 ,position: 'relative'}}>
       <StyledInfoIcon>
         <img id="tooltip" src="/assets/images/question_mark.png" width={"21px"}></img>
         <div id="tag">Google에서 한 달 동안의 검색된 추이를 보여줍니다.

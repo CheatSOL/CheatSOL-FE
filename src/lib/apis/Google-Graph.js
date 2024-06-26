@@ -5,9 +5,10 @@ import axios from "axios";
 export async function googleTrendsAPI(keyword) {
     try {
         console.log("googleTrendsAPI 백엔드 요청")
-        const response = await axios.get("/api/trends", {
+        const response = await axios.get("/api/trends/google", {
             params: {
               keyword: keyword,
+              startTime: 30,
             },
           });
           console.log(response.data);

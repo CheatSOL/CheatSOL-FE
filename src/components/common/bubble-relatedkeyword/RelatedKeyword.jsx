@@ -10,16 +10,20 @@ import { useSelector } from "react-redux";
 import Loading from "../Loading/Loading";
 
 export default function RelatedKeyword() {
-    const scrollRef = useRef(null);
-    const keyword = useSelector((state) => state.keyword.keyword);
+    // 다크모드 적용
+    const darkMode = useSelector((state) => state.theme.darkMode);
 
+    // 스크롤 적용
+    const scrollRef = useRef(null);
+    // 전역 키워드
+    const keyword = useSelector((state) => state.keyword.keyword);
     const params1 = {
         keyword: keyword,
     };   
   
   //버블 원형 배치를 위한 코드
-  const big_radius = 250; // 반지름
-  const sml_radius = 190;
+  const big_radius = 268; // 반지름
+  const sml_radius = 180;
   const angleStep = 360 / 6;
 
   //버블 사이즈
@@ -88,11 +92,11 @@ export default function RelatedKeyword() {
 
     if (isLoadingKeyword) {
         return (
-            <StyledRelatedKeywordContainer>  
-        <StyledHeadTitleBox className="related-text-box" animate={clickedbubble}>
+            <StyledRelatedKeywordContainer darkMode={darkMode}>  
+        <StyledHeadTitleBox darkMode={darkMode} className="related-text-box" animate={clickedbubble}>
                             <img src={sns} width={"50px"} height={"auto"}></img>                                 
                                 <span>{keyword}과 같이 언급되는 단어들이에요. </span>
-            </StyledHeadTitleBox>  
+            </StyledHeadTitleBox >  
             <Loading></Loading>
             </StyledRelatedKeywordContainer>
         )
@@ -103,7 +107,7 @@ export default function RelatedKeyword() {
     }
     
     else return(
-        <StyledRelatedKeywordContainer>  
+        <StyledRelatedKeywordContainer darkMode={darkMode}>  
         <StyledHeadTitleBox className="related-text-box" animate={clickedbubble}>
                             <img src={sns} width={"50px"} height={"auto"}></img>                                 
                                 <span>{keyword}과 같이 언급되는 단어들이에요. </span>
@@ -169,16 +173,16 @@ export default function RelatedKeyword() {
 
                     {shownewstab && (
 
-                        <StyledNewsTab >
+                        <StyledNewsTab darkMode={darkMode} animate={clickedbubble}>
                             <StyledTitleBox className="related-text-box" animate={clickedbubble}>
                             <img src={sns} width={"50px"} height={"auto"}></img>                                 
                                 <span>{keyword}과 {currentword}의 검색량을 비교해보세요. </span>
                             </StyledTitleBox>
-                            <StyledGraphBox animate={clickedbubble}>  
+                            <StyledGraphBox darkMode={darkMode} animate={clickedbubble}>  
                                                           
                                 <RelatedKeywordChart keyword={keyword} related={currentword} ></RelatedKeywordChart>
                              </StyledGraphBox>
-                        <StyledNaverbox animate={clickedbubble}>
+                        <StyledNaverbox darkMode={darkMode} animate={clickedbubble}>
                             {/* <NaverNews data={relatedNewsData} width={"680px"} Hfontsize={"0.8rem"} Cfontsize={"0.7rem"}></NaverNews> */}
                             <RelatedNews params2={params2}></RelatedNews>
                         </StyledNaverbox>
