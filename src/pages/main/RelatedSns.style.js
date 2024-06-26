@@ -12,14 +12,15 @@ export const StyledTitleDiv = styled.div`
   font-weight: bold;
 `;
 export const YoutubeContent = styled.div`
-  background-color: ${(props) => (props.darkMode ? "#333333" : "#ededed")};
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "#E0E0E0")};
   width: 90%;
   height: 200px;
   border-radius: 9px;
   align-content: center;
+  justify-content:center;
 `;
 export const InstagramContent = styled.div`
-  background-color: ${(props) => (props.darkMode ? "#333333" : "#ededed")};
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "#E0E0E0")};
   width: 90%;
   height: 120px;
   border-radius: 9px;

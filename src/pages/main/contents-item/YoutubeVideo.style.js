@@ -20,6 +20,7 @@ export const SlideContent = styled.div`
   text-align: center;
 `;
 export const Title = styled.div`
+color: ${(props) => (props.darkMode ? "white" : "black")};
 margin-left:-12.7px;
 width:120%;  
 font-size: 12px;
@@ -31,6 +32,7 @@ font-size: 12px;
 export const Channel = styled.div`
   font-size: 10px;
   color: #666;
+  color: ${(props) => (props.darkMode ? "#ddd" : "#666")};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -49,8 +51,10 @@ export const CenteredSlideImage = styled(SlideImage)`
   height: auto;
   border-radius: 10px;
   transition: transform 0.3s, opacity 0.3s;
-  margin-bottom:5px;
-
+  margin-bottom:7px;
+  img{
+    height:100px;
+  }
   ${props => props.isCenter && css`
     transform: scale(1.05);
     opacity: 1;
@@ -88,10 +92,10 @@ export const CustomArrow = styled.div`
   }
 
   &.slick-prev {
-    left: -15px;
+    left: -30px;
   }
 
   &.slick-next {
-    right: -15px;
+    right: -30px;
   }
 `;
