@@ -24,15 +24,7 @@ export default function LandingSearch() {
   const navigate = useNavigate();
   const inputRef = useRef(null);
 
-  const keywords = [
-    "신한투자증권",
-    "신한지주",
-    "투자신한",
-    "신한투자증권",
-    "신한투자증권",
-    "신한투자증권",
-
-  ];
+  const keywords = ["불닭", "신한지주", "반도체", "빼빼로", "선풍기", "에어컨"];
 
   const onChangeText = (e) => {
     const { value } = e.target;
@@ -48,14 +40,9 @@ export default function LandingSearch() {
 
   const onKeyDownText = (e) => {
     if (e.key === "Enter") {
-      setText("");
       setFocus(false);
       dispatch(searchKeyword(text));
-
-      const params = new URLSearchParams({
-        name: keyword,
-      });
-      navigate(`/main?${params.toString()}`);
+      navigate(`/main?name=${text}`);
     }
   };
 
@@ -69,16 +56,16 @@ export default function LandingSearch() {
 
   const handleClick = () => {
     dispatch(searchKeyword(text));
-    navigate("/main");
-  }
+    navigate(`/main?name=${text}`);
+  };
 
   return (
     <StyledLandingDiv>
       {/* <StyledCenterDiv> */}
       <StyledSearchDiv>
-      <StyledSearchLogoImgDiv>
-        <img src="/assets/images/logo4 (2).png" alt="Logo" />
-      </StyledSearchLogoImgDiv>
+        <StyledSearchLogoImgDiv>
+          <img src="/assets/images/logo4 (2).png" alt="Logo" />
+        </StyledSearchLogoImgDiv>
         <StyledSearchInputDiv>
           <StyledSearchInput
             type="text"
@@ -91,20 +78,26 @@ export default function LandingSearch() {
             onKeyDown={onKeyDownText}
             ref={inputRef}
           />
-          <StyledSearchIcon visible={true} onClick={handleClick}/>
+          <StyledSearchIcon visible={true} onClick={handleClick} />
           <StyledKeywordsDiv>
-            <StyledHotKeyword><p>이번 주 HOT</p></StyledHotKeyword>
-              <StyledKeywordsParentDiv>
-                {keywords.map((keyword, index) => (
-                  <StyledKeyword className="keyword" key={index} onClick={onClickKeyword(keyword)}>
-                    <span>{keyword}</span>
-                  </StyledKeyword>
-                ))}
-              </StyledKeywordsParentDiv>
+            <StyledHotKeyword>
+              <p>이번 주 HOT</p>
+            </StyledHotKeyword>
+            <StyledKeywordsParentDiv>
+              {keywords.map((keyword, index) => (
+                <StyledKeyword
+                  className="keyword"
+                  key={index}
+                  onClick={onClickKeyword(keyword)}
+                >
+                  <span>{keyword}</span>
+                </StyledKeyword>
+              ))}
+            </StyledKeywordsParentDiv>
           </StyledKeywordsDiv>
-        </StyledSearchInputDiv>      
-    </StyledSearchDiv>
-    {/* </StyledCenterDiv> */}
-  </StyledLandingDiv>
+        </StyledSearchInputDiv>
+      </StyledSearchDiv>
+      {/* </StyledCenterDiv> */}
+    </StyledLandingDiv>
   );
 }

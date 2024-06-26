@@ -4,7 +4,6 @@ export const StyledNewsDiv = styled.div`
   width: ${(props) => props.width || "470px"};
   height: ${(props) => props.height || "600px"};
   background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
-  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,18 +20,23 @@ export const StyledNewsKeyword = styled.div`
   & span {
     font-weight: bold;
   }
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
 `;
 export const StyledBlurDiv = styled.div`
-  width: calc(100% - 30px);
+  width: calc(25% - 30px);
   height: 70px;
   position: absolute;
-  bottom: 0px;
-  background: linear-gradient(to top, transparent, 0%, white, 50%, transparent);
+  bottom: 30px;
+  background: ${(props) =>
+    props.darkMode
+      ? `linear-gradient(to top, transparent, 0%, #444547, 50%, transparent)`
+      : `linear-gradient(to top, transparent, 0%, white, 50%, transparent)`};
 `;
 
 export const StyledNewsItemPatentDiv = styled.div`
+  width: 100%;
   height: 100%;
-  overflow-y: ${(props) => props.isscroll || "scroll"};
+  overflow-y: scroll;
 `;
 
 export const StyledNewsItemDiv = styled.div`
@@ -44,6 +48,7 @@ export const StyledNewsItemDiv = styled.div`
   border-radius: 10px;
   margin-bottom: 10px;
   padding-bottom: 20px;
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
 
 
   &:hover {
@@ -55,7 +60,7 @@ export const StyledNewsItemDiv = styled.div`
 export const StyledNewsItemHeaderDiv = styled.div`
   font-size: 0.7rem;
   margin-bottom: 10px;
-  color: rgba(0, 0, 0, 0.6);
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
   display: flex;
   align-items: center;
 
@@ -71,4 +76,17 @@ export const StyledNewsItemContentDiv = styled.div`
   color: ${(props) => props.darkMode? "#959595" : "rgba(0, 0, 0, 0.4)"};
   font-size: ${(props) => props.Cfontsize || "14px"};
   margin-top: 10px;
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
+`;
+
+export const StyledContentsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 130px;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  background-color: white;
+  margin-bottom: 5px;
 `;

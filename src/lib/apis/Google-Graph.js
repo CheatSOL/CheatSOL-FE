@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 //3. 검색어-연관키워드 검색량 가져오기 (google trends api)
 export async function googleTrendsAPI(keyword) {
     try {
@@ -22,4 +21,5 @@ export async function googleTrendsAPI(keyword) {
             return false;
         }
     }
-  };
+  }
+}
