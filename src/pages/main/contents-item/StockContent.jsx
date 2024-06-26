@@ -7,12 +7,14 @@ import {
   StyledContentsMiniTitle,
 } from "./Contents.style";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function StockContent(props) {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const company = props.company;
   const companyCode = company.code;
   const companyName = company.name;
+  const darkMode = useSelector((state) => state.theme.darkMode);
 
   const [ratePerYesterday, setRatePerYesterday] = useState(0);
   /*
@@ -43,12 +45,18 @@ export default function StockContent(props) {
   };
   return (
     // !! div에 key값 붙여주세요. (redux 구현 후)
-    <StyledContentsDiv width={props.width} height={props.height} onClick={handleDivClick}>
+    <StyledContentsDiv
+      width={props.width}
+      height={props.height}
+      onClick={handleDivClick}
+      darkMode={darkMode}
+    >
       <StyledContentsTitleGroup>
         <StyledContentsTitle>{companyName}</StyledContentsTitle>
         <StyledContentsMiniTitle
           key={companyCode}
           signperyesterday={signPerYesterday}
+          darkMode={darkMode}
         >
           <p>({ratePerYesterday}%)</p>
           {signPerYesterday > 0 ? (

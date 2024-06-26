@@ -6,6 +6,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import { StyledMainContentDiv } from "./Main.style";
+import { useSelector } from "react-redux";
 
 export default function RelatedStock({ keyword }) {
   const STOCK_SIZE = 6;
@@ -13,6 +14,7 @@ export default function RelatedStock({ keyword }) {
   const STOCK_CONTENT_HEIGHT = "90px";
 
   const [companies, setCompaines] = useState([]);
+  const darkMode = useSelector((state) => state.theme.darkMode);
 
   useEffect(() => {
     setCompaines([]);
@@ -32,20 +34,21 @@ export default function RelatedStock({ keyword }) {
   }, [keyword]);
 
   return (
-    <StyledMainContentDiv>
+    <StyledMainContentDiv darkMode={darkMode}>
       <ContentHeader
         imgUrl="/assets/images/hand-with-care.svg"
         keyword={keyword}
         description="와 관련도가 높은 주식회사에요."
         toLink="/main/stock"
       ></ContentHeader>
-      <Contents>
+      <Contents darkMode={darkMode}>
         {/* 내용이 들어오면 변경 */}
         {companies.length === 0 ? (
           Array.from({ length: STOCK_SIZE }).map((elem, index) => (
             <StyledContentsDiv
               width={STOCK_CONTENT_WIDTH}
               height={STOCK_CONTENT_HEIGHT}
+              darkMode={darkMode}
             >
               <Skeleton
                 key={index}
@@ -57,11 +60,17 @@ export default function RelatedStock({ keyword }) {
             </StyledContentsDiv>
           ))
         ) : companies[0].similarity == 0 ? (
-          <img
-            style={{ width: "750px", height: "165px" }}
-            // 다크 모드 시 no-data-darkmode.svg
-            src="/assets/images/no-data.svg"
-          ></img>
+          darkMode ? (
+            <img
+              style={{ width: "952px", height: "227px" }}
+              src="/assets/images/no-data-darkmode.svg"
+            ></img>
+          ) : (
+            <img
+              style={{ width: "952px", height: "227px" }}
+              src="/assets/images/no-data.svg"
+            ></img>
+          )
         ) : (
           companies.map((company) => (
             <StockContent
