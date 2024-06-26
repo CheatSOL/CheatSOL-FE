@@ -142,7 +142,7 @@ export default function YoutubeItem() {
               </span>
               {isGraphVisible ? (
                 isLoading ? (
-                  <StyledLoadingDiv>
+                  <StyledLoadingDiv darkMode={darkMode}>
                     <ClipLoader color={"#43D2FF"} loading={true} />
                   </StyledLoadingDiv>
                 ) : (

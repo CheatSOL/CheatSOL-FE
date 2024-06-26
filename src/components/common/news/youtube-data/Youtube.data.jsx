@@ -16,15 +16,34 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import { decode } from "html-entities";
+import { Link, json } from "react-router-dom";
 
 const fetchYoutubeData = async (keyword, props) => {
   props.setLoadError(false);
-  const result = await axios.get("/api/news/youtube", {
+  const result = await axios.get("/api/youtube", {
     params: {
-      keyword: keyword,
+      word: keyword,
     },
   });
-  return result.data.slice(0, 20);
+  return result.data.slice(0, 5).map((video) => {
+    const videoRenderer = video.videoRenderer || {};
+    const thumbnail = videoRenderer.thumbnail?.thumbnails?.[0]?.url;
+    const videoUrl = videoRenderer.inlinePlaybackEndpoint?.commandMetadata
+      ?.webCommandMetadata?.url
+      ? `https://www.youtube.com${videoRenderer.inlinePlaybackEndpoint.commandMetadata.webCommandMetadata.url}`
+      : "#";
+    const title = videoRenderer.title?.accessibility?.accessibilityData?.label;
+    const channel = videoRenderer.longBylineText?.runs?.[0]?.text;
+    const pubDate = videoRenderer.publishedTimeText?.simpleText;
+
+    return {
+      thumbnail,
+      videoUrl,
+      title,
+      channel,
+      pubDate,
+    };
+  });
 };
 export default function YoutubeData(props) {
   const keyword = useSelector((state) => state.keyword.keyword);
@@ -41,12 +60,13 @@ export default function YoutubeData(props) {
       retry: false,
     }
   );
+  console.log("youtube : " + data);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (!isLoading && data.length === 0) {
       props.setLoadError(true);
     } else props.setLoadError(false);
-  }, [isLoading, data, props.loadError]);
+  }, [isLoading, data, props.loadError]); */
 
   return (
     <StyledNewsDiv className="Youtube-Box">
@@ -79,9 +99,11 @@ export default function YoutubeData(props) {
                     </StyledNewsItemHeaderDiv>
                     <div className="youtube-title">{decode(e.title)}</div>
                   </StyledVideoDiv>
-                  <StyledImageDiv>
-                    <img src={e.thumbnail_url}></img>
-                  </StyledImageDiv>
+                  <Link to={`${e.videoUrl}`}>
+                    <StyledImageDiv>
+                      <img src={e.thumbnail}></img>
+                    </StyledImageDiv>
+                  </Link>
                 </StyledNewsItemDiv>
               </a>
             ))}
