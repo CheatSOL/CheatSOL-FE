@@ -217,6 +217,7 @@ const sketch = (p5) => {
       for (let i = 0; i < data.length; i++) {
         const barHeight = p5.map(data[i], 0, Math.max(...data), 0, 250);
         currentBarHeight[i] = p5.lerp(0, barHeight, barProgress[i]);
+
         if (
           p5.mouseX >
             p5.map(i, 0, data.length - 1, 100, width + 100) - barWidth * 0.5 &&
@@ -225,33 +226,10 @@ const sketch = (p5) => {
           p5.mouseY > 350 - currentBarHeight[i] &&
           p5.mouseY < 350
         ) {
-          p5.fill(color[0], color[1], color[2], 100);
-        } else {
-          p5.fill(color[0], color[1], color[2], 50);
-        }
-        p5.strokeWeight(0);
-        p5.fill(color[0], color[1], color[2], 100);
-        if (
-          p5.mouseX >
-            p5.map(i, 0, data.length - 1, 100, width + 100) - barWidth * 0.5 &&
-          p5.mouseX <
-            p5.map(i, 0, data.length - 1, 100, width + 100) + barWidth * 0.5 &&
-          p5.mouseY > 350 - currentBarHeight[i] &&
-          p5.mouseY < 350
-        ) {
-          p5.fill(color[0], color[1], color[2], 100);
-        } else {
-          p5.fill(color[0], color[1], color[2], 50);
-        }
-        if (
-          p5.mouseX >
-            p5.map(i, 0, data.length - 1, 100, width + 100) - barWidth * 0.5 &&
-          p5.mouseX <
-            p5.map(i, 0, data.length - 1, 100, width + 100) + barWidth * 0.5 &&
-          p5.mouseY > 350 - currentBarHeight[i] &&
-          p5.mouseY < 350
-        ) {
-          if (darkMode) p5.fill(71, 72, 74, 50);
+          p5.noStroke();
+          if (darkMode) {
+            p5.fill(71, 72, 74, 50);
+          }
           p5.fill(255, 255, 255, 20);
           p5.rect(
             p5.map(i, 0, data.length - 1, 100, width + 100) - 35,
@@ -263,19 +241,31 @@ const sketch = (p5) => {
           p5.fill(color[0], color[1], color[2], 100);
           p5.textSize(12);
           p5.fill(color[0], color[1], color[2], 255);
-          if (data[i] == 100)
+
+          if (data[i] == 100) {
             p5.text(
               data[i],
               p5.map(i, 0, data.length - 1, 100, width + 100) - 9,
               350 - barHeight - 18
             );
-          else {
+            if (darkMode) {
+              p5.fill(200, 200, 200);
+            }
+            p5.text(
+              date[i],
+              p5.map(i, 0, data.length - 1, 100, width + 100) - 22,
+              350 - barHeight - 8
+            );
+          } else {
             p5.text(
               data[i],
               p5.map(i, 0, data.length - 1, 100, width + 100) - 6,
               350 - barHeight - 21
             );
             p5.fill(100, 100, 100, 255);
+            if (darkMode) {
+              p5.fill(200, 200, 200);
+            }
             p5.text(
               date[i],
               p5.map(i, 0, data.length - 1, 100, width + 100) - 22,
@@ -286,6 +276,7 @@ const sketch = (p5) => {
         } else {
           p5.fill(color[0], color[1], color[2], 50);
         }
+        p5.noStroke();
         p5.rect(
           p5.map(i, 0, data.length - 1, 100, width + 100) - barWidth * 0.5,
           350 - currentBarHeight[i],

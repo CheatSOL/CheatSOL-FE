@@ -117,7 +117,7 @@ export default function GoogleItem() {
               </span>
               {isGraphVisible ? (
                 isLoading ? (
-                  <StyledLoadingDiv>
+                  <StyledLoadingDiv darkMode>
                     <ClipLoader color={"#43D2FF"} loading={true} />
                   </StyledLoadingDiv>
                 ) : (
