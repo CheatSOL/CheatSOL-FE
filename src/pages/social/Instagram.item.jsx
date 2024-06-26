@@ -17,13 +17,22 @@ export default function InstagramItem() {
   const [data, setData] = useState([]);
   const [topTags, setTopTags] = useState([]);
   const [tagInfo, setTagInfo] = useState([]);
+  const [temp, setTemp] = useState(false);
   const keyword = useSelector((state) => state.keyword.keyword);
 
   useEffect(() => {
     async function fetchData(word) {
       try {
         const instagramInfo = await getInstagramSocialTrend(word);
-        if (!instagramInfo) return;
+        if (
+          instagramInfo.tagInfo === undefined ||
+          instagramInfo.topTags === undefined ||
+          instagramInfo.trendData === undefined
+        ) {
+          setTemp(true);
+          return;
+        }
+
         console.log("instagram", instagramInfo);
         setData(instagramInfo.trendData);
         setTopTags(instagramInfo.topTags);
@@ -60,7 +69,7 @@ export default function InstagramItem() {
           ],
         });
       } catch (error) {
-        console.error("Error fetching Instagram data:", error);
+        console.error(error);
       }
     }
     fetchData(keyword);
@@ -205,41 +214,94 @@ export default function InstagramItem() {
         </div>
         <div></div>
       </StyledInstagramItemDiv>
-      <StyledInstagramChartNewsDiv ref={scrollRef} darkMode={darkMode}>
-        <div style={{ marginTop: "18px" }}>
-          <div>
-            <span
-              style={{
-                fontSize: "16px",
-                color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)",
-              }}
-            >
-              <strong>"{keyword}"</strong>이 이만큼 언급됐어요
-            </span>
-            {isGraphVisible && data ? (
-              <InstagramGraph
-                data={data.length}
-                lineData={lineData}
-                options={options}
-              />
-            ) : (
-              <InstagramGraph></InstagramGraph>
-            )}
-          </div>
-          <div>
-            <span
-              style={{
-                fontSize: "18px",
-                color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)",
-              }}
-            >
-              <strong>"{keyword}"</strong>과 함께 반응이 좋은 해시태그
-            </span>
-            <InstagramHotHashTags topTags={topTags} />
-          </div>
+      {temp ? (
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {darkMode ? (
+            <img
+              src="/assets/images/no-data-darkmode.svg"
+              width={"70%"}
+              height={"400px"}
+            />
+          ) : (
+            <img
+              src="/assets/images/no-data.svg"
+              width={"70%"}
+              height={"400px"}
+            />
+          )}
         </div>
-        <InstagramData tagInfo={tagInfo} />
-      </StyledInstagramChartNewsDiv>
+      ) : (
+        <>
+          <StyledInstagramChartNewsDiv ref={scrollRef} darkMode={darkMode}>
+            {!data ? (
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {darkMode ? (
+                  <img
+                    src="/assets/images/no-data-darkmode.svg"
+                    width={"70%"}
+                    height={"400px"}
+                  />
+                ) : (
+                  <img
+                    src="/assets/images/no-data.svg"
+                    width={"70%"}
+                    height={"400px"}
+                  />
+                )}
+              </div>
+            ) : (
+              <div style={{ marginTop: "18px" }}>
+                <div>
+                  <span
+                    style={{
+                      fontSize: "16px",
+                      color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)",
+                    }}
+                  >
+                    <strong>"{keyword}"</strong>이 이만큼 언급됐어요
+                  </span>
+                  {isGraphVisible && data ? (
+                    <InstagramGraph
+                      data={data.length}
+                      lineData={lineData}
+                      options={options}
+                    />
+                  ) : (
+                    <InstagramGraph></InstagramGraph>
+                  )}
+                </div>
+                <div>
+                  <span
+                    style={{
+                      fontSize: "18px",
+                      color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)",
+                    }}
+                  >
+                    <strong>"{keyword}"</strong>과 함께 반응이 좋은 해시태그
+                  </span>
+                  <InstagramHotHashTags topTags={topTags} />
+                </div>
+              </div>
+            )}
+
+            <InstagramData tagInfo={tagInfo} />
+          </StyledInstagramChartNewsDiv>
+        </>
+      )}
     </StyledSocialInstagramDiv>
   );
 }
