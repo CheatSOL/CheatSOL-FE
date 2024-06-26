@@ -1,12 +1,15 @@
 import styled from "styled-components";
 
 export const HeaderContentDiv = styled.div`
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
+
+  background-color: ${(props) => (props.darkMode ? "#333333" : "white")};
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  width:100%;
-  flex-wrap:wrap;
+  width: 100%;
+  flex-wrap: wrap;
 `;
 
 export const GlowIcon = styled.div`

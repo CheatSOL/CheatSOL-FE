@@ -57,6 +57,7 @@ ${(props) =>
 `
 
 export const StyledRelatedKeywordContainer = styled.div`
+    color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
     display: flex;
     width: 100%;
     height: 100%;
@@ -152,12 +153,12 @@ ${(props) =>
 
 export const StyledNaverbox = styled.div`
     opacity: 0; /* 처음에 숨김 */
+    background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
     
     border-radius: 20px;
     box-shadow: 8px 20px 30px 0px rgb(0, 0, 0, 0.04);
     margin-bottom: 10vh;
     padding: 5px;
-    background-color: white;
 
     ${(props) =>
       props.animate &&
@@ -170,7 +171,7 @@ export const StyledNaverbox = styled.div`
 `
 
 export const StyledGraphBox = styled.div`
-    background-color: white;
+    background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0px 10px 14px 0px rgb(0, 0, 0, 0.04);
@@ -204,9 +205,9 @@ export const StyledInfoIcon = styled.div`
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #F5F6F8;
+    background-color: ${props => props.darkMode ? '#000000ad' : '#f0f1f3'};
     padding: 8px;
-    border: 1px solid rgba(187,195,192,1);
+    border: ${props => props.darkMode ? '1px solid rgb(0 0 0 / 62%)' : '1px solid rgba(187,195,192,1)'};
     border-radius: 5px;
     visibility: hidden;
     opacity: 0;
@@ -216,6 +217,8 @@ export const StyledInfoIcon = styled.div`
     width: 400px;
     font-size: 0.9rem;
   }
+
+
 `;
 
 export const StyledGraphKeyword = styled.div`
@@ -226,7 +229,8 @@ export const StyledGraphKeyword = styled.div`
     gap: 2%;
     padding: 5px;
     width: 100%;
-    background-color: rgb(67,210,255,1);
+    background-color: ${(props) => (props.darkMode ? "#323842" : "rgb(67,210,255,1)")};
+    box-shadow: ${(props) => (props.darkMode ? "0 0 0 5px rgba(0, 0, 0, 0.15)" : "0 0 0 5px rgb(45,202,255)")};
     text-align: center;
     font-size: 1.1rem;
     color: white;
