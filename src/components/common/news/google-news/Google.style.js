@@ -7,7 +7,7 @@ export const StyledNewsDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+
   padding-top: 0px;
   position: relative;
 `;
@@ -22,13 +22,14 @@ export const StyledNewsKeyword = styled.div`
   color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
 `;
 export const StyledBlurDiv = styled.div`
-  width: calc(100% - 30px);
+  width: calc(100%);
   height: 70px;
+  left: 0px;
   position: absolute;
-  bottom: 0px;
+  bottom: -1px;
   background: ${(props) =>
     props.darkMode
-      ? `linear-gradient(to top, transparent, 0%, #444547, 50%, transparent)`
+      ? `linear-gradient(to top, transparent, 0%, #47484A, 50%, transparent)`
       : `linear-gradient(to top, transparent, 0%, white, 50%, transparent)`};
 `;
 export const StyledNewsItemPatentDiv = styled.div`
