@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Slider from 'react-slick';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Slider from "react-slick";
 import {
   SliderContainer,
   Slide,
@@ -9,11 +9,12 @@ import {
   CenteredSlideContent,
   Title,
   Channel,
-  CustomArrow
-} from './YoutubeVideo.style';
+  CustomArrow,
+} from "./YoutubeVideo.style";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { ClipLoader } from "react-spinners";
 
 export default function YoutubeVideo({ keyword }) {
   const [videos, setVideos] = useState([]);
@@ -24,8 +25,8 @@ export default function YoutubeVideo({ keyword }) {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get('/api/youtube', {
-          params: { word: keyword, limit: 5 }
+        const response = await axios.get("/api/youtube", {
+          params: { word: keyword, limit: 5 },
         });
         setVideos(response.data);
         setLoading(false);
@@ -47,7 +48,7 @@ export default function YoutubeVideo({ keyword }) {
     prevArrow: <CustomArrow className="slick-prev">Previous</CustomArrow>,
     nextArrow: <CustomArrow className="slick-next">Next</CustomArrow>,
     beforeChange: (current, next) => {
-      setCenterSlideIndex((next+1)%5);
+      setCenterSlideIndex((next + 1) % 5);
     },
     responsive: [
       {
@@ -55,43 +56,43 @@ export default function YoutubeVideo({ keyword }) {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-        }
-      }
-    ]
+        },
+      },
+    ],
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (loading) return <ClipLoader color="#43d2ff"></ClipLoader>;
+  if (!loading && (error || videos.length !== 0))
+    return (
+      <img
+        style={{ marginLeft: "2rem", width: "100%", height: "100%" }}
+        src="/assets/images/undefined-error.svg"
+      />
+    );
 
   return (
     <SliderContainer>
       <Slider {...settings}>
-        {videos.map((video, index) => (
-          <Slide key={video.url}>
-            
+        {!error &&
+          videos.length !== 0 &&
+          videos.map((video, index) => (
+            <Slide key={video.url}>
               <CenteredSlideWrapper>
-              <a href={video.url} target="_blank" rel="noopener noreferrer">
-                <CenteredSlideImage
-                  src={video.thumbnail_url}
-                  alt={video.title}
-                  isCenter={index === centerSlideIndex}
-                />
-              </a>
+                <a href={video.url} target="_blank" rel="noopener noreferrer">
+                  <CenteredSlideImage
+                    src={video.thumbnail_url}
+                    alt={video.title}
+                    isCenter={index === centerSlideIndex}
+                  />
+                </a>
                 <CenteredSlideContent isCenter={index === centerSlideIndex}>
-
-                    <Title>{video.title}</Title>
-                    <Channel>| {video.channel} |</Channel>
-                    
-                 
+                  <Title>{video.title}</Title>
+                  <Channel>| {video.channel} |</Channel>
                 </CenteredSlideContent>
               </CenteredSlideWrapper>
-            
-          </Slide>
-        ))}
+            </Slide>
+          ))}
       </Slider>
     </SliderContainer>
   );
 }
-
-const CustomPrevArrow = (props) => <div {...props}>Previous</div>;
-const CustomNextArrow = (props) => <div {...props}>Next</div>;

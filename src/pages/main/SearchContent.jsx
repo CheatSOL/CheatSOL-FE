@@ -7,6 +7,7 @@ import { Contents } from "./contents-item/Contents.style";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
+import { useSelector } from "react-redux";
 
 const fetchStockData = async (keyword) => {
   console.log(`Fetching data for keyword: ${keyword}`);
@@ -23,6 +24,7 @@ export default function SearchContent({ keyword }) {
   const [percent, setPercent] = useState(NaN);
   const [currentWeekData, setCurrentWeekData] = useState([]);
   const [currentWeekDates, setCurrentWeekDates] = useState([]);
+  const darkMode = useSelector((state) => state.theme.darkMode);
 
   const {
     data: stockData,
@@ -77,7 +79,7 @@ export default function SearchContent({ keyword }) {
   }, [stockData]);
 
   return (
-    <StyledMainContentDiv>
+    <StyledMainContentDiv darkMode={darkMode}>
       <ContentHeader
         imgUrl="/assets/images/search.svg"
         keyword={keyword}

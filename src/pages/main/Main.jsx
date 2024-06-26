@@ -5,14 +5,12 @@ import RelatedStockContent from "./RelatedStockContent";
 import { useSelector } from "react-redux";
 import RelatedKeyword from "./RelatedKeyword";
 import SearchContent from "./SearchContent";
-import { useState } from "react";
-import ScrollToTopButton from "../../components/common/scroll-top-button/Scroll.top.button";
 import RelatedSns from "./RelatedSns";
 export default function MainPage() {
   const keyword = useSelector((state) => state.keyword.keyword);
-
+  const darkMode = useSelector((state) => state.theme.darkMode);
   return (
-    <StyledMainDiv>
+    <StyledMainDiv darkMode={darkMode}>
       <Sidebar />
       <MainContent>
         <MainBody>
