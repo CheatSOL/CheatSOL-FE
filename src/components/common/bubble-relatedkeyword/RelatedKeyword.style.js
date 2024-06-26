@@ -15,7 +15,7 @@ const animate_click = keyframes`
     transform: translateX(0) scale(1);
   }
   100% {
-    transform: translateX(-380px) scale(0.5);
+    transform: translateX(-400px) translateY(80px) scale(0.75);
   }
 `;
 
@@ -57,18 +57,19 @@ ${(props) =>
 `
 
 export const StyledRelatedKeywordContainer = styled.div`
+    color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
     display: flex;
     width: 100%;
     height: 100%;
     flex-direction: column;
-    position: relative;
+    position: relative;    
 `
 
 export const StyledBubbleContainer = styled.div`
     display: flex;
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 70%;
 `
 
 export const StyledCircleContainer = styled.div`
@@ -152,12 +153,12 @@ ${(props) =>
 
 export const StyledNaverbox = styled.div`
     opacity: 0; /* 처음에 숨김 */
+    background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
     
     border-radius: 20px;
     box-shadow: 8px 20px 30px 0px rgb(0, 0, 0, 0.04);
     margin-bottom: 10vh;
     padding: 5px;
-    background-color: white;
 
     ${(props) =>
       props.animate &&
@@ -170,11 +171,12 @@ export const StyledNaverbox = styled.div`
 `
 
 export const StyledGraphBox = styled.div`
-    background-color: white;
+    background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
     padding: 20px;
     border-radius: 20px;
-    box-shadow: 8px 20px 30px 0px rgb(0, 0, 0, 0.04);
+    box-shadow: 0px 10px 14px 0px rgb(0, 0, 0, 0.04);
     opacity: 0;
+    position: relative;
 
     ${(props) =>
       props.animate &&
@@ -185,14 +187,64 @@ export const StyledGraphBox = styled.div`
       `}  
 `
 
+export const StyledInfoIcon = styled.div`
+  position: absolute;
+    right: 70px;
+    cursor: pointer;
+    z-index: 1;
+    top: -0.5px;
+
+  /* img 요소에 호버 시 #tag 요소가 보이도록 설정합니다. */
+  &:hover #tag {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  & #tag {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: ${props => props.darkMode ? '#000000ad' : '#f0f1f3'};
+    padding: 8px;
+    border: ${props => props.darkMode ? '1px solid rgb(0 0 0 / 62%)' : '1px solid rgba(187,195,192,1)'};
+    border-radius: 5px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s;
+  
+    height: 100px;
+    width: 400px;
+    font-size: 0.9rem;
+  }
+
+
+`;
+
 export const StyledGraphKeyword = styled.div`
-    background-color: rgb(67,210,255,1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 2%;
+    padding: 5px;
+    width: 100%;
+    background-color: ${(props) => (props.darkMode ? "#323842" : "rgb(67,210,255,1)")};
+    box-shadow: ${(props) => (props.darkMode ? "0 0 0 5px rgba(0, 0, 0, 0.15)" : "0 0 0 5px rgb(45,202,255)")};
     text-align: center;
     font-size: 1.1rem;
     color: white;
-    padding: 10px;
     border-radius: 20px;
     box-shadow: 8px 20px 30px 0px rgb(0, 0, 0, 0.04);
+& #related-news-count {
+background-color: rgb(41 239 140 / 76%);
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 40px;
+}
+
 `
 
 export const StyledRelatedKeyword = styled.div`

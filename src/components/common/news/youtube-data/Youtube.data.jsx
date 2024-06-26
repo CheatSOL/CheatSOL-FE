@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyledNewsKeyword } from "./Youtube.data.style";
 import {
   StyledNewsDiv,
@@ -17,7 +17,8 @@ import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import { decode } from "html-entities";
 
-const fetchYoutubeData = async (keyword) => {
+const fetchYoutubeData = async (keyword, props) => {
+  props.setLoadError(false);
   const result = await axios.get("/api/news/youtube", {
     params: {
       keyword: keyword,
@@ -25,21 +26,28 @@ const fetchYoutubeData = async (keyword) => {
   });
   return result.data.slice(0, 20);
 };
-export default function YoutubeData() {
+export default function YoutubeData(props) {
   const keyword = useSelector((state) => state.keyword.keyword);
   const {
     data = [],
     error,
     isLoading,
-  } = useQuery(["youtubeData", keyword], () => fetchYoutubeData(keyword), {
-    enabled: !!keyword,
-    staleTime: Infinity,
-  });
+  } = useQuery(
+    ["youtubeData", keyword],
+    () => fetchYoutubeData(keyword, props),
+    {
+      enabled: !!keyword,
+      staleTime: Infinity,
+      retry: false,
+    }
+  );
 
-  if (error) {
-    return <div>Error fetching Google news</div>;
-  }
-  console.log(data);
+  useEffect(() => {
+    console.log("yt_data sda : " + props.loadError);
+    if (!isLoading && data.length === 0) {
+      props.setLoadError(true);
+    } else props.setLoadError(false);
+  }, [isLoading, data, props.loadError]);
 
   return (
     <StyledNewsDiv className="Youtube-Box">

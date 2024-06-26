@@ -15,8 +15,14 @@ import { useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
 import axios from "axios";
 
-const fetchYoutubeStockData = async (keyword, startTime) => {
-  console.log("startTime : ", startTime);
+const fetchYoutubeStockData = async (
+  keyword,
+  startTime,
+  setLoadError,
+  loadError
+) => {
+  setLoadError(false);
+  console.log("yt : " + loadError);
   const response = await axios.get("/api/trends/youtube", {
     params: {
       keyword: keyword,
@@ -27,7 +33,9 @@ const fetchYoutubeStockData = async (keyword, startTime) => {
 };
 
 export default function YoutubeItem() {
+  const darkMode = useSelector((state) => state.theme.darkMode);
   const scrollRef = useRef(null);
+  const [loadError, setLoadError] = useState(false);
   const [isGraphVisible, setIsGraphVisible] = useState(false);
   const keyword = useSelector((state) => state.keyword.keyword);
   const [startTime, setStartTime] = useState(7);
@@ -35,30 +43,35 @@ export default function YoutubeItem() {
     ["youtubeStockData", keyword, startTime],
     () =>
       startTime
-        ? fetchYoutubeStockData(keyword, startTime)
+        ? fetchYoutubeStockData(keyword, startTime, setLoadError, loadError)
         : Promise.resolve(null),
     {
       staleTime: Infinity,
-      enabled: !!keyword,
+      enabled: !!keyword, // keyword이 존재할 때만 요청을 보냄
+      retry: false,
     }
   );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
+        console.log(entries);
         entries.forEach((entry) => {
-          setIsGraphVisible(entry.isIntersecting);
+          if (entry.isIntersecting) {
+            setIsGraphVisible(true); // Set visibility state to true if intersecting
+            observer.disconnect(); // Disconnect observer once graph is visible
+          }
         });
       },
       {
-        threshold: 0.1,
+        threshold: 0.1, // Adjust the threshold as needed
       }
     );
 
     observer.observe(scrollRef.current);
 
     return () => {
-      observer.disconnect();
+      observer.disconnect(); // Cleanup function to disconnect observer on unmount
     };
   }, []);
 
@@ -75,36 +88,60 @@ export default function YoutubeItem() {
   };
 
   return (
-    <StyledSocialYoutubeDiv>
+    <StyledSocialYoutubeDiv darkMode={darkMode}>
       <StyledYoutubeItemDiv>
         <div>
-          <img src="/assets/images/youtube.png" alt="Youtube" />
+          <img
+            src="/assets/images/YouTube_logo.png"
+            alt="Youtube"
+            width={"120px"}
+            height={"30px"}
+          />
         </div>
         <StyledYoutubeHeaderDiv>
           <PeriodSelectBar handlePeriodChange={handlePeriodChange} />
         </StyledYoutubeHeaderDiv>
         <div></div>
       </StyledYoutubeItemDiv>
-      <StyledYoutubeChartNewsDiv ref={scrollRef}>
-        <div>
-          <span>
-            <strong>{`"${keyword}"`}</strong>이 이만큼 언급됐어요
-          </span>
-          {isGraphVisible ? (
-            isLoading ? (
-              <StyledLoadingDiv>
-                <ClipLoader color={"#43D2FF"} loading={true} />
-              </StyledLoadingDiv>
-            ) : (
-              <YoutubeGraph data={data?.default?.timelineData || []} />
-            )
-          ) : (
-            <div
-              style={{ marginTop: "20px", width: "600px", height: "400px" }}
-            ></div>
-          )}
-        </div>
-        <YoutubeData />
+      <StyledYoutubeChartNewsDiv ref={scrollRef} darkMode={darkMode}>
+        {loadError || error ? (
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src="/assets/images/no-search.svg"
+              width={"70%"}
+              height={"400px"}
+            />
+          </div>
+        ) : (
+          <>
+            <div>
+              <span>
+                <strong>{`"${keyword}"`}</strong>이 이만큼 언급됐어요
+              </span>
+              {isGraphVisible ? (
+                isLoading ? (
+                  <StyledLoadingDiv>
+                    <ClipLoader color={"#43D2FF"} loading={true} />
+                  </StyledLoadingDiv>
+                ) : (
+                  <YoutubeGraph data={data?.default?.timelineData || []} />
+                )
+              ) : (
+                <div
+                  style={{ marginTop: "20px", width: "600px", height: "400px" }}
+                ></div>
+              )}
+            </div>
+            <YoutubeData setLoadError={setLoadError} loadError={loadError} />
+          </>
+        )}
       </StyledYoutubeChartNewsDiv>
     </StyledSocialYoutubeDiv>
   );

@@ -8,14 +8,16 @@ import NaverItem from "./NaverItem";
 import { StyledSocialDiv, StyledSocialInfoDiv } from "./Social.style";
 import YoutubeItem from "./Youtube.item";
 import ScrollToTopButton from "../../components/common/scroll-top-button/Scroll.top.button";
+import { useSelector } from "react-redux";
 
 export default function SocialPage() {
   const scrollRef = useRef(null);
+  const darkMode = useSelector((state) => state.theme.darkMode);
 
   return (
     <StyledSocialDiv>
       <Sidebar />
-      <StyledSocialInfoDiv ref={scrollRef}>
+      <StyledSocialInfoDiv ref={scrollRef} darkMode={darkMode}>
         <Header />
         <GoogleItem />
         <YoutubeItem />

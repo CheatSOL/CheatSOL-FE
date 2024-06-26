@@ -1,13 +1,13 @@
 import axios from "axios";
 
-
 //3. 검색어-연관키워드 검색량 가져오기 (google trends api)
 export async function googleTrendsAPI(keyword) {
     try {
         console.log("googleTrendsAPI 백엔드 요청")
-        const response = await axios.get("/api/trends", {
+        const response = await axios.get("/api/trends/google", {
             params: {
               keyword: keyword,
+              startTime: 30,
             },
           });
           console.log(response.data);
@@ -21,4 +21,5 @@ export async function googleTrendsAPI(keyword) {
             return false;
         }
     }
-  };
+  }
+}

@@ -1,24 +1,28 @@
 import styled, {keyframes,css} from "styled-components";
 
-const bubbleBurst = keyframes`
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }  
-  50% {
-    transform: scale(1.2) ;
-    opacity: 0.8;
-  }
-  95% {
-    transform: scale(1.4) ;
-    opacity: 0.3;
-  }
-  100% {
-    transform: scale(1.5) ;
-    opacity: 0;
-  }
+// const bubbleBurst = keyframes`
+//   0% {
+//     transform: scale(1);
+//     opacity: 1;
+//   }  
+//   50% {
+//     transform: scale(1.2) ;
+//     opacity: 0.8;
+//   }
+//   95% {
+//     transform: scale(1.4) ;
+//     opacity: 0.3;
+//   }
+//   100% {
+//     transform: scale(1.5) ;
+//     opacity: 0;
+//   }
   
-`;
+// `;
+
+const lightGradient = 'radial-gradient(circle, white 0%, white 30%, rgba(196, 196, 196, 0.1) 40%, #bfe9f6 90%, #bfe9f6 100%)';
+const darkGradient = 'radial-gradient(circle, #ffffffeb 0%, #ecfeffd1 30%, rgb(226 250 255 / 81%) 40%, #bfe9f6 90%, #bfe9f6 100%)';
+
 
 export const StyledBubbleDiv = styled.div`
   /* display: ${(props) => (props.iscurrent ? "none" : "flex" || "flex")};; */
@@ -27,22 +31,20 @@ export const StyledBubbleDiv = styled.div`
   height: ${(props) => props.height || "100px"};
   /* opacity 값 설정 */
   opacity: ${(props) => (props.iscurrent ? "1" : props.opacity || "1")};
-  
-  /* ${(props) =>
-    props.iscurrent &&
-    css`
-      animation: ${bubbleBurst} 0.1s forwards;
-    `} */
 
+  background: ${(props)=>(props.darkMode? darkGradient
+  : lightGradient)
+  || "radial-gradient(circle, white 0%, white 30%, rgba(196, 196, 196, 0.1) 40%, #bfe9f6 90%, #bfe9f6 100%)"};
+  
     
-  background: radial-gradient(
+  /* background: radial-gradient(
     circle,
     white 0%,
     white 30%,
     rgba(196, 196, 196, 0.1) 40%,
     #bfe9f6 90%,
     #bfe9f6 100%
-  );
+  ); */
   border: none;
   border-radius: 50%;
   justify-content: center;
@@ -88,4 +90,9 @@ export const StyledBubbleDiv = styled.div`
     opacity: 1; 
   }
   
+  #content {
+    flex-wrap: wrap;
+    padding: 10px;
+    text-align: center
+  }
 `;

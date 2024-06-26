@@ -2,11 +2,12 @@ import React from "react";
 import { HeaderContentDiv, GlowIcon } from "./ContentHeader.style";
 import { HiChevronDoubleRight } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function ContentHeader(props) {
-  const location = useLocation();
+  const darkMode = useSelector((state) => state.theme.darkMode);
   return (
-    <HeaderContentDiv>
+    <HeaderContentDiv darkMode={darkMode}>
       <div
         style={{
           textAlign: "top",
@@ -14,7 +15,14 @@ export default function ContentHeader(props) {
         }}
       >
         <img style={{ width: "60px", height: "60px" }} src={props.imgUrl}></img>
-        <span style={{ display: "flex", fontSize: "22px", color: "#2E2E30", alignItems:"center" }}>
+        <span
+          style={{
+            display: "flex",
+            fontSize: "22px",
+            color: darkMode ? "white" : "#2E2E30",
+            alignItems: "center",
+          }}
+        >
           <strong
             style={{
               fontSize: "28px",
@@ -23,8 +31,8 @@ export default function ContentHeader(props) {
           >
             "{props.keyword}"
           </strong>
-          <span style={{marginTop:"5px", display:"flex"}}>
-          {props.description}
+          <span style={{ marginTop: "5px", display: "flex" }}>
+            {props.description}
           </span>
         </span>
       </div>
