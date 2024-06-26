@@ -1,9 +1,9 @@
 import styled, { keyframes, css } from "styled-components";
 
 export const StyledNewsDiv = styled.div`
-  width: ${(props) => props.width || "470px"};
-  height: ${(props) => props.height || "600px"};
-  background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
+  width: calc(100% - 600px);
+  height: 470px;
+  background-color: ${(props) => (props.darkMode ? "" : "white")};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,7 +42,8 @@ export const StyledNewsItemPatentDiv = styled.div`
 export const StyledNewsItemDiv = styled.div`
   font-size: ${(props) => props.Hfontsize || "16px"};
   width: 100%;
-  background-color: ${(props) => (props.darkMode ? "#47484A" : "rgba(0, 0, 0, 0.02)")};
+  background-color: ${(props) =>
+    props.darkMode ? "rgb(65, 65, 65)" : "rgba(0, 0, 0, 0.02)"};
 
   padding: 10px;
   border-radius: 10px;
@@ -50,10 +51,11 @@ export const StyledNewsItemDiv = styled.div`
   padding-bottom: 20px;
   color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
 
-
   &:hover {
-    background-color: ${(props) => props.darkMode ? 'none' : 'rgba(0, 0, 0, 0.04)'};
-    box-shadow: ${(props) => props.darkMode ? '0 0 0 1px inset #43D2FF' : 'transparent'};
+    background-color: ${(props) =>
+      props.darkMode ? "none" : "rgba(0, 0, 0, 0.04)"};
+    box-shadow: ${(props) =>
+      props.darkMode ? "0 0 0 1px inset #43D2FF" : "transparent"};
   }
 `;
 
@@ -73,7 +75,7 @@ export const StyledNewsItemHeaderDiv = styled.div`
 `;
 
 export const StyledNewsItemContentDiv = styled.div`
-  color: ${(props) => props.darkMode? "#959595" : "rgba(0, 0, 0, 0.4)"};
+  color: ${(props) => (props.darkMode ? "#959595" : "rgba(0, 0, 0, 0.4)")};
   font-size: ${(props) => props.Cfontsize || "14px"};
   margin-top: 10px;
   color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};

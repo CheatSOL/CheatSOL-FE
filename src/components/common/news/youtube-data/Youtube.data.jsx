@@ -43,7 +43,6 @@ export default function YoutubeData(props) {
   );
 
   useEffect(() => {
-    console.log("yt_data sda : " + props.loadError);
     if (!isLoading && data.length === 0) {
       props.setLoadError(true);
     } else props.setLoadError(false);

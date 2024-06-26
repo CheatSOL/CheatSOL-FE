@@ -18,6 +18,7 @@ export const StyledNewsKeyword = styled.div`
   & span {
     font-weight: bold;
   }
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
 `;
 
 export const StyledNewsItemParentDiv = styled.div`
@@ -36,14 +37,18 @@ export const StyledBlurDiv = styled.div`
   height: 70px;
   position: absolute;
   bottom: 0px;
-  background: linear-gradient(to top, transparent, 0%, white, 50%, transparent);
+  background: ${(props) =>
+    props.darkMode
+      ? `linear-gradient(to top, transparent, 0%, #444547, 50%, transparent)`
+      : `linear-gradient(to top, transparent, 0%, white, 50%, transparent)`};
 `;
 export const StyledNewsItemDiv = styled.div`
   display: flex;
   gap: 20px;
 
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: ${(props) =>
+    props.darkMode ? "rgb(65, 65, 65);" : "rgba(0, 0, 0, 0.02)"};
   padding: 20px;
   border-radius: 20px;
   margin-bottom: 10px;
@@ -73,7 +78,7 @@ export const StyledNewsItemHeaderDiv = styled.div`
   gap: 12px;
   font-size: 0.7rem;
   margin-bottom: 10px;
-  color: rgba(0, 0, 0, 0.6);
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
 
   & span:nth-child(1) {
     margin-right: 10px;

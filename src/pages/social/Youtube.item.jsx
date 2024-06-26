@@ -39,7 +39,7 @@ export default function YoutubeItem() {
   const [isGraphVisible, setIsGraphVisible] = useState(false);
   const keyword = useSelector((state) => state.keyword.keyword);
   const [startTime, setStartTime] = useState(7);
-  const { data, isLoading, error } = useQuery(
+  const { data, isLoading, error, refetch } = useQuery(
     ["youtubeStockData", keyword, startTime],
     () =>
       startTime
@@ -74,6 +74,13 @@ export default function YoutubeItem() {
       observer.disconnect(); // Cleanup function to disconnect observer on unmount
     };
   }, []);
+
+  useEffect(() => {
+    if (keyword) {
+      setLoadError(false);
+      refetch();
+    }
+  }, [keyword, refetch]);
 
   const handlePeriodChange = (selectedPeriod) => {
     let t = "";
@@ -113,11 +120,19 @@ export default function YoutubeItem() {
               alignItems: "center",
             }}
           >
-            <img
-              src="/assets/images/no-search.svg"
-              width={"70%"}
-              height={"400px"}
-            />
+            {darkMode ? (
+              <img
+                src="/assets/images/no-data-darkmode.svg"
+                width={"70%"}
+                height={"400px"}
+              />
+            ) : (
+              <img
+                src="/assets/images/no-data.svg"
+                width={"70%"}
+                height={"400px"}
+              />
+            )}
           </div>
         ) : (
           <>
