@@ -85,7 +85,7 @@ export default function RelatedKeyword({ keyword }) {
                     content={keyword}
                     width={key_bubble_size}
                     height={key_bubble_size}
-                    fontsize={"1.7rem"}
+                    fontsize={"1.5rem"}
                     nothover={true}
                   />
                 </StyledKeyCircleItem>

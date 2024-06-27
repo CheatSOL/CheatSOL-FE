@@ -37,4 +37,9 @@ export const StyledSearchIcon = styled(IoSearch)`
   transform: translateY(-50%);
   font-size: 24px;
   color: ${(props) => (props.darkMode ? "#bcb4b4" : "rgba(0, 0, 0, 0.5)")};
+  cursor:pointer;
+
+  &:hover {
+    color: #43D2FF;
+  }
 `;

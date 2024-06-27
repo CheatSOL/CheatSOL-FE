@@ -40,6 +40,15 @@ export default function Search(props) {
       navigate(`.?${params.toString()}`);
     }
   };
+  const onClickSearch=()=>{
+    if(text==="") return;
+    dispatch(searchKeyword(text));
+    localStorage.setItem("searchKeyword", text);
+    const params = new URLSearchParams({
+      name: text,
+    });
+    navigate(`.?${params.toString()}`);
+  }
 
   return (
     <StyledHeaderInputDiv>
@@ -52,7 +61,7 @@ export default function Search(props) {
         onKeyDown={onkeydownKeyword}
         darkMode={darkMode}
       />
-      <StyledSearchIcon darkMode={darkMode} />
+      <StyledSearchIcon onClick={onClickSearch}/>
     </StyledHeaderInputDiv>
   );
 }

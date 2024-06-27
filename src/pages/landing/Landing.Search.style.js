@@ -9,7 +9,7 @@ export const StyledLandingDiv = styled.div`
 
 
 export const StyledSearchDiv = styled.div`
-  width: 90%;
+  width: 100%;
   padding-top: 35px;
   padding-bottom: 35px;
   padding-right: 20px;
@@ -70,6 +70,9 @@ export const StyledSearchIcon = styled(IoSearchOutline)`
   right: 5%;
   top: 8%;
   cursor: pointer;
+  :hover {
+    color: #43D2FF;
+  }
 `;
 
 export const StyledKeywordsDiv = styled.div`

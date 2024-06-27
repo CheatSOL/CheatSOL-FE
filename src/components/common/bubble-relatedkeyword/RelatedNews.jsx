@@ -95,8 +95,9 @@ export default function RelatedNews(props) {
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ textDecoration: "none", color: "inherit" }}
+                    
                   >
-                    <StyledNewsItemHeaderDiv>
+                    <StyledNewsItemHeaderDiv darkMode={darkMode}>
                       <img src="/assets/images/blog.png" />
                       <span>{e.writer}</span> |{" "}
                       <span>{timeAgo(e.documentDate)}</span>
@@ -125,7 +126,7 @@ export default function RelatedNews(props) {
                 </StyledNewsItemDiv>
               ))}
         </StyledNewsItemPatentDiv>
-        <StyledBlurDiv darkMode></StyledBlurDiv>
+        <StyledBlurDiv darkMode={darkMode}></StyledBlurDiv>
       </StyledNewsDiv>
     );
 }
