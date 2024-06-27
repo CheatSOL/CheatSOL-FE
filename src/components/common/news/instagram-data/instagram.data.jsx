@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyledNewsKeyword } from "./instagram.data.style";
 import { StyledNewsDiv } from "./instagram.data.style";
 import {
@@ -12,14 +12,12 @@ import insta from "~/images/instagram.png";
 import { StyledBlurDiv } from "./instagram.data.style";
 import InstagramIndexes from "../../keywordGraph/instagramGraph/InstagramIndexes";
 import { useSelector } from "react-redux";
+import { getInstagramPosts } from "../../../../lib/apis/social";
 export default function InstagramData({ tagInfo }) {
   const keyword = useSelector((state) => state.keyword.keyword);
   const darkMode = useSelector((state) => state.theme.darkMode);
-  //!! 샘플 데이터입니다.
-  useEffect(() => {
-    console.log(tagInfo);
-  }, []);
-  const insta_sample_data = [
+
+  const [data, setData] = useState([
     {
       caption:
         "라이스페이퍼 어디까지 먹어봤뉘?? #불닭쌈 쫜득쫜득 쌀종이+핵매운 불닭조합‼️ ",
@@ -57,10 +55,20 @@ export default function InstagramData({ tagInfo }) {
         "https://mediance.s3.ap-northeast-2.amazonaws.com/media/instagram/post/thumbnail/3005792912671700753/instagram-post-3005792912671700753.jpg",
       url: "https://www.instagram.com/p/Cm2uLqMLvcR",
     },
-  ];
-
-  const data = insta_sample_data;
-
+  ]);
+  useEffect(() => {
+    const getData = async () => {
+      console.log("here");
+      const fetchedData = await getInstagramPosts(keyword);
+      console.log(fetchedData);
+      setData(fetchedData);
+    };
+    try {
+      getData();
+    } catch (e) {
+      console.log(e);
+    }
+  }, [keyword]);
   return (
     <StyledNewsDiv>
       <StyledNewsKeyword darkMode={darkMode}>
@@ -68,44 +76,49 @@ export default function InstagramData({ tagInfo }) {
       </StyledNewsKeyword>
       <InstagramIndexes tagInfo={tagInfo}></InstagramIndexes>
       <StyledNewsItemParentDiv>
-        {data.map((e, index) => (
-          <>
-            <StyledNewsItemDiv key={index} darkMode={darkMode}>
-              <section>
-                <StyledNewsItemHeaderDiv darkMode={darkMode}>
-                  <img src={insta}></img>
-                  <div className="insta-title">
-                    <span>{e.channel}</span> |
-                    <span>{weekTimeAgo(e.pubDate)}</span>
-                  </div>
-                </StyledNewsItemHeaderDiv>
-                <a
-                  href={e.url}
-                  key={index}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <p
-                    style={{ color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)" }}
+        {data &&
+          data.map((e, index) => (
+            <>
+              <StyledNewsItemDiv key={index} darkMode={darkMode}>
+                <section>
+                  <StyledNewsItemHeaderDiv darkMode={darkMode}>
+                    <img src={insta}></img>
+                    <div className="insta-title">
+                      <span>{e.channel}</span> |
+                      <span>{weekTimeAgo(e.pubDate)}</span>
+                    </div>
+                  </StyledNewsItemHeaderDiv>
+                  <a
+                    href={e.url}
+                    key={index}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    {e.caption}...
-                  </p>
-                  <p
-                    id="hashtags"
-                    style={{ color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)" }}
-                  >
-                    {e.hashtag}...
-                  </p>
-                </a>
-              </section>
-              <StyledImageDiv>
-                {e.thumbnail_url && (
-                  <img src={e.thumbnail_url} alt="Thumbnail" />
-                )}
-              </StyledImageDiv>
-            </StyledNewsItemDiv>
-          </>
-        ))}
+                    <p
+                      style={{
+                        color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)",
+                      }}
+                    >
+                      {e.caption}...
+                    </p>
+                    <p
+                      id="hashtags"
+                      style={{
+                        color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)",
+                      }}
+                    >
+                      {e.hashtag}...
+                    </p>
+                  </a>
+                </section>
+                <StyledImageDiv>
+                  {e.thumbnail_url && (
+                    <img src={e.thumbnail_url} alt="Thumbnail" />
+                  )}
+                </StyledImageDiv>
+              </StyledNewsItemDiv>
+            </>
+          ))}
       </StyledNewsItemParentDiv>
       <StyledBlurDiv darkMode={darkMode} />
     </StyledNewsDiv>
