@@ -13,6 +13,7 @@ export const StyledMainContentDiv = styled.div`
   position: relative;
   white-space: nowrap;
   gap: 70px;
+  
 `;
 
 export const StyledBubbleContainer = styled.div`

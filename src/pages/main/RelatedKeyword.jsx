@@ -37,8 +37,37 @@ export default function RelatedKeyword({ keyword }) {
     }
   );
 
-  if (isLoadingKeyword) return <div>Loading...</div>;
-  if (errorKeyword) return <div>Error loading data</div>;
+  if (isLoadingKeyword) return (<StyledMainContentDiv>
+    <ContentHeader
+          imgUrl="/assets/images/bell.svg"
+          keyword={keyword}
+          description="과 함께 언급되는 단어에요"
+          toLink="/main/keyword"
+        />
+        <div style={{display:"flex",alignContent:"center", justifyContent:"center"}}>
+        <ClipLoader/>
+        </div>
+  </StyledMainContentDiv>)
+  if (errorKeyword) return (<StyledMainContentDiv>
+    <ContentHeader
+          imgUrl="/assets/images/bell.svg"
+          keyword={keyword}
+          description="과 함께 언급되는 단어에요"
+          toLink="/main/keyword"
+        />
+      {darkMode ? (
+            <img
+              style={{ width: "700px", height: "auto", marginTop:"50px" }}
+              src="/assets/images/no-data-darkmode.svg"
+            ></img>
+          ) : (
+            <img
+              style={{ width: "700px", height: "auto",  marginTop:"50px" }}
+              src="/assets/images/no-data.svg"
+            ></img>
+          )}
+      
+  </StyledMainContentDiv>)
 
   return (
     <>

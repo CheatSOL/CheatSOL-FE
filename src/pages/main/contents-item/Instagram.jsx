@@ -36,15 +36,18 @@ export default function Instagram({ keyword }) {
   const darkMode = useSelector((state) => state.theme.darkMode);
   useEffect(() => {
     async function fetchData(keyword) {
+      setData([]);
+      setTopTags([]);
+      setTagInfo([]);
       try {
         const instagramInfo = await getInstagramSocialTrend(keyword);
+        setLoading(false);
         if (!instagramInfo) return;
-        console.log("instagram", instagramInfo);
+        if(instagramInfo === null) return;
         setData(instagramInfo.trendData);
         setTopTags(instagramInfo.topTags);
         setTagInfo(instagramInfo.tagInfo);
 
-        setLoading(false);
       } catch (error) {
         setError(true);
         console.error("Error fetching Instagram data", error);
@@ -59,6 +62,7 @@ export default function Instagram({ keyword }) {
     !loading &&
     (error ||
       data === undefined ||
+      data.length === 0 ||
       topTags === undefined ||
       tagInfo === undefined)
   )
