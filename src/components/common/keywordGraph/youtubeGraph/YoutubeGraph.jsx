@@ -35,6 +35,8 @@ export default function YoutubeGraph(props) {
   const data = props.data.map((e) => e.formattedValue[0]) || []; // 유효성 검사
   const darkMode = useSelector((state) => state.theme.darkMode);
 
+  const darkMode = useSelector((state) => state.theme.darkMode);
+
   useEffect(() => {
     window.noLoop = false;
     return () => {
