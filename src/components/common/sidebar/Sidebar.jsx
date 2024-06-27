@@ -46,9 +46,17 @@ export default function Sidebar() {
     );
   }, [keyword]);
 
+  useEffect(() => {
+    localStorage.setItem("darkmode", darkMode);
+  }, [darkMode]);
+
   const isActive = (path) => {
     const url = new URL(window.location.href);
     return url.pathname + url.search === path;
+  };
+
+  const onClickDarkMode = () => {
+    dispatch(toggleDarkMode());
   };
 
   return (
@@ -104,17 +112,17 @@ export default function Sidebar() {
         >
           <StyledHeaderFillSunIcon
             darkmode={darkMode}
-            onClick={() => dispatch(toggleDarkMode())}
+            onClick={onClickDarkMode}
           />
           <StyledToggleContainer
             isDarkMode={darkMode}
-            onClick={() => dispatch(toggleDarkMode())}
+            onClick={onClickDarkMode}
           >
             <StyledToggleCircle isDarkMode={darkMode} />
           </StyledToggleContainer>
           <StyledHeaderFillMoonIcon
             darkmode={darkMode}
-            onClick={() => dispatch(toggleDarkMode())}
+            onClick={onClickDarkMode}
           />
         </div>
       </StyledSidebarInfoDiv>
