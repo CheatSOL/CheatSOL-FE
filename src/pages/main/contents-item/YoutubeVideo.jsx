@@ -31,8 +31,8 @@ export default function YoutubeVideo({ keyword }) {
 
           params: { keyword: keyword, limit: 5 },
         });
-        setVideos(response.data);
-
+        setVideos(response.data.slice(0,5));
+        console.log(response.data.slice(0,5));
         setLoading(false);
       } catch (err) {
         setError(err);
