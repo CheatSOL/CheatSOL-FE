@@ -95,10 +95,13 @@ export default function RelatedNews(props) {
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ textDecoration: "none", color: "inherit" }}
-                    
                   >
                     <StyledNewsItemHeaderDiv darkMode={darkMode}>
-                      <img src="/assets/images/blog.png" />
+                      <img
+                        src="/assets/images/news.svg"
+                        width={"20px"}
+                        height={"20px"}
+                      />
                       <span>{e.writer}</span> |{" "}
                       <span>{timeAgo(e.documentDate)}</span>
                     </StyledNewsItemHeaderDiv>
