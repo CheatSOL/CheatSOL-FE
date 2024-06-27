@@ -21,7 +21,7 @@ const fetchYoutubeData = async (keyword) => {
   const result = await axios.get("/api/news/youtube", {
     params: {
       keyword: keyword,
-      limit:20
+      limit: 20,
     },
   });
   return result.data;
@@ -77,9 +77,9 @@ export default function YoutubeData(props) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <StyledNewsItemDiv key={index}>
+                <StyledNewsItemDiv key={index} darkMode={darkMode}>
                   <StyledVideoDiv>
-                    <StyledNewsItemHeaderDiv>
+                    <StyledNewsItemHeaderDiv darkMode={darkMode}>
                       <span>{e.channel}</span> |
                       <span>{timeAgo(e.pubDate)}</span>
                     </StyledNewsItemHeaderDiv>
