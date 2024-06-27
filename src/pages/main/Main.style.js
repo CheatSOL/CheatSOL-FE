@@ -34,4 +34,5 @@ export const StyledMainContentDiv = styled.div`
   margin-bottom: 30px;
   overflow-x: auto;
   white-space: nowrap;
+  position: relative;
 `;

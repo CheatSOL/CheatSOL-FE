@@ -28,8 +28,9 @@ export const InstagramContent = styled.div`
 `;
 export const StyledMainContentDiv = styled.div`
   background-color: ${(props) => (props.darkMode ? "#333333" : "white")};
+  position:relative;
   width: 37vw;
-  height: 600px;
+  height: auto;
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);

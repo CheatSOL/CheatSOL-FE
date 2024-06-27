@@ -27,9 +27,9 @@ export default function YoutubeVideo({ keyword }) {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get("/api/youtube", {
+        const response = await axios.get("/api/news/youtube", {
 
-          params: { word: keyword, limit: 5 },
+          params: { keyword: keyword, limit: 5 },
         });
         setVideos(response.data);
         setLoading(false);
