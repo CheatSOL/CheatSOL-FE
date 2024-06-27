@@ -45,12 +45,12 @@ export default function ContentHeader(props) {
         }}
       >
         <a href={props.toLink}>
-          <GlowIcon>
+          <GlowIcon darkMode={darkMode}>
             <HiChevronDoubleRight
               style={{
+                color: darkMode ? "#F2F2F2" : "#00537A",
                 cursor: "pointer",
                 width: "38px",
-                color: "#00537A",
               }}
             ></HiChevronDoubleRight>
           </GlowIcon>
