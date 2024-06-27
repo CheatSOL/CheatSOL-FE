@@ -8,6 +8,20 @@ export default function StockChart(props) {
   const keyword = useSelector((state) => state.keyword.keyword);
   const darkMode = useSelector((state) => state.theme.darkMode);
 
+  const [categories, setCategories] = useState([]);
+  const [series, setSeries] = useState([
+    {
+      name: keyword,
+      data: [], // 초기에는 빈 배열로 설정
+      yAxisIndex: 0,
+    },
+    {
+      name: props.curCompanyName,
+      data: [], // 초기에는 빈 배열로 설정
+      yAxisIndex: 1,
+    },
+  ]);
+
   const getInitialOptions = (darkMode) => ({
     chart: {
       id: "basic-area",
@@ -16,19 +30,23 @@ export default function StockChart(props) {
       },
       background: darkMode ? "#333" : "#fff",
       stacked: false,
+      zoom: {
+        enabled: false,
+      },
     },
     theme: {
       mode: darkMode ? "dark" : "light",
     },
     xaxis: {
-      categories: [],
-      type: "dateTime",
+      categories: categories,
+      type: "category",
       tickAmount: 6,
       labels: {
         show: true,
         style: {
           colors: darkMode ? "#fff" : "#333",
         },
+        rotate: 0,
       },
       axisBorder: {
         show: false,
@@ -83,19 +101,6 @@ export default function StockChart(props) {
 
   const [options, setOptions] = useState(getInitialOptions(darkMode));
 
-  const [series, setSeries] = useState([
-    {
-      name: keyword,
-      data: [], // 초기에는 빈 배열로 설정
-      yAxisIndex: 0,
-    },
-    {
-      name: "삼성전자",
-      data: [], // 초기에는 빈 배열로 설정
-      yAxisIndex: 1,
-    },
-  ]);
-
   useEffect(() => {
     async function getSeries() {
       const flattenedData = await props.data.map((e) => e.ratio);
@@ -117,18 +122,20 @@ export default function StockChart(props) {
           },
         ]);
 
-        const categories = props.data.map((e) => {
+        const newCategories = props.data.map((e) => {
           let date = new Date(e.period);
           let day = date.getDate();
           let month = date.getMonth() + 1;
           return `${month}/${day}`;
         });
 
+        setCategories(newCategories);
+
         setOptions((prevOptions) => ({
           ...prevOptions,
           xaxis: {
             ...prevOptions.xaxis,
-            categories: categories,
+            categories: newCategories,
           },
         }));
       });
