@@ -45,7 +45,7 @@ export const StyledNewsItemDiv = styled.div`
   font-size: ${(props) => props.Hfontsize || "16px"};
   width: 100%;
   background-color: ${(props) =>
-    props.darkMode ? "rgb(65, 65, 65)" : "rgba(0, 0, 0, 0.02)"};
+    props.darkMode ? "#47484A" : "rgba(0, 0, 0, 0.02)"};
 
   padding: 10px;
   border-radius: 10px;
@@ -64,15 +64,19 @@ export const StyledNewsItemDiv = styled.div`
 export const StyledNewsItemHeaderDiv = styled.div`
   font-size: 0.7rem;
   margin-bottom: 10px;
-  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
+  
   display: flex;
   align-items: center;
 
   & span:nth-child(2) {
     margin: 0px 10px;
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
+
   }
   & span:nth-child(3) {
     margin-left: 10px;
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
+
   }
 `;
 

@@ -18,7 +18,6 @@ export default function KeywordPage() {
         <div>                
         <Header />
       </div>
-
         <StyledRelatedKeyword>
           </StyledRelatedKeyword>
       <RelatedKeyword></RelatedKeyword>
