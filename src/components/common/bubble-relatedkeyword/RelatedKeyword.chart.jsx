@@ -6,27 +6,15 @@ import Skeleton from 'react-loading-skeleton'; // Make sure you have this instal
 import 'react-loading-skeleton/dist/skeleton.css'; // Import CSS for the skeleton
 import { StyledInfoIcon } from './RelatedKeyword.style';
 import { useSelector } from "react-redux";
-
-const googleTrendsAPI = async (keyword) => {
-  try {
-    const response = await axios.get("/api/trends/google", {
-      params: {
-        keyword: keyword,
-        startTime: 30,
-      },
-    });
-    return JSON.parse(response.data);
-  } catch (err) {
-    return null; // 에러 발생 시 null 반환
-  }
-};
+import { fetchNaverStockData } from "../../../lib/apis/Naver-Trends";
 
 export default function RelatedKeywordChart(props) {
   console.log(props.darkMode)
   const darkMode = useSelector((state) => state.theme.darkMode);
   const [color, setColor] = useState([]);
   const [backcolor, setBackColor] = useState("")
-  
+  const [loadError, setLoadError] = useState(false);
+
   useEffect(() => {
     if (props.darkMode) {
       setColor(["rgba(0, 170, 255, 0.9)", "rgba(31, 255, 154, 0.9)"])
@@ -38,16 +26,42 @@ export default function RelatedKeywordChart(props) {
     // 필요한 다른 로직 수행
   }, [props.darkMode]);
 
-  
+
+  const today = new Date();
+  const MonthAgo = new Date(today);
+  MonthAgo.setDate(today.getDate() - 30);
+ // 네이버 데이터랩 요청 날짜 형식으로 변환 (ex. 2024-06-22)
+  const formatDate = (date) => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+  };
+  // startDate: 7일 전 날짜
+  // endDate: 현재날짜
+  const startDate = formatDate(MonthAgo);
+  const endDate = formatDate(today);
+  const periodOffset = 30;
+  const keyword = [props.keyword];
+  const related = [props.related];
+
   const {
     data: GraphData1,
     isLoading: isLoadingGraph1,
     error: errorGraph1,
   } = useQuery(
-    ["GoogleTrendsData1", props.keyword],
-    () => googleTrendsAPI(props.keyword),
+    ["NaverTrendsData1", props.keyword],
+    () => fetchNaverStockData(
+        keyword,
+        startDate,
+        endDate,
+        periodOffset,
+        setLoadError
+      ),
     {
       staleTime: Infinity,
+      enabled: !!keyword,
+      retry: false,
     }
   );
 
@@ -56,10 +70,18 @@ export default function RelatedKeywordChart(props) {
     isLoading: isLoadingGraph2,
     error: errorGraph2,
   } = useQuery(
-    ["GoogleTrendsData2", props.related],
-    () => googleTrendsAPI(props.related),
+    ["NaverTrendsData2", props.related],
+    () => fetchNaverStockData(
+        related,
+        startDate,
+        endDate,
+        periodOffset,
+        setLoadError
+      ),
     {
       staleTime: Infinity,
+      enabled: !!related,
+      retry: false,
     }
   );
 
@@ -81,22 +103,29 @@ export default function RelatedKeywordChart(props) {
     );
   }
 
-  const data1 = GraphData1?.default?.timelineData || [];
-  const data2 = GraphData2?.default?.timelineData || [];
+  console.log("네이버 응답데이터")
+  console.log(GraphData1)
+
+
+  const data1 = GraphData1[0]?.data || [];
+  const data2 = GraphData2[0]?.data|| [];
   const categories = [];
   const value1 = [];
   const value2 = [];
 
+  console.log(data1)
   data1.forEach((e) => {
-    const date = new Date(e.formattedTime);
+    const date = new Date(e.period);
     const day = date.getDate();
     const month = date.getMonth() + 1;
     categories.push(`${month}/${day}`);
-    value1.push(e.value[0]);
+    value1.push(e.ratio);
   });
 
+  console.log(categories,value1)
+
   data2.forEach((e) => {
-    value2.push(e.value[0]);
+    value2.push(e.ratio);
   });
 
   const options = {
