@@ -15,7 +15,9 @@ export default function KeywordPage() {
   return (  <StyledSocialDiv>
       <Sidebar />
       <StyledKeywordDiv darkMode={darkMode}>
+        <div>                
         <Header />
+      </div>
         <StyledRelatedKeyword>
           </StyledRelatedKeyword>
       <RelatedKeyword></RelatedKeyword>

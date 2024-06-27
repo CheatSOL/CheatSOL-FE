@@ -16,23 +16,7 @@ import {
 import { useSelector } from "react-redux";
 import { isError, useQuery } from "react-query";
 import { ClipLoader } from "react-spinners";
-
-const fetchNaverStockData = async (
-  keywords,
-  startDate,
-  endDate,
-  periodOffset,
-  setLoadError
-) => {
-  setLoadError(false);
-  const response = await axios.post("/api/trends/naver", {
-    keywords,
-    startDate,
-    endDate,
-    periodOffset,
-  });
-  return response.data;
-};
+import { fetchNaverStockData } from "../../lib/apis/Naver-Trends";
 
 const NaverItem = () => {
   const keyword = useSelector((state) => state.keyword.keyword);

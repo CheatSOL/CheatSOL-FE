@@ -122,9 +122,9 @@ export const StyledKeyCircleItem = styled.div`
 
 export const StyledNewsContainer = styled.div`
     position: absolute;
-    right: 5vw;
-    margin-right: 3vw;
+    right: 7vw;
     border: 1px;
+    width: 45%;
 `
 
 export const StyledNewsTab = styled.div`
@@ -153,7 +153,7 @@ ${(props) =>
 
 export const StyledNaverbox = styled.div`
     opacity: 0; /* 처음에 숨김 */
-    background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
+    background-color: ${(props) => (props.darkMode ? "#333333" : "white")};
     
     border-radius: 20px;
     box-shadow: 8px 20px 30px 0px rgb(0, 0, 0, 0.04);
@@ -171,7 +171,7 @@ export const StyledNaverbox = styled.div`
 `
 
 export const StyledGraphBox = styled.div`
-    background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
+    background-color: ${(props) => (props.darkMode ? "#333333" : "white")};
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0px 10px 14px 0px rgb(0, 0, 0, 0.04);
@@ -229,7 +229,7 @@ export const StyledGraphKeyword = styled.div`
     gap: 2%;
     padding: 5px;
     width: 100%;
-    background-color: ${(props) => (props.darkMode ? "#323842" : "rgb(67,210,255,1)")};
+    background-color: ${(props) => (props.darkMode ? "#252a33" : "rgb(67,210,255,1)")};
     box-shadow: ${(props) => (props.darkMode ? "0 0 0 5px rgba(0, 0, 0, 0.15)" : "0 0 0 5px rgb(45,202,255)")};
     text-align: center;
     font-size: 1.1rem;
