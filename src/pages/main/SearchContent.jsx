@@ -9,7 +9,7 @@ import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 
-const fetchStockData = async (keyword) => {
+/* const fetchStockData = async (keyword) => {
   console.log(`Fetching data for keyword: ${keyword}`);
   const response = await axios.get("/api/trends/google", {
     params: {
@@ -18,54 +18,78 @@ const fetchStockData = async (keyword) => {
     },
   });
   return JSON.parse(response.data);
+}; */
+
+const fetchStockData = async (keywords, startDate, endDate, periodOffset) => {
+  const response = await axios.post("/api/trends/naver", {
+    keywords,
+    startDate,
+    endDate,
+    periodOffset,
+  });
+  console.log("naver111 : " + [keywords, startDate, endDate, periodOffset]);
+  return response.data;
 };
 
 export default function SearchContent({ keyword }) {
   const [percent, setPercent] = useState(NaN);
   const [currentWeekData, setCurrentWeekData] = useState([]);
   const [currentWeekDates, setCurrentWeekDates] = useState([]);
+  const [startDate, setStartDate] = useState(() => {
+    const currentDate = new Date();
+    const sevenDaysAgo = new Date(
+      currentDate.setDate(currentDate.getDate() - 30)
+    );
+    return sevenDaysAgo.toISOString().split("T")[0];
+  });
+  const [endDate, setEndDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+  const [periodOffset, setPeriodOffset] = useState(30);
+  const [initialLoad, setInitialLoad] = useState(true);
+  const keywords = [keyword];
   const darkMode = useSelector((state) => state.theme.darkMode);
 
   const {
     data: stockData,
     isLoading,
     error,
-  } = useQuery(["stockData", keyword], () => fetchStockData(keyword), {
-    staleTime: Infinity,
-    enabled: !!keyword,
-  });
-
+    refetch: refetchStockData,
+  } = useQuery(
+    ["stockData", keyword],
+    () =>
+      keyword || initialLoad
+        ? fetchStockData(keywords, startDate, endDate, periodOffset)
+        : Promise.resolve(null),
+    {
+      staleTime: Infinity,
+      enabled: initialLoad || !!keyword,
+      //refetchInterval: 10000,
+    }
+  );
+  console.log("stockData : " + stockData);
   useEffect(() => {
     setPercent(NaN);
+    console.log("ssss : ", stockData);
     if (stockData) {
-      const dayOfData = stockData.default.timelineData.sort((a, b) => {
-        return b.time - a.time;
+      const dayOfData = stockData[0].data.sort((a, b) => {
+        return b.period - a.period;
       });
-
       let currentWeek = 0;
       let lastWeek = 0;
-
-      const currentWeekValues = dayOfData
-        .slice(0, 7)
-        .reverse()
-        .map((elem) => {
-          currentWeek += parseFloat(elem.formattedValue);
-          return parseFloat(elem.formattedValue);
-        });
-
-      const currentWeekTimes = dayOfData
-        .slice(0, 7)
-        .reverse()
-        .map((elem) => {
-          console.log("dfs", elem.formattedTime);
-          return elem.formattedTime;
-        });
+      const currentWeekValues = dayOfData.slice(-7).map((elem) => {
+        currentWeek += parseFloat(elem.ratio);
+        return parseFloat(elem.ratio);
+      });
+      const currentWeekTimes = dayOfData.slice(-7).map((elem) => {
+        return elem.period;
+      });
 
       dayOfData
         .slice(7, 14)
         .reverse()
         .map((elem) => {
-          lastWeek += parseFloat(elem.formattedValue);
+          lastWeek += parseFloat(elem.ratio);
         });
 
       const calculatedPercent = ((currentWeek - lastWeek) / lastWeek) * 100;
@@ -77,6 +101,13 @@ export default function SearchContent({ keyword }) {
       console.log(percent);
     }
   }, [stockData]);
+
+  useEffect(() => {
+    if (initialLoad) {
+      setInitialLoad(false);
+      refetchStockData();
+    }
+  }, [initialLoad, refetchStockData]);
 
   return (
     <StyledMainContentDiv darkMode={darkMode}>
