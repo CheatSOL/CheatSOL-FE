@@ -30,7 +30,7 @@ jobs:
         run: |
           npm install
           npm ci
-          
+
       # Build step removed since there is no build script
 
       - name: Copy files via SSH
@@ -41,7 +41,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           port: 22
           source: "."
-          target: "/home/ec2-user/CheatSOL-FE"
+          target: "/home/ubuntu/CheatSOL-FE"
 
       - name: Execute remote commands via SSH
         uses: appleboy/ssh-action@master
@@ -55,7 +55,7 @@ jobs:
             curl -sL https://rpm.nodesource.com/setup_20.x | sudo bash -
             sudo yum install -y nodejs
             # Navigate to the application directory
-            cd /home/ec2-user/CheatSOL-FE
+            cd /home/ubuntu/CheatSOL-FE
             # Install project dependencies
             npm install
             # Restart or start the application with pm2
