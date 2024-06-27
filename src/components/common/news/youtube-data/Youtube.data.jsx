@@ -17,8 +17,7 @@ import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import { decode } from "html-entities";
 
-const fetchYoutubeData = async (keyword, props) => {
-  props.setLoadError(false);
+const fetchYoutubeData = async (keyword) => {
   const result = await axios.get("/api/news/youtube", {
     params: {
       keyword: keyword,
@@ -29,40 +28,46 @@ const fetchYoutubeData = async (keyword, props) => {
 };
 export default function YoutubeData(props) {
   const keyword = useSelector((state) => state.keyword.keyword);
+  const darkMode = useSelector((state) => state.theme.darkMode);
+
   const {
     data = [],
     error,
     isLoading,
-  } = useQuery(
-    ["youtubeData", keyword],
-    () => fetchYoutubeData(keyword, props),
-    {
-      enabled: !!keyword,
-      staleTime: Infinity,
-      retry: false,
-    }
-  );
-
-  useEffect(() => {
-    if (!isLoading && data.length === 0) {
-      props.setLoadError(true);
-    } else props.setLoadError(false);
-  }, [isLoading, data, props.loadError]);
+  } = useQuery(["youtubeData", keyword], () => fetchYoutubeData(keyword), {
+    enabled: !!keyword,
+    staleTime: Infinity,
+    retry: false,
+  });
 
   return (
     <StyledNewsDiv className="Youtube-Box">
-      <StyledNewsKeyword>
+      <StyledNewsKeyword darkMode={darkMode}>
         <span>{`"${keyword}"`}</span>이 이렇게 언급됐어요
       </StyledNewsKeyword>
       <StyledNewsItemParentDiv>
-        {isLoading || !data ? (
+        {isLoading ? (
           Array.from({ length: 20 }).map((_, index) => (
-            <StyledContentsDiv key={index}>
+            <StyledContentsDiv key={index} darkMode={darkMode}>
               <Skeleton height={20} />
               <Skeleton height={15} />
               <Skeleton height={15} width="75%" />
             </StyledContentsDiv>
           ))
+        ) : error ? (
+          darkMode ? (
+            <img
+              src="/assets/images/no-data-box-darkmode.svg"
+              alt="No search result"
+              style={{ marginTop: "40px", width: "600px" }}
+            />
+          ) : (
+            <img
+              src="/assets/images/no-data-box.svg"
+              alt="No search result"
+              style={{ marginTop: "40px", width: "600px" }}
+            />
+          )
         ) : (
           <>
             {data.map((e, index) => (
@@ -89,7 +94,7 @@ export default function YoutubeData(props) {
           </>
         )}
 
-        <StyledBlurDiv></StyledBlurDiv>
+        <StyledBlurDiv darkMode={darkMode}></StyledBlurDiv>
       </StyledNewsItemParentDiv>
     </StyledNewsDiv>
   );

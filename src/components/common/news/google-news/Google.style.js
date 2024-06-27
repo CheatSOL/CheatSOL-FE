@@ -77,6 +77,6 @@ export const StyledContentsDiv = styled.div`
   padding: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 15px;
-  background-color: white;
+  background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
   margin-bottom: 5px;
 `;

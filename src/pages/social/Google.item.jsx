@@ -68,13 +68,6 @@ export default function GoogleItem() {
     };
   }, []);
 
-  /* useEffect(() => {
-    if (keyword) {
-      setLoadError(false);
-      refetch();
-    }
-  }, [keyword, refetch]); */
-
   const handlePeriodChange = (selectedPeriod) => {
     let t = "";
     if (selectedPeriod.includes("일")) {

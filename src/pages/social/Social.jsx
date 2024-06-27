@@ -17,7 +17,10 @@ export default function SocialPage() {
     <StyledSocialDiv>
       <Sidebar />
       <StyledSocialInfoDiv ref={scrollRef} darkMode={darkMode}>
-        <Header />
+        <div>
+          {" "}
+          <Header />
+        </div>
 
         <GoogleItem />
         <YoutubeItem />

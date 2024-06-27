@@ -7,8 +7,10 @@ export const StyledStockDiv = styled.div`
 `;
 
 export const StyledStockRightDiv = styled.div`
-  background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
+  background-color: ${(props) => (props.darkMode ? "#282828" : "#F9FCFF")};
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const StyledStockHeaderDiv = styled.div`
@@ -36,6 +38,8 @@ export const StyledStockBodyDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: start;
+  padding: 50px;
+  padding-top: 0px;
 `;
 
 export const StyledBodyCompanyDiv = styled.div`
@@ -44,9 +48,8 @@ export const StyledBodyCompanyDiv = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
-  height: 630px;
+  height: 615px;
   overflow-y: scroll;
-  position: relative;
 
   &:hover {
     cursor: pointer;
@@ -55,11 +58,12 @@ export const StyledBodyCompanyDiv = styled.div`
 
 export const StyledLoadingDiv = styled.div`
   width: 800px;
-  height: 400px;
+  height: 550px;
+  margin-left: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
 `;
 
 export const StyledContentsDiv = styled.div`
@@ -71,14 +75,14 @@ export const StyledContentsDiv = styled.div`
 
   border: 1px solid #d3d3d3;
   border-radius: 50px;
-  background-color: white;
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
 `;
 
 export const StyledHeaderChart = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;
 
 export const StyledSearchSpan = styled.span`
@@ -101,7 +105,7 @@ export const BlurDiv = styled.div`
     to top,
     transparent,
     0%,
-    rgba(51, 51, 51, 0.9),
+    #282828,
     70%,
     transparent
   )`
@@ -123,4 +127,15 @@ export const StyledTitleDiv = styled.div`
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
   background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
   color: ${(props) => (props.darkMode ? "white" : "")};
+`;
+
+export const StyledStockDetailDiv = styled.div`
+  width: 800px;
+  background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
+  padding: 10px;
+  padding-bottom: 30px;
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 `;

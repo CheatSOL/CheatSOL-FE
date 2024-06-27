@@ -66,7 +66,7 @@ export default function YoutubeVideo({ keyword }) {
   };
 
   if (loading) return <ClipLoader color="#43d2ff"></ClipLoader>;
-  if (!loading && (error || videos.length === 0))   
+  if (!loading && (error || videos.length === 0))
     return !darkMode ? (
       <img
         style={{ marginLeft: "2rem", width: "100%", height: "100%" }}
@@ -81,7 +81,6 @@ export default function YoutubeVideo({ keyword }) {
 
   return (
     <SliderContainer>
-
       <Slider {...settings}>
         {!error &&
           videos.length !== 0 &&
@@ -93,7 +92,6 @@ export default function YoutubeVideo({ keyword }) {
                     src={video.thumbnail_url}
                     alt={video.title}
                     isCenter={index === centerSlideIndex}
-                    
                   />
                 </a>
                 <CenteredSlideContent isCenter={index === centerSlideIndex}>
@@ -105,6 +103,5 @@ export default function YoutubeVideo({ keyword }) {
           ))}
       </Slider>
     </SliderContainer>
-   
   );
 }

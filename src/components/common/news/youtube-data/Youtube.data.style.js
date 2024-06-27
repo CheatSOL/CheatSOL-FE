@@ -31,6 +31,7 @@ export const StyledNewsKeyword = styled.div`
   & span {
     font-weight: bold;
   }
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
 `;
 export const StyledNewsItemParentDiv = styled.div`
   display: flex;
@@ -58,12 +59,13 @@ export const StyledNewsItemDiv = styled.div`
   gap: 5px;
 
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: ${(props) =>
+    props.darkMode ? "rgb(65, 65, 65);" : "rgba(0, 0, 0, 0.02)"};
   padding: 20px;
   border-radius: 20px;
   margin-bottom: 10px;
   padding-bottom: 20px;
-
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
   &:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.04);
@@ -73,7 +75,7 @@ export const StyledNewsItemDiv = styled.div`
 export const StyledNewsItemHeaderDiv = styled.div`
   font-size: 0.7rem;
   margin-bottom: 10px;
-  color: rgba(0, 0, 0, 0.6);
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
 
   & span:nth-child(1) {
     margin-right: 10px;
@@ -104,5 +106,5 @@ export const StyledContentsDiv = styled.div`
   padding: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 15px;
-  background-color: white;
+  background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
 `;

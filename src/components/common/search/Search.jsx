@@ -54,8 +54,8 @@ export default function Search(props) {
     <StyledHeaderInputDiv>
       <StyledHeaderInput
         placeholder="Search"
-        width={props.width}
-        height={props.height}
+        width={"900px"}
+        height={"50px"}
         value={text}
         onChange={onChangeKeyword}
         onKeyDown={onkeydownKeyword}
