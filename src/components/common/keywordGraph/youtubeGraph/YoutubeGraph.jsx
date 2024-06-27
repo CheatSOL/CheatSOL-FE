@@ -32,9 +32,6 @@ const formatDate = (dateStr) => {
 };
 export default function YoutubeGraph(props) {
   const date = props.data.map((e) => e.formattedAxisTime) || []; // 유효성 검사
-  const data = props.data.map((e) => e.formattedValue[0]) || []; // 유효성 검사
-  const darkMode = useSelector((state) => state.theme.darkMode);
-
   const darkMode = useSelector((state) => state.theme.darkMode);
 
   useEffect(() => {
