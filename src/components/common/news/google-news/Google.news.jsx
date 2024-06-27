@@ -36,8 +36,7 @@ function timeAgo(dateString) {
   }
 }
 
-const fetchGoogleNews = async (keyword, props) => {
-  /* props.setLoadError(false); */
+const fetchGoogleNews = async (keyword) => {
   const result = await axios.get("/api/news/google", {
     params: {
       keyword: keyword,
@@ -54,7 +53,7 @@ export default function GoogleNews(props) {
     data = [],
     error,
     isLoading,
-  } = useQuery(["googleNews", keyword], () => fetchGoogleNews(keyword, props), {
+  } = useQuery(["googleNews", keyword], () => fetchGoogleNews(keyword), {
     enabled: !!keyword,
     staleTime: Infinity,
     retry: false,

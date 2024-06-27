@@ -21,8 +21,6 @@ const fetchYoutubeStockData = async (
   setLoadError,
   loadError
 ) => {
-  setLoadError(false);
-  console.log("yt : " + loadError);
   const response = await axios.get("/api/trends/youtube", {
     params: {
       keyword: keyword,
@@ -35,7 +33,7 @@ const fetchYoutubeStockData = async (
 export default function YoutubeItem() {
   const darkMode = useSelector((state) => state.theme.darkMode);
   const scrollRef = useRef(null);
-  const [loadError, setLoadError] = useState(false);
+  /* const [loadError, setLoadError] = useState(false); */
   const [isGraphVisible, setIsGraphVisible] = useState(false);
   const keyword = useSelector((state) => state.keyword.keyword);
   const [startTime, setStartTime] = useState(7);
@@ -43,7 +41,7 @@ export default function YoutubeItem() {
     ["youtubeStockData", keyword, startTime],
     () =>
       startTime
-        ? fetchYoutubeStockData(keyword, startTime, setLoadError, loadError)
+        ? fetchYoutubeStockData(keyword, startTime)
         : Promise.resolve(null),
     {
       staleTime: Infinity,
@@ -58,29 +56,29 @@ export default function YoutubeItem() {
         console.log(entries);
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsGraphVisible(true); // Set visibility state to true if intersecting
-            observer.disconnect(); // Disconnect observer once graph is visible
+            setIsGraphVisible(true);
+            observer.disconnect();
           }
         });
       },
       {
-        threshold: 0.1, // Adjust the threshold as needed
+        threshold: 0.1,
       }
     );
 
     observer.observe(scrollRef.current);
 
     return () => {
-      observer.disconnect(); // Cleanup function to disconnect observer on unmount
+      observer.disconnect();
     };
   }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (keyword) {
       setLoadError(false);
       refetch();
     }
-  }, [keyword, refetch]);
+  }, [keyword, refetch]); */
 
   const handlePeriodChange = (selectedPeriod) => {
     let t = "";
@@ -111,7 +109,7 @@ export default function YoutubeItem() {
         <div></div>
       </StyledYoutubeItemDiv>
       <StyledYoutubeChartNewsDiv ref={scrollRef} darkMode={darkMode}>
-        {loadError || error ? (
+        {error ? (
           <div
             style={{
               width: "100%",
@@ -154,7 +152,7 @@ export default function YoutubeItem() {
                 ></div>
               )}
             </div>
-            <YoutubeData setLoadError={setLoadError} loadError={loadError} />
+            <YoutubeData />
           </>
         )}
       </StyledYoutubeChartNewsDiv>

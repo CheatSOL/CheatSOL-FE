@@ -98,7 +98,7 @@ export default function StockChart(props) {
 
   useEffect(() => {
     async function getSeries() {
-      const flattenedData = await props.data.flatMap((e) => e.value);
+      const flattenedData = await props.data.map((e) => e.ratio);
       return flattenedData;
     }
 
@@ -118,7 +118,7 @@ export default function StockChart(props) {
         ]);
 
         const categories = props.data.map((e) => {
-          let date = new Date(e.formattedTime);
+          let date = new Date(e.period);
           let day = date.getDate();
           let month = date.getMonth() + 1;
           return `${month}/${day}`;

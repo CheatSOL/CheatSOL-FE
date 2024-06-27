@@ -62,7 +62,7 @@ export default function Contents(props) {
 
   if (isLoading) {
     return (
-      <StyledContentsDiv width={"280px"} height={"180px"}>
+      <StyledContentsDiv width={"230px"} height={"150px"}>
         <Skeleton height={20} />
         <Skeleton height={15} />
         <Skeleton height={15} width="80%" />

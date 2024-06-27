@@ -25,14 +25,15 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useEffect, useState } from "react";
 
-const fetchStockData = async (keyword) => {
-  const response = await axios.get("/api/trends/google", {
-    params: {
-      keyword: keyword,
-      startTime: 30,
-    },
+const fetchStockData = async (keywords, startDate, endDate, periodOffset) => {
+  const response = await axios.post("/api/trends/naver", {
+    keywords,
+    startDate,
+    endDate,
+    periodOffset,
   });
-  return JSON.parse(response.data);
+  console.log("naver : " + [keywords, startDate, endDate, periodOffset]);
+  return response.data;
 };
 
 const fetchCompanyData = async (keyword) => {
@@ -51,19 +52,36 @@ export default function StockPage() {
   const [curCompanyCode, setCurCompanyCode] = useState("");
   const [curCompanyId, setCurCompanyId] = useState(0);
   const [stockDetails, setStockDetails] = useState([]);
+  const [startDate, setStartDate] = useState(() => {
+    const currentDate = new Date();
+    const sevenDaysAgo = new Date(
+      currentDate.setDate(currentDate.getDate() - 30)
+    );
+    return sevenDaysAgo.toISOString().split("T")[0];
+  });
+  const [endDate, setEndDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+  const [periodOffset, setPeriodOffset] = useState(30);
+  const [initialLoad, setInitialLoad] = useState(true);
+  const keywords = [keyword];
   const darkMode = useSelector((state) => state.theme.darkMode);
 
   const {
     data: stockData,
     isLoading: isStockLoading,
     error: stockError,
+    refetch: refetchStockData,
   } = useQuery(
     ["stockData", keyword],
-    () => (keyword ? fetchStockData(keyword) : Promise.resolve(null)),
+    () =>
+      keyword || initialLoad
+        ? fetchStockData(keywords, startDate, endDate, periodOffset)
+        : Promise.resolve(null),
     {
       staleTime: Infinity,
-      enabled: !!keyword,
-      refetchInterval: 10000,
+      enabled: initialLoad || !!keyword,
+      //refetchInterval: 10000,
     }
   );
 
@@ -77,9 +95,16 @@ export default function StockPage() {
     {
       staleTime: Infinity,
       enabled: !!keyword,
-      refetchInterval: 10000,
+      //refetchInterval: 10000,
     }
   );
+
+  useEffect(() => {
+    if (initialLoad) {
+      setInitialLoad(false);
+      refetchStockData();
+    }
+  }, [initialLoad, refetchStockData]);
 
   useEffect(() => {
     const fetchDailyPrice = async () => {
@@ -141,7 +166,6 @@ export default function StockPage() {
             "키워드를 입력해주세요."
           )}
         </StyledStockHeaderDiv>
-
         <StyledStockBodyDiv>
           <div>
             <StyledHeaderChart>
@@ -151,14 +175,44 @@ export default function StockPage() {
                 {curCompanyName}의<StyledPriceSpan> 시세 </StyledPriceSpan>비교
               </StyledTitleDiv>
             </StyledHeaderChart>
+
             {isStockLoading ? (
-              <StyledLoadingDiv>
+              <StyledLoadingDiv darkMode={darkMode}>
                 <ClipLoader color={"#43D2FF"} loading={true} />
               </StyledLoadingDiv>
+            ) : stockError ? (
+              <>
+                <div
+                  style={{
+                    width: "800px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: darkMode ? "#47484A" : "white",
+                    border: "1px solid rgba(0,0,0,0.15)",
+                    borderRadius: "20px",
+                    marginLeft: "10px",
+                  }}
+                >
+                  {darkMode ? (
+                    <img
+                      src="/assets/images/no-data-darkmode.svg"
+                      width={"70%"}
+                      height={"550px"}
+                    />
+                  ) : (
+                    <img
+                      src="/assets/images/no-data.svg"
+                      width={"70%"}
+                      height={"550px"}
+                    />
+                  )}
+                </div>
+              </>
             ) : (
               stockData && (
                 <StockChart
-                  data={stockData?.default?.timelineData}
+                  data={stockData[0]?.data}
                   curCompanyPrice={curCompanyPrice}
                   curCompanyName={curCompanyName}
                   curCompanyCode={curCompanyCode}
@@ -174,36 +228,39 @@ export default function StockPage() {
                 확인하기
               </StyledTitleDiv>
             </StyledHeaderChart>
-            <StyledBodyCompanyDiv>
-              {isCompanyLoading || !companyData ? (
-                Array.from({ length: 20 }).map((_, index) => (
-                  <StyledContentsDiv
-                    width={"280px"}
-                    height={"180px"}
-                    key={index}
-                  >
-                    <Skeleton height={20} />
-                    <Skeleton height={15} />
-                    <Skeleton height={15} width="80%" />
-                  </StyledContentsDiv>
-                ))
-              ) : (
-                <>
-                  {companyData.map((e, i) => (
-                    <ContentsItem
-                      width={"280px"}
-                      height={"180px"}
-                      item={e}
-                      key={i}
-                      id={i}
-                      currentCompany={handleItemClick}
-                      curCompanyId={curCompanyId}
-                    />
-                  ))}
-                </>
-              )}
-            </StyledBodyCompanyDiv>
-            <BlurDiv darkMode={darkMode} />
+            <div style={{ position: "relative", height: "615px" }}>
+              <StyledBodyCompanyDiv>
+                {isCompanyLoading || !companyData ? (
+                  Array.from({ length: 20 }).map((_, index) => (
+                    <StyledContentsDiv
+                      width={"230px"}
+                      height={"150px"}
+                      key={index}
+                      darkMode={darkMode}
+                    >
+                      <Skeleton height={20} />
+                      <Skeleton height={15} />
+                      <Skeleton height={15} width="80%" />
+                    </StyledContentsDiv>
+                  ))
+                ) : (
+                  <>
+                    {companyData.map((e, i) => (
+                      <ContentsItem
+                        width={"230px"}
+                        height={"150px"}
+                        item={e}
+                        key={i}
+                        id={i}
+                        currentCompany={handleItemClick}
+                        curCompanyId={curCompanyId}
+                      />
+                    ))}
+                  </>
+                )}
+              </StyledBodyCompanyDiv>
+              <BlurDiv darkMode={darkMode} />
+            </div>
           </div>
         </StyledStockBodyDiv>
       </StyledStockRightDiv>

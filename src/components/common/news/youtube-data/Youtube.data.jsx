@@ -16,72 +16,57 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import { decode } from "html-entities";
-import { Link, json } from "react-router-dom";
 
-const fetchYoutubeData = async (keyword, props) => {
-  props.setLoadError(false);
-  const result = await axios.get("/api/youtube", {
+const fetchYoutubeData = async (keyword) => {
+  const result = await axios.get("/api/news/youtube", {
     params: {
-      word: keyword,
+      keyword: keyword,
     },
   });
-  return result.data.slice(0, 5).map((video) => {
-    const videoRenderer = video.videoRenderer || {};
-    const thumbnail = videoRenderer.thumbnail?.thumbnails?.[0]?.url;
-    const videoUrl = videoRenderer.inlinePlaybackEndpoint?.commandMetadata
-      ?.webCommandMetadata?.url
-      ? `https://www.youtube.com${videoRenderer.inlinePlaybackEndpoint.commandMetadata.webCommandMetadata.url}`
-      : "#";
-    const title = videoRenderer.title?.accessibility?.accessibilityData?.label;
-    const channel = videoRenderer.longBylineText?.runs?.[0]?.text;
-    const pubDate = videoRenderer.publishedTimeText?.simpleText;
-
-    return {
-      thumbnail,
-      videoUrl,
-      title,
-      channel,
-      pubDate,
-    };
-  });
+  return result.data.slice(0, 20);
 };
 export default function YoutubeData(props) {
   const keyword = useSelector((state) => state.keyword.keyword);
+  const darkMode = useSelector((state) => state.theme.darkMode);
+
   const {
     data = [],
     error,
     isLoading,
-  } = useQuery(
-    ["youtubeData", keyword],
-    () => fetchYoutubeData(keyword, props),
-    {
-      enabled: !!keyword,
-      staleTime: Infinity,
-      retry: false,
-    }
-  );
-  console.log("youtube : " + data);
-
-  /* useEffect(() => {
-    if (!isLoading && data.length === 0) {
-      props.setLoadError(true);
-    } else props.setLoadError(false);
-  }, [isLoading, data, props.loadError]); */
+  } = useQuery(["youtubeData", keyword], () => fetchYoutubeData(keyword), {
+    enabled: !!keyword,
+    staleTime: Infinity,
+    retry: false,
+  });
 
   return (
     <StyledNewsDiv className="Youtube-Box">
-      <StyledNewsKeyword>
+      <StyledNewsKeyword darkMode={darkMode}>
         <span>{`"${keyword}"`}</span>이 이렇게 언급됐어요
       </StyledNewsKeyword>
       <StyledNewsItemParentDiv>
-        {isLoading || !data ? (
+        {isLoading ? (
           Array.from({ length: 20 }).map((_, index) => (
-            <StyledContentsDiv key={index}>
+            <StyledContentsDiv key={index} darkMode={darkMode}>
               <Skeleton height={20} />
               <Skeleton height={15} />
               <Skeleton height={15} width="75%" />
             </StyledContentsDiv>
           ))
+        ) : error ? (
+          darkMode ? (
+            <img
+              src="/assets/images/no-data-box-darkmode.svg"
+              alt="No search result"
+              style={{ marginTop: "40px", width: "600px" }}
+            />
+          ) : (
+            <img
+              src="/assets/images/no-data-box.svg"
+              alt="No search result"
+              style={{ marginTop: "40px", width: "600px" }}
+            />
+          )
         ) : (
           <>
             {data.map((e, index) => (
@@ -99,18 +84,16 @@ export default function YoutubeData(props) {
                     </StyledNewsItemHeaderDiv>
                     <div className="youtube-title">{decode(e.title)}</div>
                   </StyledVideoDiv>
-                  <Link to={`${e.videoUrl}`}>
-                    <StyledImageDiv>
-                      <img src={e.thumbnail}></img>
-                    </StyledImageDiv>
-                  </Link>
+                  <StyledImageDiv>
+                    <img src={e.thumbnail_url}></img>
+                  </StyledImageDiv>
                 </StyledNewsItemDiv>
               </a>
             ))}
           </>
         )}
 
-        <StyledBlurDiv></StyledBlurDiv>
+        <StyledBlurDiv darkMode={darkMode}></StyledBlurDiv>
       </StyledNewsItemParentDiv>
     </StyledNewsDiv>
   );

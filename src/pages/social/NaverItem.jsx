@@ -31,6 +31,7 @@ const fetchNaverStockData = async (
     endDate,
     periodOffset,
   });
+  console.log("naver : " + [keywords, startDate, endDate, periodOffset]);
   return response.data;
 };
 
