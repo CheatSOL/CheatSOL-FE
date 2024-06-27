@@ -32,6 +32,7 @@ export default function YoutubeVideo({ keyword }) {
           params: { keyword: keyword, limit: 5 },
         });
         setVideos(response.data);
+
         setLoading(false);
       } catch (err) {
         setError(err);
@@ -80,6 +81,7 @@ export default function YoutubeVideo({ keyword }) {
 
   return (
     <SliderContainer>
+
       <Slider {...settings}>
         {!error &&
           videos.length !== 0 &&
