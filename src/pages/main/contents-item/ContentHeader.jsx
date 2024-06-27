@@ -21,6 +21,7 @@ export default function ContentHeader(props) {
             fontSize: "22px",
             color: darkMode ? "white" : "#2E2E30",
             alignItems: "center",
+            flexWrap: "wrap"
           }}
         >
           <strong

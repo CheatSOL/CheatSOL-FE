@@ -15,6 +15,7 @@ export const StyledStockHeaderDiv = styled.div`
   margin-left: 50px;
   font-size: 18px;
   margin-bottom: 40px;
+  
   color: ${(props) => (props.darkMode ? "white" : "")};
   & strong {
     font-size: 22px;

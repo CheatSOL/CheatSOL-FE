@@ -148,7 +148,7 @@ export const StockChart = ({symbol}) => {
       
       
       </FlexContainer>
-      <div style={{fontSize:"14px", display:"flex", justifyContent:"end", marginBottom:"35px"}}><i class="bi bi-info-circle" style={{marginRight:"5px"}}></i>일별 / 주별 / 월별 / 연별로 현재 날짜로부터 최대 100개의 정보를 제공합니다.</div>
+      <div style={{fontSize:"14px", display:"flex", justifyContent:"end", marginBottom:"35px",color:darkMode? "white":"black"}}><i class="bi bi-info-circle" style={{marginRight:"5px"}}></i>일별 / 주별 / 월별 / 연별로 현재 날짜로부터 최대 100개의 정보를 제공합니다.</div>
 
       <CustomTabs justify variant='tabs' activeKey={activeTab} onSelect={handleTabChange} darkMode={darkMode}>
         <Nav.Item>

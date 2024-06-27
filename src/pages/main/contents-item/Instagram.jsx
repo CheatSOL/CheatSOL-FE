@@ -85,7 +85,7 @@ export default function Instagram({ keyword }) {
             tagInfo !== undefined &&
             tagInfo[0]}
         </Number>
-        <Label>포스터 수</Label>
+        <Label darkMode={darkMode}>포스터 수</Label>
       </Column>
       <Column>
         <Number>
@@ -95,7 +95,7 @@ export default function Instagram({ keyword }) {
             tagInfo !== undefined &&
             tagInfo[1]}
         </Number>
-        <Label>상위 비율</Label>
+        <Label darkMode={darkMode}>상위 비율</Label>
       </Column>
     </Container>
   );

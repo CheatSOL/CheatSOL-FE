@@ -27,6 +27,6 @@ export const Number = styled.span`
 `;
 
 export const Label = styled.span`
+  color: ${(props) => (props.darkMode ? "white" : "#555")};
   font-size: 15px;
-  color: #555;
 `;

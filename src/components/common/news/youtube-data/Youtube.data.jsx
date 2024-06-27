@@ -22,9 +22,10 @@ const fetchYoutubeData = async (keyword, props) => {
   const result = await axios.get("/api/news/youtube", {
     params: {
       keyword: keyword,
+      limit:20
     },
   });
-  return result.data.slice(0, 20);
+  return result.data;
 };
 export default function YoutubeData(props) {
   const keyword = useSelector((state) => state.keyword.keyword);

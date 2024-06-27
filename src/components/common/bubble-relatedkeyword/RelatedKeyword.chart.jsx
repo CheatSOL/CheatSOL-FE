@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { useQuery } from "react-query";
 import axios from "axios";
-import Skeleton from 'react-loading-skeleton'; // Make sure you have this installed
-import 'react-loading-skeleton/dist/skeleton.css'; // Import CSS for the skeleton
-import { StyledInfoIcon } from './RelatedKeyword.style';
+import Skeleton from "react-loading-skeleton"; // Make sure you have this installed
+import "react-loading-skeleton/dist/skeleton.css"; // Import CSS for the skeleton
+import { StyledInfoIcon } from "./RelatedKeyword.style";
 import { useSelector } from "react-redux";
 import { fetchNaverStockData } from "../../../lib/apis/Naver-Trends";
 
@@ -171,8 +171,8 @@ export default function RelatedKeywordChart(props) {
       labels: {
         show: false,
       },
-    }, 
-     colors: color,
+    },
+    colors: color,
   };
 
   const series = [
@@ -186,13 +186,18 @@ export default function RelatedKeywordChart(props) {
     },
   ];
 
-
-  return(
-    <div style={{ zIndex: -1 ,position: 'relative'}}>
+  return (
+    <div style={{ zIndex: -1, position: "relative" }}>
       <StyledInfoIcon darkMode={darkMode}>
-        <img id="tooltip" src="/assets/images/question_mark.png" width={"21px"}></img>
-        <div id="tag">Google에서 한 달 동안의 검색된 추이를 보여줍니다.
-            가장 많이 검색된 날을 100으로 고정하여 상대값을 보여주며, 연관키워드 역시 한 달 중 최고치를 기준으로 상대값을 보여줍니다.
+        <img
+          id="tooltip"
+          src="/assets/images/question_mark.png"
+          width={"21px"}
+        ></img>
+        <div id="tag">
+          Google에서 한 달 동안의 검색된 추이를 보여줍니다. 가장 많이 검색된
+          날을 100으로 고정하여 상대값을 보여주며, 연관키워드 역시 한 달 중
+          최고치를 기준으로 상대값을 보여줍니다.
         </div>
       </StyledInfoIcon>
       <Chart
