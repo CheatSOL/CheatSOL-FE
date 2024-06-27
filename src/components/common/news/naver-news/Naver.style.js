@@ -70,12 +70,12 @@ export const StyledNewsItemHeaderDiv = styled.div`
 
   & span:nth-child(2) {
     margin: 0px 10px;
-  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
+    color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
 
   }
   & span:nth-child(3) {
     margin-left: 10px;
-  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
+    color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
 
   }
 `;
