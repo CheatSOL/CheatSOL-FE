@@ -13,6 +13,9 @@ export const HeaderContentDiv = styled.div`
 `;
 
 export const GlowIcon = styled.div`
+  position: absolute;
+  right:20px;
+  top:35px;
   display: flex;
   align-items: center;
   justify-content: center;

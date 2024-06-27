@@ -10,7 +10,7 @@ export const StyledMainContentDiv = styled.div`
   padding: 15px;
   border-radius: 20px;
   margin-bottom: 30px;
-
+  position: relative;
   white-space: nowrap;
   gap: 70px;
 `;
