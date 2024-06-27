@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 const formatDate = (dateStr) => {
   let datePart = dateStr.includes("–") ? dateStr.split("–")[0].trim() : dateStr;
   const parts = datePart.split(" ");
-  const darkMode = useSelector((state) => state.theme.darkMode);
 
   const month = parts[0];
   const day = parts[1].replace(",", "");
@@ -34,6 +33,8 @@ const formatDate = (dateStr) => {
 export default function YoutubeGraph(props) {
   const date = props.data.map((e) => e.formattedAxisTime) || []; // 유효성 검사
   const data = props.data.map((e) => e.formattedValue[0]) || []; // 유효성 검사
+
+  const darkMode = useSelector((state) => state.theme.darkMode);
 
   useEffect(() => {
     window.noLoop = false;
