@@ -8,23 +8,21 @@ import { StyledInfoIcon } from './RelatedKeyword.style';
 import { useSelector } from "react-redux";
 import { fetchNaverStockData } from "../../../lib/apis/Naver-Trends";
 
+import './Chart_Background.css'
+
 export default function RelatedKeywordChart(props) {
-  console.log(props.darkMode)
   const darkMode = useSelector((state) => state.theme.darkMode);
   const [color, setColor] = useState([]);
-  const [backcolor, setBackColor] = useState("")
   const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
-    if (props.darkMode) {
+    if (darkMode) {
       setColor(["rgba(0, 170, 255, 0.9)", "rgba(31, 255, 154, 0.9)"])
-      setBackColor("#282828")
     } else {
       setColor(["rgba(26, 175, 255, 0.9)", "rgba(46, 233, 183, 0.9)"])
-      setBackColor("transparent")
     }
     // 필요한 다른 로직 수행
-  }, [props.darkMode]);
+  }, [darkMode]);
 
 
   const today = new Date();
@@ -50,7 +48,7 @@ export default function RelatedKeywordChart(props) {
     isLoading: isLoadingGraph1,
     error: errorGraph1,
   } = useQuery(
-    ["NaverTrendsData1", props.keyword],
+    ["NaverTrendsData1", [props.keyword, darkMode]],
     () => fetchNaverStockData(
         keyword,
         startDate,
@@ -70,7 +68,7 @@ export default function RelatedKeywordChart(props) {
     isLoading: isLoadingGraph2,
     error: errorGraph2,
   } = useQuery(
-    ["NaverTrendsData2", props.related],
+    ["NaverTrendsData2", [props.related, darkMode]],
     () => fetchNaverStockData(
         related,
         startDate,
@@ -157,7 +155,6 @@ export default function RelatedKeywordChart(props) {
           customIcons: [],
         },
       },
-      background: backcolor,  
     },
     theme: {
       mode: darkMode ? "dark" : "light",
@@ -199,6 +196,7 @@ export default function RelatedKeywordChart(props) {
         </div>
       </StyledInfoIcon>
       <Chart
+      className="abc"
         key={`${props.keyword}-${props.related}`} // 키를 이용해 컴포넌트 리렌더링
         options={options}
         series={series}

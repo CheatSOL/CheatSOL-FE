@@ -125,7 +125,7 @@ export default function RelatedNews(props) {
                 </StyledNewsItemDiv>
               ))}
         </StyledNewsItemPatentDiv>
-        <StyledBlurDiv darkMode></StyledBlurDiv>
+        <StyledBlurDiv darkMode={darkMode}></StyledBlurDiv>
       </StyledNewsDiv>
     );
 }

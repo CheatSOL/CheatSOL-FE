@@ -1,12 +1,12 @@
 import styled, { keyframes, css } from "styled-components";
 
 export const StyledNewsDiv = styled.div`
-  width: calc(100% - 600px);
   height: 470px;
   background-color: ${(props) => (props.darkMode ? "" : "white")};
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 10px;
 
   position: relative;
   gap: 20px;
@@ -26,6 +26,7 @@ export const StyledBlurDiv = styled.div`
   width: calc(100%);
   height: 70px;
   position: absolute;
+  border-radius: 20px;
   left: 0px;
   bottom: -1px;
   background: ${(props) =>

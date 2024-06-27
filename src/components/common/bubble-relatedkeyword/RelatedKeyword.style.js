@@ -122,9 +122,9 @@ export const StyledKeyCircleItem = styled.div`
 
 export const StyledNewsContainer = styled.div`
     position: absolute;
-    right: 5vw;
-    margin-right: 3vw;
+    right: 7vw;
     border: 1px;
+    width: 45%;
 `
 
 export const StyledNewsTab = styled.div`

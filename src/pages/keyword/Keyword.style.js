@@ -9,4 +9,6 @@ export const StyledKeywordDiv = styled.div`
   flex-direction: column;
   overflow-y: scroll;  
   gap: 2vh;
+  align-items: center;
+
 `
