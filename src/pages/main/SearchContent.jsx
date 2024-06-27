@@ -20,7 +20,12 @@ import { useSelector } from "react-redux";
   return JSON.parse(response.data);
 }; */
 
-const fetchStockData = async (keywords, startDate, endDate, periodOffset) => {
+const fetchNaverLabData = async (
+  keywords,
+  startDate,
+  endDate,
+  periodOffset
+) => {
   const response = await axios.post("/api/trends/naver", {
     keywords,
     startDate,
@@ -56,10 +61,10 @@ export default function SearchContent({ keyword }) {
     error,
     refetch: refetchStockData,
   } = useQuery(
-    ["stockData", keyword],
+    ["naverLabData", keyword],
     () =>
       keyword || initialLoad
-        ? fetchStockData(keywords, startDate, endDate, periodOffset)
+        ? fetchNaverLabData(keywords, startDate, endDate, periodOffset)
         : Promise.resolve(null),
     {
       staleTime: Infinity,
@@ -91,7 +96,6 @@ export default function SearchContent({ keyword }) {
         .map((elem) => {
           lastWeek += parseFloat(elem.ratio);
         });
-
       const calculatedPercent = ((currentWeek - lastWeek) / lastWeek) * 100;
 
       setPercent(Math.round(calculatedPercent * 100) / 100);
