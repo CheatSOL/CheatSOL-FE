@@ -8,15 +8,19 @@ export const StyledNewsDiv = styled.div`
 
   flex-direction: column;
   align-items: center;
-  padding: 15px;
+
   padding-top: 0px;
 `;
 export const StyledBlurDiv = styled.div`
-  width: calc(100% - 30px);
+  width: calc(100%);
   height: 70px;
   position: absolute;
-  bottom: 0px;
-  background: linear-gradient(to top, transparent, 0%, white, 50%, transparent);
+  left: 0px;
+  bottom: -1px;
+  background: ${(props) =>
+    props.darkMode
+      ? `linear-gradient(to top, transparent, 0%, #47484A, 50%, transparent)`
+      : `linear-gradient(to top, transparent, 0%, white, 50%, transparent)`};
 `;
 
 export const StyledNewsKeyword = styled.div`
@@ -27,10 +31,12 @@ export const StyledNewsKeyword = styled.div`
   & span {
     font-weight: bold;
   }
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
 `;
 export const StyledNewsItemParentDiv = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   // gap: 5px;
 
   height: 480px;
@@ -49,15 +55,17 @@ export const StyledNewsItemParentDiv = styled.div`
 
 export const StyledNewsItemDiv = styled.div`
   display: flex;
+  justify-content: space-between;
   gap: 5px;
 
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: ${(props) =>
+    props.darkMode ? "rgb(65, 65, 65);" : "rgba(0, 0, 0, 0.02)"};
   padding: 20px;
   border-radius: 20px;
   margin-bottom: 10px;
   padding-bottom: 20px;
-
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
   &:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.04);
@@ -67,7 +75,7 @@ export const StyledNewsItemDiv = styled.div`
 export const StyledNewsItemHeaderDiv = styled.div`
   font-size: 0.7rem;
   margin-bottom: 10px;
-  color: rgba(0, 0, 0, 0.6);
+  color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
 
   & span:nth-child(1) {
     margin-right: 10px;
@@ -88,4 +96,15 @@ export const StyledImageDiv = styled.div`
     height: auto;
     border-radius: 10px;
   }
+`;
+
+export const StyledContentsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
 `;

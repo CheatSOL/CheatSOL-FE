@@ -15,6 +15,8 @@ export const StyledHeaderInput = styled.input`
   font-size: 20px;
   margin-left: 100px;
   padding-left: 20px;
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
+  color: ${(props) => (props.darkMode ? "white" : "")};
 
   &:focus {
     outline: none;
@@ -34,5 +36,10 @@ export const StyledSearchIcon = styled(IoSearch)`
   top: 50%;
   transform: translateY(-50%);
   font-size: 24px;
-  color: rgba(0, 0, 0, 0.5);
+  color: ${(props) => (props.darkMode ? "#bcb4b4" : "rgba(0, 0, 0, 0.5)")};
+  cursor:pointer;
+
+  &:hover {
+    color: #43D2FF;
+  }
 `;

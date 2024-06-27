@@ -6,11 +6,19 @@ export const StyledStockDiv = styled.div`
   height: 100%;
 `;
 
+export const StyledStockRightDiv = styled.div`
+  background-color: ${(props) => (props.darkMode ? "#282828" : "#F9FCFF")};
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+`;
+
 export const StyledStockHeaderDiv = styled.div`
   margin-left: 50px;
   font-size: 18px;
   margin-bottom: 40px;
-
+  
+  color: ${(props) => (props.darkMode ? "white" : "")};
   & strong {
     font-size: 22px;
     margin-right: 5px;
@@ -30,6 +38,8 @@ export const StyledStockBodyDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: start;
+  padding: 50px;
+  padding-top: 0px;
 `;
 
 export const StyledBodyCompanyDiv = styled.div`
@@ -38,9 +48,8 @@ export const StyledBodyCompanyDiv = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
-  height: 636px;
+  height: 615px;
   overflow-y: scroll;
-  position: relative;
 
   &:hover {
     cursor: pointer;
@@ -49,11 +58,12 @@ export const StyledBodyCompanyDiv = styled.div`
 
 export const StyledLoadingDiv = styled.div`
   width: 800px;
-  height: 400px;
+  height: 550px;
+  margin-left: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
 `;
 
 export const StyledContentsDiv = styled.div`
@@ -65,21 +75,14 @@ export const StyledContentsDiv = styled.div`
 
   border: 1px solid #d3d3d3;
   border-radius: 50px;
-  background-color: white;
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
 `;
 
 export const StyledHeaderChart = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
-  & > span {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    padding: 8px 80px;
-    border-radius: 50px;
-    background-color: white;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
-  }
+  margin-bottom: 30px;
 `;
 
 export const StyledSearchSpan = styled.span`
@@ -96,12 +99,43 @@ export const BlurDiv = styled.div`
   height: 70px;
   position: absolute;
   bottom: -26px;
-  background: linear-gradient(
+  background: ${(props) =>
+    props.darkMode
+      ? `linear-gradient(
+    to top,
+    transparent,
+    0%,
+    #282828,
+    70%,
+    transparent
+  )`
+      : `linear-gradient(
     to top,
     transparent,
     0%,
     #fafcff,
     50%,
     transparent
-  );
+  )`};
+`;
+
+export const StyledTitleDiv = styled.div`
+  width: auto;
+  padding: 10px 50px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 50px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
+  color: ${(props) => (props.darkMode ? "white" : "")};
+`;
+
+export const StyledStockDetailDiv = styled.div`
+  width: 800px;
+  background-color: ${(props) => (props.darkMode ? "#282828" : "white")};
+  padding: 10px;
+  padding-bottom: 30px;
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 `;

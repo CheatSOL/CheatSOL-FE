@@ -1,70 +1,307 @@
-import React, { useRef, useState, useEffect } from "react";
-import CountrySelectBar from "../../components/common/chart-select-bar/country/Country.select.bar";
-import PeriodSelectBar from "../../components/common/chart-select-bar/period/Period.select.bar";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import InstagramGraph from "../../components/common/keywordGraph/instagramGraph/InstagramGraph";
 import InstagramData from "../../components/common/news/instagram-data/instagram.data";
 import InstagramHotHashTags from "../../components/common/keywordGraph/instagramGraph/InstagramHotHashTags";
+import { useSelector } from "react-redux";
 import {
   StyledSocialInstagramDiv,
   StyledInstagramItemDiv,
   StyledInstagramHeaderDiv,
   StyledInstagramChartNewsDiv,
 } from "./Instagram.style";
+import { getInstagramSocialTrend } from "../../lib/apis/social";
 
 export default function InstagramItem() {
-  const scrollRef = useRef(null);
-  const [isGraphVisible, setIsGraphVisible] = useState(false);
+  const darkMode = useSelector((state) => state.theme.darkMode);
+  const [lineData, setLineData] = useState({});
+  const [data, setData] = useState([]);
+  const [topTags, setTopTags] = useState([]);
+  const [tagInfo, setTagInfo] = useState([]);
+  const [temp, setTemp] = useState(false);
+  const keyword = useSelector((state) => state.keyword.keyword);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    async function fetchData(word) {
+      try {
+        const instagramInfo = await getInstagramSocialTrend(word);
+        if (
+          instagramInfo.tagInfo === undefined ||
+          instagramInfo.topTags === undefined ||
+          instagramInfo.trendData === undefined
+        ) {
+          setTemp(true);
+          return;
+        }
+
+        console.log("instagram", instagramInfo);
+        setData(instagramInfo.trendData);
+        setTopTags(instagramInfo.topTags);
+        setTagInfo(instagramInfo.tagInfo);
+
+        const labels = instagramInfo.trendData.map((item) => item.date);
+        const counts = instagramInfo.trendData.map((item) => item.posts);
+        const changes = instagramInfo.trendData.map((item, index) => {
+          if (index === 0) return 0;
+          return item.posts - instagramInfo.trendData[index - 1].posts;
+        });
+
+        setLineData({
+          labels: labels,
+          datasets: [
+            {
+              label: "포스트 수",
+              data: counts,
+              borderColor: "rgba(214, 41, 118, 1)",
+              borderWidth: 3,
+              yAxisID: "y1",
+            },
+            {
+              label: "전월 대비 증감",
+              data: changes,
+              backgroundColor: darkMode
+                ? "rgba(214, 41, 118, 0.7)"
+                : "rgba(214, 41, 118, 0.2)",
+              borderRadius: 20,
+              barThickness: 20,
+              yAxisID: "y2",
+              type: "bar",
+            },
+          ],
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData(keyword);
+  }, [keyword]);
+
+  // Dark mode 변경 시 lineData 업데이트
+  useEffect(() => {
+    if (data.length > 0) {
+      const labels = data.map((item) => item.date);
+      const counts = data.map((item) => item.posts);
+      const changes = data.map((item, index) => {
+        if (index === 0) return 0;
+        return item.posts - data[index - 1].posts;
+      });
+
+      setLineData({
+        labels: labels,
+        datasets: [
+          {
+            label: "포스트 수",
+            data: counts,
+            borderColor: "rgba(214, 41, 118, 1)",
+            borderWidth: 3,
+            yAxisID: "y1",
+          },
+          {
+            label: "전월 대비 증감",
+            data: changes,
+            backgroundColor: darkMode
+              ? "rgba(214, 41, 118, 0.7)"
+              : "rgba(214, 41, 118, 0.2)",
+            borderRadius: 20,
+            barThickness: 20,
+            yAxisID: "y2",
+            type: "bar",
+          },
+        ],
+      });
+    }
+  }, [darkMode, data]);
+
+  const scrollRef = useRef(null);
+  const [isGraphVisible, setIsGraphVisible] = useState(false);
+  const observerRef = useRef(null);
+
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsGraphVisible(true); // When element is in view, set state to true
-          } else {
-            setIsGraphVisible(false); // When element is out of view, set state to false
-          }
+          setIsGraphVisible(entry.isIntersecting);
         });
       },
       {
-        threshold: 0.1, // Adjust the threshold as needed
+        threshold: 0.1,
       }
     );
 
-    observer.observe(scrollRef.current);
+    observerRef.current.observe(scrollRef.current);
 
     return () => {
-      observer.disconnect();
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
     };
   }, []);
 
+  const options = useMemo(() => {
+    const maxDataValue = Math.max(...(lineData.datasets?.[1]?.data || []));
+    const minDataValue = Math.min(...(lineData.datasets?.[1]?.data || []));
+    const range = Math.max(Math.abs(maxDataValue), Math.abs(minDataValue));
+    const symRange = range;
+
+    const formatYAxisLabel = (value) => {
+      if (Math.abs(value) >= 1000000) {
+        return (Math.abs(value) / 1000000).toFixed(1) + "M";
+      } else if (Math.abs(value) >= 1000) {
+        return (Math.abs(value) / 1000).toFixed(0) + "K";
+      }
+      return value;
+    };
+
+    return {
+      scales: {
+        y1: {
+          beginAtZero: true,
+          position: "left",
+          grid: {
+            drawOnChartArea: false,
+          },
+          ticks: {
+            color: darkMode ? "white" : "black", // y1축 텍스트 색상 설정
+            callback: (value) => formatYAxisLabel(value),
+          },
+        },
+        y2: {
+          beginAtZero: true,
+          position: "right",
+          grid: {
+            drawTicks: true,
+            display: true,
+          },
+          ticks: {
+            color: darkMode ? "white" : "black", // y2축 텍스트 색상 설정
+            callback: (value) => {
+              let formattedValue = formatYAxisLabel(Math.abs(value));
+              if (value > 0) {
+                return `${formattedValue}`;
+              } else if (value < 0) {
+                return `-${formattedValue}`;
+              }
+              return formattedValue;
+            },
+          },
+          min: -symRange,
+          max: symRange,
+        },
+        x: {
+          beginAtZero: true,
+          ticks: {
+            color: darkMode ? "white" : "black", // x축 텍스트 색상 설정
+          },
+        },
+      },
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        tooltip: {
+          mode: "index",
+          intersect: false,
+        },
+      },
+    };
+  }, [darkMode, lineData]);
+
   return (
-    <StyledSocialInstagramDiv>
+    <StyledSocialInstagramDiv darkMode={darkMode}>
       <StyledInstagramItemDiv>
         <div>
-          <img src="/assets/images/instagram-logo.png" />
+          <img src="/assets/images/instagram-logo.png" alt="Instagram Logo" />
         </div>
-
         <div></div>
       </StyledInstagramItemDiv>
-      <StyledInstagramChartNewsDiv ref={scrollRef}>
-        <div style={{ marginTop: "18px" }}>
-          <div>
-            <span style={{ fontSize: "16px" }}>
-              <strong>"불닭"</strong>이 이만큼 언급됐어요
-            </span>
-            {isGraphVisible && <InstagramGraph />} {/* Conditional rendering */}
-          </div>
-          <div>
-            <span style={{ fontSize: "18px" }}>
-              <strong>"불닭"</strong>과 함께 반응이 좋은 해시태그
-            </span>
-            <InstagramHotHashTags />
-          </div>
+      {temp ? (
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {darkMode ? (
+            <img
+              src="/assets/images/no-data-darkmode.svg"
+              width={"70%"}
+              height={"400px"}
+            />
+          ) : (
+            <img
+              src="/assets/images/no-data.svg"
+              width={"70%"}
+              height={"400px"}
+            />
+          )}
         </div>
+      ) : (
+        <>
+          <StyledInstagramChartNewsDiv ref={scrollRef} darkMode={darkMode}>
+            {!data ? (
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {darkMode ? (
+                  <img
+                    src="/assets/images/no-data-darkmode.svg"
+                    width={"70%"}
+                    height={"400px"}
+                  />
+                ) : (
+                  <img
+                    src="/assets/images/no-data.svg"
+                    width={"70%"}
+                    height={"400px"}
+                  />
+                )}
+              </div>
+            ) : (
+              <div style={{ marginTop: "18px" }}>
+                <div>
+                  <span
+                    style={{
+                      fontSize: "16px",
+                      color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)",
+                    }}
+                  >
+                    <strong>"{keyword}"</strong>이 이만큼 언급됐어요
+                  </span>
+                  {isGraphVisible && data ? (
+                    <InstagramGraph
+                      data={data.length}
+                      lineData={lineData}
+                      options={options}
+                    />
+                  ) : (
+                    <InstagramGraph></InstagramGraph>
+                  )}
+                </div>
+                <div>
+                  <span
+                    style={{
+                      fontSize: "18px",
+                      color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)",
+                    }}
+                  >
+                    <strong>"{keyword}"</strong>과 함께 반응이 좋은 해시태그
+                  </span>
+                  <InstagramHotHashTags topTags={topTags} />
+                </div>
+              </div>
+            )}
 
-        <InstagramData />
-      </StyledInstagramChartNewsDiv>
+            <InstagramData tagInfo={tagInfo} />
+          </StyledInstagramChartNewsDiv>
+        </>
+      )}
     </StyledSocialInstagramDiv>
   );
 }

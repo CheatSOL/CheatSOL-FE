@@ -11,28 +11,31 @@ export const Table = styled.table`
     border-collapse: collapse;
     width: 100%;
     margin-top: 10px;
-    border-bottom:2px solid #959595;
+    
+    
 `;
 
 export const Th = styled.th`
-    background-color: #F1FCFF;
+    background-color: ${(props) => (props.darkMode ? "#47484A" : " #F1FCFF")};
+    // background-color: #F1FCFF;
     /* 제목 셀 하단에만 경계선 추가 */
     padding: 12px;  
     text-align: center;
     font-weight: bold;
-    color: #666; 
+    color: ${(props) => (props.darkMode ? "white" : " black")};
 `;
 
 export const Td = styled.td`
-    border-bottom: 1.5px solid #ddd; 
+    border-bottom: ${(props) => (props.darkMode ? "2px solid #ADAEAE" : " 2px solid #ddd")};
     padding: 8px;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
+    color:${(props) => (props.darkMode ? "white" : " balck")};
 `;
 
 export const Thead = styled.tbody`
-    background-color: #ff;
+   background-color:#ff;
     
 `;
 

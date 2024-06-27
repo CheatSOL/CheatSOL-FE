@@ -7,7 +7,9 @@ import {
   StyledMoveDetailDiv,
   StyledMoveIcon,
 } from "./StockInfoDetail.style";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import darkmode from "../../store/reducers/darkmode";
 
 let curDate = new Date();
 curDate.setDate(curDate.getDate() - 1);
@@ -17,9 +19,9 @@ let year = String(curDate.getFullYear()).slice(2);
 let formattedDate = `${year}.${month}.${day}`;
 console.log("formattedDate : " + formattedDate);
 
-const getInvestorTradeColor = (value) => {
+const getInvestorTradeColor = (value, darkMode) => {
   if (value.includes("%")) {
-    return "black";
+    return darkMode ? "darkgray" : "black";
   }
 
   const numValue = parseFloat(value.replace(/[^0-9.-]/g, ""));
@@ -37,9 +39,11 @@ const getInvestorTradeColor = (value) => {
   return "black";
 };
 
-const SeiseInfo = ({ details }) => (
-  <StyledInfoDetailDiv>
-    <StyledTitleStockDetail>시세정보</StyledTitleStockDetail>
+const SeiseInfo = ({ details, darkMode }) => (
+  <StyledInfoDetailDiv darkMode={darkMode}>
+    <StyledTitleStockDetail darkMode={darkMode}>
+      시세정보
+    </StyledTitleStockDetail>
     <div>
       <p>시가</p>
       <p style={{ color: "tomato", fontWeight: "bold" }}>
@@ -55,9 +59,11 @@ const SeiseInfo = ({ details }) => (
   </StyledInfoDetailDiv>
 );
 
-const StockInfo = ({ details }) => (
-  <StyledInfoDetailDiv>
-    <StyledTitleStockDetail>종목정보</StyledTitleStockDetail>
+const StockInfo = ({ details, darkMode }) => (
+  <StyledInfoDetailDiv darkMode={darkMode}>
+    <StyledTitleStockDetail darkMode={darkMode}>
+      종목정보
+    </StyledTitleStockDetail>
     <div>
       <p>시총</p> <p>{details.marketcome}</p>
     </div>
@@ -67,17 +73,19 @@ const StockInfo = ({ details }) => (
   </StyledInfoDetailDiv>
 );
 
-const InvestorTrade = ({ details }) => (
-  <StyledInfoDetailDiv>
-    <StyledTitleStockDetail>
+const InvestorTrade = ({ details, darkMode }) => (
+  <StyledInfoDetailDiv darkMode={darkMode}>
+    <StyledTitleStockDetail darkMode={darkMode}>
       투자자별 매매동향
-      <StyledStockDetailTime>{`${formattedDate}`}</StyledStockDetailTime>
+      <StyledStockDetailTime
+        darkMode={darkMode}
+      >{`${formattedDate}`}</StyledStockDetailTime>
     </StyledTitleStockDetail>
     <div>
       <p>외국인보유율</p>
       <p
         style={{
-          color: getInvestorTradeColor(details.foreignOwnershipRate),
+          color: getInvestorTradeColor(details.foreignOwnershipRate, darkMode),
           fontWeight: "bold",
         }}
       >
@@ -109,10 +117,13 @@ const InvestorTrade = ({ details }) => (
   </StyledInfoDetailDiv>
 );
 
-const QuarterResult = ({ details, section }) => (
-  <StyledInfoDetailDiv>
-    <StyledTitleStockDetail>
-      분기실적 <StyledStockDetailTime>{section.slice(4)}</StyledStockDetailTime>
+const QuarterResult = ({ details, section, darkMode }) => (
+  <StyledInfoDetailDiv darkMode={darkMode}>
+    <StyledTitleStockDetail darkMode={darkMode}>
+      분기실적{" "}
+      <StyledStockDetailTime darkMode={darkMode}>
+        {section.slice(4)}
+      </StyledStockDetailTime>
     </StyledTitleStockDetail>
     <div>
       <p>매출액: </p>
@@ -130,41 +141,48 @@ const QuarterResult = ({ details, section }) => (
   </StyledInfoDetailDiv>
 );
 
-const StockDataComponent = ({ data }) => {
+const StockDataComponent = ({ data, darkMode }) => {
   switch (data.section.slice(0, 4)) {
     case "시세정보":
-      return <SeiseInfo details={data.details} />;
+      return <SeiseInfo details={data.details} darkMode={darkMode} />;
     case "종목정보":
-      return <StockInfo details={data.details} />;
+      return <StockInfo details={data.details} darkMode={darkMode} />;
     case `투자자별`:
-      return <InvestorTrade details={data.details} />;
+      return <InvestorTrade details={data.details} darkMode={darkMode} />;
     case "분기실적":
-      return <QuarterResult details={data.details} section={data.section} />;
+      return (
+        <QuarterResult
+          details={data.details}
+          section={data.section}
+          darkMode={darkMode}
+        />
+      );
     default:
       return <div>알 수 없는 데이터</div>;
   }
 };
 
+const StockInfoDetail = (props) => {
+  const navigate = useNavigate();
+  const darkMode = useSelector((state) => state.theme.darkMode);
 
+  const handleNavigation = () => {
+    const params = new URLSearchParams({
+      code: props.curCompanyCode,
+      name: props.curCompanyName,
+    });
 
-const StockInfoDetail = ( props ) => {
-  const navigate= useNavigate();
+    navigate(`/main/stocks/detail?${params.toString()}`);
+  };
 
-  const onClickMoveDetailPage = () =>{
-    const params = new URLSearchParams({ code:props.curCompanyCode , name: props.curCompanyName }).toString();
-    navigate(`?${params}`);
-
-
-  }
   return (
     <>
-      <StyledStockDetailDiv>
+      <StyledStockDetailDiv darkMode={darkMode}>
         {props.info?.map((data, index) => (
-          <StockDataComponent key={index} data={data} />
+          <StockDataComponent key={index} data={data} darkMode={darkMode} />
         ))}
       </StyledStockDetailDiv>
-      <Link to={`/main/stocks/detail/${props.curCompanyCode}/${props.curCompanyName }`} >
-      <StyledMoveDetailDiv onClick={onClickMoveDetailPage}>
+      <StyledMoveDetailDiv onClick={handleNavigation} darkMode={darkMode}>
         <span>
           상세정보 더보기{" "}
           <span>
@@ -172,8 +190,6 @@ const StockInfoDetail = ( props ) => {
           </span>
         </span>
       </StyledMoveDetailDiv>
-      </Link>
-
     </>
   );
 };

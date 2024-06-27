@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const StyledHeaderDiv = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   height: 100px;
-  padding: 10px;
-  margin: 20px 0px;
+  margin: 10px 0px;
+  //padding: 10px;
 `;
 export const StyledHeaderLogoDiv = styled.div`
   margin-left: 30px;
@@ -14,8 +14,8 @@ export const StyledHeaderLogoDiv = styled.div`
 
 export const StyledHeaderParentDiv = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin: 0px 50px;
-  width: 90%;
+  width: 100%;
 `;

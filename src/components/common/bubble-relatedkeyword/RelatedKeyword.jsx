@@ -1,63 +1,59 @@
-import { useState,useEffect,useRef } from "react";
+import { useState,useRef, useEffect } from "react";
 import Bubble from "../bubble/KeywordBubble";
-import NaverNews from "../news/naver-news/Naver.news";
+import RelatedNews from "./RelatedNews";
 import RelatedKeywordChart from "./RelatedKeyword.chart";
-import { StyledHeadTitleBox, StyledTitleBox, StyledRelatedKeyword, StyledGraphBox, StyledNaverbox, StyledNewsContainer, StyledNewsTab, StyledRelatedKeywordContainer, StyledBubbleContainer, StyledCircleContainer, StyledCircleItem, StyledMiniCircleItem, StyledKeyCircleItem, StyledGraphKeyword } from "./RelatedKeyword.style";
+import { StyledHeadTitleBox, StyledTitleBox, StyledGraphBox, StyledNaverbox, StyledNewsContainer, StyledNewsTab, StyledRelatedKeywordContainer, StyledBubbleContainer, StyledCircleContainer, StyledCircleItem, StyledMiniCircleItem, StyledKeyCircleItem, StyledInfoIcon} from "./RelatedKeyword.style";
 import sns from "~/images/sns_mark.png"
+import { relatedKeywordAPI } from "~/apis/RelatedKeyword.js"
+import { useQuery } from "react-query";
+import { useSelector } from "react-redux";
+import Loading from "../Loading/Loading";
 
 export default function RelatedKeyword() {
+    // 다크모드 적용
+    const darkMode = useSelector((state) => state.theme.darkMode);
+
+    // 스크롤 적용
     const scrollRef = useRef(null);
-  // !! sample data -> 실제 데이터로 추후 변경해주세요.
-  const keyword_sample = "불닭";
-  const related_big_keywords_sample = [
-    "맛집",
-    "카페",
-    "삼양",
-    "아이스크림",
-    "오랜만",
-    "인스타그램",
-  ];
-  const related_sml_keywords_sample = [
-    "불닭",
-    "불닭",
-    "불닭",
-    "불닭",
-    "불닭",
-    "불닭",
-  ];
-
-  //data
-  const keyword = keyword_sample;
-  const related_big_keywords = related_big_keywords_sample;
-  const related_sml_keywords = related_sml_keywords_sample;
-
+    // 전역 키워드
+    const keyword = useSelector((state) => state.keyword.keyword);
+    const params1 = {
+        keyword: keyword,
+    };   
+  
   //버블 원형 배치를 위한 코드
-  const big_radius = 200; // 반지름
-  const sml_radius = 130;
-  const angleStep = 360 / related_big_keywords.length;
+  const big_radius = 268; // 반지름
+  const sml_radius = 180;
+  const angleStep = 360 / 6;
 
   //버블 사이즈
-  const bubble_size = "170px";
-  const mini_bubble_size = "60px";
-  const key_bubble_size = "80px";
+  const bubble_size = "190px";
+  const mini_bubble_size = "100px";
+  const key_bubble_size = "180px";
 
     //Click한 키워드명
-     const [currentword,setCurrentword] = useState(keyword);
-    
+     const [currentword,setCurrentword] = useState(null);
+        //keyword가 바뀌어서 연관키워드가 재요청되면, 버블에 띄워진 current word도 업데이트시키기
+        useEffect(() => {
+            setCurrentword(null);
+            setClickedBubble(false);
+            setCurrentBubble(null);
+            setShowNewsTab(false); 
+          }, [keyword]);
     //Click시 버블 줄이기
     const [clickedbubble, setClickedBubble] = useState(false);
     //Click시 버블 투명도 찐하게
     const [currentbubble, setCurrentBubble] = useState(null);
     //Click시 나머지 버블 투명도 조절
-    const [opacity, setOpacity] = useState("0.5");
-    const [miniopacity, setMiniOpacity] = useState(null);
+    const [opacity, setOpacity] = useState("0.4");
     //Click시 그래프&뉴스탭 보이기
     const [shownewstab, setShowNewsTab] = useState(false);
     //Click하면 수행되는 함수
     const handleClick = (e) => {
         setClickedBubble(true);
         setShowNewsTab(true); 
-        setOpacity("0.3");
+        setOpacity("0.3");        
+
         if (currentbubble !== e.target.id) {
             setCurrentBubble(e.target.id);
             setCurrentword(e.target.innerText);
@@ -74,140 +70,121 @@ export default function RelatedKeyword() {
         if (currentbubble !== e.target.id) {
             setCurrentBubble(e.target.id);
             setCurrentword(e.target.innerText);
-
         } else {
             setCurrentBubble(null);
         }
         
     }
 
+    const params2 = {        
+        keyword: params1.keyword,
+        exWord: currentword,
+    };
 
-    // !! googletrends sample data => 추후 api 요청해서 받아오는 걸로 변경
-    const keyword_data = [
-        [
-          '2024-04-20', '2024-04-21', '2024-04-22', '2024-04-23',
-          '2024-04-24', '2024-04-25', '2024-04-26', '2024-04-27',
-          '2024-04-28', '2024-04-29', '2024-04-30', '2024-05-01',
-          '2024-05-02', '2024-05-03', '2024-05-04', '2024-05-05',
-          '2024-05-06', '2024-05-07', '2024-05-08', '2024-05-09',
-          '2024-05-10', '2024-05-11', '2024-05-12', '2024-05-13',
-          '2024-05-14', '2024-05-15', '2024-05-16', '2024-05-17',
-          '2024-05-18', '2024-05-19', '2024-05-20', '2024-05-21',
-          '2024-05-22', '2024-05-23', '2024-05-24', '2024-05-25',
-          '2024-05-26', '2024-05-27', '2024-05-28', '2024-05-29',
-          '2024-05-30', '2024-05-31', '2024-06-01', '2024-06-02',
-          '2024-06-03', '2024-06-04', '2024-06-05', '2024-06-06',
-          '2024-06-07', '2024-06-08', '2024-06-09', '2024-06-10',
-          '2024-06-11', '2024-06-12', '2024-06-13', '2024-06-14',
-          '2024-06-15', '2024-06-16', '2024-06-17', '2024-06-18',
-          '2024-06-19', '2024-06-20'
-        ],
-        [
-           56, 54, 67, 71, 67, 65, 61, 64, 62, 72, 62, 60,
-           65, 68, 66, 78, 68, 69, 61, 63, 67, 74, 76, 74,
-          100, 87, 70, 85, 87, 84, 96, 81, 64, 77, 75, 77,
-           79, 66, 68, 60, 71, 64, 77, 70, 87, 71, 76, 68,
-           75, 72, 76, 75, 72, 78, 76, 74, 87, 78, 82, 80,
-           73, 32
-        ]
-      ]
-
-      const relatedkeyword_data = [
-        [
-          '2024-04-20', '2024-04-21', '2024-04-22', '2024-04-23',
-          '2024-04-24', '2024-04-25', '2024-04-26', '2024-04-27',
-          '2024-04-28', '2024-04-29', '2024-04-30', '2024-05-01',
-          '2024-05-02', '2024-05-03', '2024-05-04', '2024-05-05',
-          '2024-05-06', '2024-05-07', '2024-05-08', '2024-05-09',
-          '2024-05-10', '2024-05-11', '2024-05-12', '2024-05-13',
-          '2024-05-14', '2024-05-15', '2024-05-16', '2024-05-17',
-          '2024-05-18', '2024-05-19', '2024-05-20', '2024-05-21',
-          '2024-05-22', '2024-05-23', '2024-05-24', '2024-05-25',
-          '2024-05-26', '2024-05-27', '2024-05-28', '2024-05-29',
-          '2024-05-30', '2024-05-31', '2024-06-01', '2024-06-02',
-          '2024-06-03', '2024-06-04', '2024-06-05', '2024-06-06',
-          '2024-06-07', '2024-06-08', '2024-06-09', '2024-06-10',
-          '2024-06-11', '2024-06-12', '2024-06-13', '2024-06-14',
-          '2024-06-15', '2024-06-16', '2024-06-17', '2024-06-18',
-          '2024-06-19', '2024-06-20'
-        ],
-        [
-          81,  85, 70, 71, 70, 75, 76, 74, 75, 76, 76, 78,
-          68,  73, 84, 89, 75, 72, 61, 72, 74, 82, 79, 73,
-          76,  78, 71, 76, 70, 69, 79, 85, 66, 69, 72, 70,
-          80,  68, 71, 72, 63, 74, 76, 66, 70, 76, 72, 79,
-          74,  81, 79, 74, 78, 63, 69, 69, 80, 78, 72, 74,
-          74, 100
-        ]
-      ]
+    const { data: relatedKeywordData, isLoading: isLoadingKeyword, error: errorKeyword } = useQuery(
+    ["relatedkeywordData",keyword],
+    () => relatedKeywordAPI(params1),
+    {
+        staleTime: Infinity,            
+    }        
+    );
 
 
+    if (isLoadingKeyword) {
+        return (
+            <StyledRelatedKeywordContainer darkMode={darkMode}>  
+        <StyledHeadTitleBox darkMode={darkMode} className="related-text-box" animate={clickedbubble}>
+                            <img src={sns} width={"50px"} height={"auto"}></img>                                 
+                                <span>{keyword}과 같이 언급되는 단어들이에요. </span>
+            </StyledHeadTitleBox >  
+            <Loading></Loading>
+            </StyledRelatedKeywordContainer>
+        )
+    }
 
-    return(
-            
-        <StyledRelatedKeywordContainer>  
+    if (errorKeyword) {
+        return <div>Error loading related keywords: {errorKeyword.message}</div>;
+    }
+    
+    else return(
+        <StyledRelatedKeywordContainer darkMode={darkMode}>  
         <StyledHeadTitleBox className="related-text-box" animate={clickedbubble}>
                             <img src={sns} width={"50px"} height={"auto"}></img>                                 
                                 <span>{keyword}과 같이 언급되는 단어들이에요. </span>
-            </StyledHeadTitleBox>                      
-            <StyledBubbleContainer>
-            
-                <StyledCircleContainer id="circle-container"  move={clickedbubble}>
-                    <StyledKeyCircleItem >
-                        <Bubble content={keyword} width={key_bubble_size} height={key_bubble_size} fontsize={"1.7rem"} nothover={true}></Bubble>
-                    </StyledKeyCircleItem>
-                {related_big_keywords.map((item, index) => {
-                    const angle = index * angleStep;
-                    const radian = (angle * Math.PI) / 180;
-                    const x = big_radius * Math.cos(radian);
-                    const y = big_radius * Math.sin(radian);
-                    
-                    return (
-                    <StyledCircleItem key={index} move={clickedbubble}
-                    x={x} y={y} distance={bubble_size} time={"1.3s"} delay={`${index * 0.5}s`}>
-                        <Bubble id={`big-bubble-${index}`} clickfunc={(e) => handleClick(e)}
-                        iscurrent={currentbubble===`big-bubble-${index}`}
-                        opacity={opacity} content={item} width={bubble_size} height={bubble_size} fontsize={"1.7rem"}></Bubble>
-                    </StyledCircleItem>
-                    );
+        </StyledHeadTitleBox>                      
+        <StyledBubbleContainer>
+        
+            <StyledCircleContainer id="circle-container"  move={clickedbubble}>
+                <StyledKeyCircleItem >
+                    <Bubble content={keyword} width={key_bubble_size} height={key_bubble_size} fontsize={"1.5rem"} nothover={true}></Bubble>
+                </StyledKeyCircleItem>
+                
+            {relatedKeywordData.data.slice(0,6).map((item, index) => {
+                const angle = index * angleStep;
+                const radian = (angle * Math.PI) / 180;
+                const x = big_radius * Math.cos(radian);
+                const y = big_radius * Math.sin(radian);
+                
+                return (
+                <StyledCircleItem key={index} move={clickedbubble}
+                x={x} y={y} distance={bubble_size} time={"1.3s"} delay={`${index * 0.5}s`}>
+                    <Bubble id={`big-bubble-${index}`} clickfunc={(e) => handleClick(e)}
+                    iscurrent={currentbubble===`big-bubble-${index}`}
+                    opacity={opacity} content={item.label} width={bubble_size} height={bubble_size} fontsize={"1.5rem"}></Bubble>
+                </StyledCircleItem>
+                );
 
 
-                })}
-                {related_sml_keywords.map((item, index) => {
-                    const angle = index * angleStep;
-                    const radian = (angle * Math.PI) / 180;
-                    const x = sml_radius * Math.cos(radian+Math.PI/6);
-                    const y = sml_radius * Math.sin(radian+Math.PI/6);
-                    
-                    return (                        
-                    <StyledMiniCircleItem key={index}
-                     x={x} y={y} distance={mini_bubble_size} time={"1s"} delay={`${index * 0.5}s`}>
-                        <Bubble id={`sml-bubble-${index}`} clickfunc={(e) => handleMiniClick(e)}
-                        iscurrent={currentbubble===`sml-bubble-${index}`}
-                        opacity={opacity} content={item} width={mini_bubble_size} height={mini_bubble_size} fontsize={"1.3rem"}></Bubble>
-                    </StyledMiniCircleItem>
-                    );
-                })}        
-                </StyledCircleContainer>
-                                             
-            </StyledBubbleContainer>   
+            })}
+            {relatedKeywordData.data.slice(6,12).map((item, index) => {
+                const angle = index * angleStep;
+                const radian = (angle * Math.PI) / 180;
+                const x = sml_radius * Math.cos(radian+Math.PI/6);
+                const y = sml_radius * Math.sin(radian+Math.PI/6);
+                
+                return (                        
+                <StyledMiniCircleItem key={index}
+                    x={x} y={y} distance={mini_bubble_size} time={"1s"} delay={`${index * 0.5}s`}>
+                    <Bubble id={`sml-bubble-${index}`} clickfunc={(e) => handleMiniClick(e)}
+                    iscurrent={currentbubble===`sml-bubble-${index}`}
+                    opacity={opacity} content={item.label} width={mini_bubble_size} height={mini_bubble_size} fontsize={"1.4rem"}></Bubble>
+                </StyledMiniCircleItem>
+                );
+            })}
+            {relatedKeywordData.data.slice(6,12).map((item, index) => {
+                const angle = index * angleStep;
+                const radian = (angle * Math.PI) / 180;
+                const x = sml_radius * Math.cos(radian+Math.PI/6);
+                const y = sml_radius * Math.sin(radian+Math.PI/6);
+                
+                return (                        
+                <StyledMiniCircleItem key={index}
+                    x={x} y={y} distance={mini_bubble_size} time={"1s"} delay={`${index * 0.5}s`}>
+                    <Bubble id={`sml-bubble-${index}`} clickfunc={(e) => handleMiniClick(e)}
+                    iscurrent={currentbubble===`sml-bubble-${index}`}
+                    opacity={opacity} content={item.label} width={mini_bubble_size} height={mini_bubble_size} fontsize={"1.4rem"}></Bubble>
+                </StyledMiniCircleItem>
+                );
+            })}        
+            </StyledCircleContainer>
+                                            
+        </StyledBubbleContainer>   
             <StyledNewsContainer className="NewsContainer">
 
                     {shownewstab && (
 
-                        <StyledNewsTab >
+                        <StyledNewsTab darkMode={darkMode} animate={clickedbubble}>
                             <StyledTitleBox className="related-text-box" animate={clickedbubble}>
                             <img src={sns} width={"50px"} height={"auto"}></img>                                 
                                 <span>{keyword}과 {currentword}의 검색량을 비교해보세요. </span>
                             </StyledTitleBox>
-                                <StyledGraphBox animate={clickedbubble}>                                
-                                <RelatedKeywordChart data1={keyword_data} data2={relatedkeyword_data}></RelatedKeywordChart>
+                            <StyledGraphBox darkMode={darkMode} animate={clickedbubble}>  
+                                                          
+                                <RelatedKeywordChart darkMode={darkMode} keyword={keyword} related={currentword} ></RelatedKeywordChart>
                              </StyledGraphBox>
-                        <StyledNaverbox animate={clickedbubble}>
-                                <StyledGraphKeyword>
-                                <span>연관 기사들</span>
-                                </StyledGraphKeyword>   
-                            <NaverNews width={"680px"} Hfontsize={"0.8rem"} Cfontsize={"0.7rem"}></NaverNews>
+                        <StyledNaverbox darkMode={darkMode} animate={clickedbubble}>
+                            {/* <NaverNews data={relatedNewsData} width={"680px"} Hfontsize={"0.8rem"} Cfontsize={"0.7rem"}></NaverNews> */}
+                            <RelatedNews params2={params2}></RelatedNews>
                         </StyledNaverbox>
                         </StyledNewsTab> 
                     )}

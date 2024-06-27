@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { 
   NewsListContainer, 
   NewsItem, 
@@ -13,6 +13,7 @@ import {
 } from './Newstab.style';
 
 export default function Newstab({id}) {
+  const darkMode = useSelector((state) => state.theme.darkMode);
   const [news, setNews] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -55,11 +56,20 @@ export default function Newstab({id}) {
       {news.map((item, key) => (
         <StyledLink key={key} to={`https://n.news.naver.com/article/${item.officeId}/${item.articleId}`}>
           <NewsItem key={key}>
-            <NewsImage src={item.imageOriginLink} alt="No image." />
+          <NewsImage
+          src={item.imageOriginLink}
+          alt="No image."
+          onError={(e) => {
+            if (e.target.src !== `/assets/images/bubbleimg.png`) {
+              e.target.onerror = null;
+              e.target.src = `/assets/images/bubbleimg.png`;
+            }
+          }}
+        />
             <NewsDetails>
-              <NewsTitle>{decodeHtmlEntities(item.title)}</NewsTitle>
-              <NewsContent>{decodeHtmlEntities(item.body)}</NewsContent>
-              <NewsDateOffice>{item.officeName}    |    {formatDateTime(item.datetime)} </NewsDateOffice>
+              <NewsTitle darkMode={darkMode}>{decodeHtmlEntities(item.title)}</NewsTitle>
+              <NewsContent darkMode={darkMode}>{decodeHtmlEntities(item.body)}</NewsContent>
+              <NewsDateOffice darkMode={darkMode}>{item.officeName}    |    {formatDateTime(item.datetime)} </NewsDateOffice>
             </NewsDetails>
           </NewsItem>
         </StyledLink>

@@ -4,7 +4,7 @@ export const StyledSocialYoutubeDiv = styled.div`
   width: 90%;
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   padding: 30px;
   border-radius: 20px;
@@ -14,11 +14,13 @@ export const StyledSocialYoutubeDiv = styled.div`
 export const StyledYoutubeItemDiv = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 100%;
 `;
 export const StyledYoutubeHeaderDiv = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-bottom: 20px;
+  width: 100%;
 
   & > nav:first-child {
     margin-right: 20px;
@@ -32,6 +34,15 @@ export const StyledYoutubeChartNewsDiv = styled.div`
 
   & > div > span:first-child {
     font-size: 23px;
-    color: rgba(0, 0, 0, 0.7);
+    color: ${(props) => (props.darkMode ? "white" : "rgba(0, 0, 0, 0.7)")};
   }
+`;
+
+export const StyledLoadingDiv = styled.div`
+  width: 600px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => (props.darkMode ? "#47484A" : "white")};
 `;

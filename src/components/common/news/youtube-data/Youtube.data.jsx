@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyledNewsKeyword } from "./Youtube.data.style";
 import {
   StyledNewsDiv,
@@ -7,83 +7,94 @@ import {
   StyledNewsItemDiv,
   StyledNewsItemHeaderDiv,
   StyledVideoDiv,
+  StyledContentsDiv,
 } from "./Youtube.data.style";
 import { timeAgo } from "~/utils/utils";
 import { StyledBlurDiv } from "./Youtube.data.style";
-export default function YoutubeData() {
-  //!! 샘플 데이터입니다.
-  const youtube_sample_data = [
-    {
-      pubDate: "2024-06-12T10:45:02Z",
-      channel: "남편요리_Husband'sCooking",
-      title: `ASMR MUKBANG  SPICY OCTOPUS 🐙 MUSHROOM FIRE NOODLE SEAFOOD`,
-      url: "https://www.youtube.com/watch?v=UxOe-w4lXQs",
-      thumbnail_url: "https://img.youtube.com/vi/UxOe-w4lXQs/0.jpg",
+import { useSelector } from "react-redux";
+import { useQuery } from "react-query";
+import axios from "axios";
+import Skeleton from "react-loading-skeleton";
+import { decode } from "html-entities";
+
+const fetchYoutubeData = async (keyword) => {
+  const result = await axios.get("/api/news/youtube", {
+    params: {
+      keyword: keyword,
+      limit: 20,
     },
-    {
-      pubDate: "2024-03-13T07:00:10Z",
-      channel: "FOOD MUKBANG",
-      title:
-        "🔥 AI는 불닭쌈 맛있다고 추천합니다. / 쫄깃하고 매콤한 불닭쌈 만들어 먹기 / 먹방 mukbang #몬스터맘TV #몬스터맘",
-      url: "https://www.youtube.com/watch?v=nV3YFzKOXNE_Y29udGlkPTIwMjQwNjEzMDE1MjHSAQA?oc=5",
-      thumbnail_url: "https://img.youtube.com/vi/nV3YFzKOXNE/0.jpg",
-    },
-    {
-      pubDate: "2022-06-10T12:15:07Z",
-      channel: "제리얌 Jelly Yum shorts",
-      title:
-        "불닭쌈🔥 다이어트식으로 요리해서 먹방!#2 베이컨 + 고구마 불닭쌈 FIRE NOODLE WARPS + DIET BACON #shorts REAL MUKBANG ASMR",
-      url: "https://www.youtube.com/watch?v=qOsV-lvJitk",
-      thumbnail_url: "https://img.youtube.com/vi/qOsV-lvJitk/0.jpg",
-    },
-    {
-      pubDate: "2021-08-29T13:17:00Z",
-      channel: "남편요리_Husband'sCooking",
-      title: `ASMR MUKBANG  SPICY OCTOPUS 🐙 MUSHROOM FIRE NOODLE SEAFOOD`,
-      url: "https://www.youtube.com/watch?v=UxOe-w4lXQs",
-      thumbnail_url: "https://img.youtube.com/vi/UxOe-w4lXQs/0.jpg",
-    },
-    {
-      pubDate: "2024-03-13T07:00:10Z",
-      channel: "FOOD MUKBANG",
-      title:
-        "🔥 AI는 불닭쌈 맛있다고 추천합니다. / 쫄깃하고 매콤한 불닭쌈 만들어 먹기 / 먹방 mukbang #몬스터맘TV #몬스터맘",
-      url: "https://www.youtube.com/watch?v=nV3YFzKOXNE_Y29udGlkPTIwMjQwNjEzMDE1MjHSAQA?oc=5",
-      thumbnail_url: "https://img.youtube.com/vi/nV3YFzKOXNE/0.jpg",
-    },
-    {
-      pubDate: "2022-06-10T12:15:07Z",
-      channel: "제리얌 Jelly Yum shorts",
-      title:
-        "불닭쌈🔥 다이어트식으로 요리해서 먹방!#2 베이컨 + 고구마 불닭쌈 FIRE NOODLE WARPS + DIET BACON #shorts REAL MUKBANG ASMR",
-      url: "https://www.youtube.com/watch?v=qOsV-lvJitk",
-      thumbnail_url: "https://img.youtube.com/vi/qOsV-lvJitk/0.jpg",
-    },
-  ];
-  const youtube_data = youtube_sample_data;
+  });
+  return result.data;
+};
+export default function YoutubeData(props) {
+  const keyword = useSelector((state) => state.keyword.keyword);
+  const darkMode = useSelector((state) => state.theme.darkMode);
+
+  const {
+    data = [],
+    error,
+    isLoading,
+  } = useQuery(["youtubeData", keyword], () => fetchYoutubeData(keyword), {
+    enabled: !!keyword,
+    staleTime: Infinity,
+    retry: false,
+  });
 
   return (
     <StyledNewsDiv className="Youtube-Box">
-      <StyledNewsKeyword>
-        <span>"불닭"</span>이 이렇게 언급됐어요
+      <StyledNewsKeyword darkMode={darkMode}>
+        <span>{`"${keyword}"`}</span>이 이렇게 언급됐어요
       </StyledNewsKeyword>
       <StyledNewsItemParentDiv>
-        {youtube_data.map((e, index) => (
-          <a href={e.url} key={index} target="_blank" rel="noopener noreferrer">
-            <StyledNewsItemDiv key={index}>
-              <StyledVideoDiv>
-                <StyledNewsItemHeaderDiv>
-                  <span>{e.channel}</span> |<span>{timeAgo(e.pubDate)}</span>
-                </StyledNewsItemHeaderDiv>
-                <div className="youtube-title">{e.title}</div>
-              </StyledVideoDiv>
-              <StyledImageDiv>
-                <img src={e.thumbnail_url}></img>
-              </StyledImageDiv>
-            </StyledNewsItemDiv>
-          </a>
-        ))}
-        <StyledBlurDiv></StyledBlurDiv>
+        {isLoading ? (
+          Array.from({ length: 20 }).map((_, index) => (
+            <StyledContentsDiv key={index} darkMode={darkMode}>
+              <Skeleton height={20} />
+              <Skeleton height={15} />
+              <Skeleton height={15} width="75%" />
+            </StyledContentsDiv>
+          ))
+        ) : error ? (
+          darkMode ? (
+            <img
+              src="/assets/images/no-data-box-darkmode.svg"
+              alt="No search result"
+              style={{ marginTop: "40px", width: "600px" }}
+            />
+          ) : (
+            <img
+              src="/assets/images/no-data-box.svg"
+              alt="No search result"
+              style={{ marginTop: "40px", width: "600px" }}
+            />
+          )
+        ) : (
+          <>
+            {data.map((e, index) => (
+              <a
+                href={e.url}
+                key={index}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <StyledNewsItemDiv key={index} darkMode={darkMode}>
+                  <StyledVideoDiv>
+                    <StyledNewsItemHeaderDiv darkMode={darkMode}>
+                      <span>{e.channel}</span> |
+                      <span>{timeAgo(e.pubDate)}</span>
+                    </StyledNewsItemHeaderDiv>
+                    <div className="youtube-title">{decode(e.title)}</div>
+                  </StyledVideoDiv>
+                  <StyledImageDiv>
+                    <img src={e.thumbnail_url}></img>
+                  </StyledImageDiv>
+                </StyledNewsItemDiv>
+              </a>
+            ))}
+          </>
+        )}
+
+        <StyledBlurDiv darkMode={darkMode}></StyledBlurDiv>
       </StyledNewsItemParentDiv>
     </StyledNewsDiv>
   );

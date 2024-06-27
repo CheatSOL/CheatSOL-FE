@@ -6,7 +6,7 @@ export const StyledWapperDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("/assets/images/landing.png");
+  background-image: url("/assets/images/landing2.png");
 `;
 
 export const StyledBubbleWapperDiv = styled.div`
