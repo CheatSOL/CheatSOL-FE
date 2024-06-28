@@ -87,7 +87,6 @@ export default function InstagramItem() {
     fetchData(keyword);
   }, [keyword]);
 
-  // Dark mode 변경 시 lineData 업데이트
   useEffect(() => {
     if (data.length > 0) {
       const labels = data.map((item) => item.date);
@@ -259,7 +258,7 @@ export default function InstagramItem() {
                       color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)",
                     }}
                   >
-                    <strong>"{keyword}"</strong>이 이만큼 언급됐어요
+                    <strong>"{keyword}"</strong>이(가) 이만큼 언급됐어요
                   </span>
                   {isGraphVisible && data ? (
                     <InstagramGraph

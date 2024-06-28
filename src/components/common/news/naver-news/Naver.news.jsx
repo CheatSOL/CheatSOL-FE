@@ -110,7 +110,7 @@ export default function NaverNews(props) {
   return (
     <StyledNewsDiv darkMode={darkMode}>
       <StyledNewsKeyword darkMode={darkMode}>
-        <span>{`"${keyword}"`}</span>이 이렇게 언급됐어요
+        <span>{`"${keyword}"`}</span>이(가) 이렇게 언급됐어요
       </StyledNewsKeyword>
       <StyledNewsItemPatentDiv isscroll={props.isscroll}>
         {isLoading || !data ? (

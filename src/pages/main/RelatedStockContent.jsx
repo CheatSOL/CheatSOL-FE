@@ -38,7 +38,7 @@ export default function RelatedStock({ keyword }) {
       <ContentHeader
         imgUrl="/assets/images/hand-with-care.svg"
         keyword={keyword}
-        description="와 관련도가 높은 주식회사에요."
+        description="와(과) 관련도가 높은 주식회사에요."
         toLink="/main/stock"
       ></ContentHeader>
       <Contents darkMode={darkMode}>
