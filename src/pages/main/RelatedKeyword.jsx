@@ -40,7 +40,6 @@ export default function RelatedKeyword({ keyword }) {
   if (isLoadingKeyword)
     return (
       <StyledMainContentDiv darkMode={darkMode}>
-      <StyledMainContentDiv>
         <ContentHeader
           imgUrl="/assets/images/bell.svg"
           keyword={keyword}
@@ -57,18 +56,12 @@ export default function RelatedKeyword({ keyword }) {
           }}
         >
           <ClipLoader color="#43d2ff" />
-            alignContent: "center",
-            justifyContent: "center",
-          }}
-        >
-          <ClipLoader />
         </div>
       </StyledMainContentDiv>
     );
   if (errorKeyword)
     return (
       <StyledMainContentDiv darkMode={darkMode}>
-      <StyledMainContentDiv>
         <ContentHeader
           imgUrl="/assets/images/bell.svg"
           keyword={keyword}
