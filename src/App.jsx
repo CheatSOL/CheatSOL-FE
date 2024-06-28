@@ -23,17 +23,17 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <Router>
             {/* <ErrorBoundaryWrapper> */}
-              <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/main" element={<MainPage />} />
-                <Route path="/main/social" element={<Socialpage />} />
-                <Route path="/main/stock" element={<StockPage />} />
-                <Route path="/main/stocks/:id/main" element={<Maintab />} />
-                <Route path="/main/keyword" element={<KeywordPage />} />
-                <Route path="/main/stocks/detail" element={<StockDetail />} />
-                <Route path="/error" element={<ErrorPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/main" element={<MainPage />} />
+              <Route path="/main/social" element={<Socialpage />} />
+              <Route path="/main/stock" element={<StockPage />} />
+              <Route path="/main/stocks/:id/main" element={<Maintab />} />
+              <Route path="/main/keyword" element={<KeywordPage />} />
+              <Route path="/main/stocks/detail" element={<StockDetail />} />
+              <Route path="/error" element={<ErrorPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
             {/* </ErrorBoundaryWrapper> */}
           </Router>
         </QueryClientProvider>

@@ -19,16 +19,29 @@ export default function InstagramItem() {
   const [tagInfo, setTagInfo] = useState([]);
   const [temp, setTemp] = useState(false);
   const keyword = useSelector((state) => state.keyword.keyword);
+  const scrollRef = useRef(null);
+  const [isGraphVisible, setIsGraphVisible] = useState(false);
+  const observerRef = useRef(null);
 
   useEffect(() => {
     async function fetchData(word) {
       try {
+        setIsGraphVisible(false);
+        setData([]);
+        setTagInfo([]);
+        setTopTags([]);
+        setTemp(false);
+        console.log("2222");
         const instagramInfo = await getInstagramSocialTrend(word);
+        console.log("111");
+        console.log("oin", instagramInfo);
         if (
+          instagramInfo === undefined ||
           instagramInfo.tagInfo === undefined ||
           instagramInfo.topTags === undefined ||
           instagramInfo.trendData === undefined
         ) {
+          console.log("dsfsfd");
           setTemp(true);
           return;
         }
@@ -37,7 +50,6 @@ export default function InstagramItem() {
         setData(instagramInfo.trendData);
         setTopTags(instagramInfo.topTags);
         setTagInfo(instagramInfo.tagInfo);
-
         const labels = instagramInfo.trendData.map((item) => item.date);
         const counts = instagramInfo.trendData.map((item) => item.posts);
         const changes = instagramInfo.trendData.map((item, index) => {
@@ -75,7 +87,6 @@ export default function InstagramItem() {
     fetchData(keyword);
   }, [keyword]);
 
-  // Dark mode 변경 시 lineData 업데이트
   useEffect(() => {
     if (data.length > 0) {
       const labels = data.map((item) => item.date);
@@ -111,9 +122,7 @@ export default function InstagramItem() {
     }
   }, [darkMode, data]);
 
-  const scrollRef = useRef(null);
-  const [isGraphVisible, setIsGraphVisible] = useState(false);
-  const observerRef = useRef(null);
+  console.log("temp" + temp);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
@@ -240,30 +249,7 @@ export default function InstagramItem() {
       ) : (
         <>
           <StyledInstagramChartNewsDiv ref={scrollRef} darkMode={darkMode}>
-            {!data ? (
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {darkMode ? (
-                  <img
-                    src="/assets/images/no-data-darkmode.svg"
-                    width={"70%"}
-                    height={"400px"}
-                  />
-                ) : (
-                  <img
-                    src="/assets/images/no-data.svg"
-                    width={"70%"}
-                    height={"400px"}
-                  />
-                )}
-              </div>
-            ) : (
+            {
               <div style={{ marginTop: "18px" }}>
                 <div>
                   <span
@@ -272,7 +258,7 @@ export default function InstagramItem() {
                       color: darkMode ? "white" : "rgba(0, 0, 0, 0.7)",
                     }}
                   >
-                    <strong>"{keyword}"</strong>이 이만큼 언급됐어요
+                    <strong>"{keyword}"</strong>이(가) 이만큼 언급됐어요
                   </span>
                   {isGraphVisible && data ? (
                     <InstagramGraph
@@ -296,7 +282,7 @@ export default function InstagramItem() {
                   <InstagramHotHashTags topTags={topTags} />
                 </div>
               </div>
-            )}
+            }
 
             <InstagramData tagInfo={tagInfo} />
           </StyledInstagramChartNewsDiv>

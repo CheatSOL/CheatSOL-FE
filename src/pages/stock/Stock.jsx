@@ -228,7 +228,9 @@ export default function StockPage() {
                 확인하기
               </StyledTitleDiv>
             </StyledHeaderChart>
-            <div style={{ position: "relative", height: "615px" }}>
+            <div
+              style={{ position: "relative", height: "645px", width: "600px" }}
+            >
               <StyledBodyCompanyDiv>
                 {isCompanyLoading || !companyData ? (
                   Array.from({ length: 20 }).map((_, index) => (
@@ -243,6 +245,44 @@ export default function StockPage() {
                       <Skeleton height={15} width="80%" />
                     </StyledContentsDiv>
                   ))
+                ) : companyData[0].similarity == 0 ? (
+                  darkMode ? (
+                    <div
+                      style={{
+                        backgroundColor: darkMode ? "#424242" : "white",
+                        borderRadius: "20px",
+                        width: "90%",
+                        height: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        border: "1px solid rgba(0,0,0,0.1)",
+                      }}
+                    >
+                      <img
+                        style={{ width: "100%", height: "227px" }}
+                        src="/assets/images/no-data-box-darkmode.svg"
+                      ></img>
+                    </div>
+                  ) : (
+                    <div
+                      style={{
+                        backgroundColor: darkMode ? "#424242" : "white",
+                        borderRadius: "20px",
+                        width: "90%",
+                        height: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        border: "1px solid rgba(0,0,0,0.1)",
+                      }}
+                    >
+                      <img
+                        style={{ width: "100%", height: "227px" }}
+                        src="/assets/images/no-data-box.svg"
+                      ></img>
+                    </div>
+                  )
                 ) : (
                   <>
                     {companyData.map((e, i) => (

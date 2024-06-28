@@ -73,13 +73,6 @@ export default function YoutubeItem() {
     };
   }, []);
 
-  /* useEffect(() => {
-    if (keyword) {
-      setLoadError(false);
-      refetch();
-    }
-  }, [keyword, refetch]); */
-
   const handlePeriodChange = (selectedPeriod) => {
     let t = "";
     if (selectedPeriod.includes("일")) {
@@ -136,7 +129,7 @@ export default function YoutubeItem() {
           <>
             <div>
               <span>
-                <strong>{`"${keyword}"`}</strong>이 이만큼 언급됐어요
+                <strong>{`"${keyword}"`}</strong>이(가) 이만큼 언급됐어요
               </span>
               {isGraphVisible ? (
                 isLoading ? (

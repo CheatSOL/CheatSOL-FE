@@ -7,6 +7,7 @@ import {
   StyledImageDiv,
   StyledNewsItemHeaderDiv,
 } from "./instagram.data.style";
+import Chart from "chart.js/auto";
 import { weekTimeAgo } from "~/utils/utils";
 import insta from "~/images/instagram.png";
 import { StyledBlurDiv } from "./instagram.data.style";
@@ -72,11 +73,25 @@ export default function InstagramData({ tagInfo }) {
   return (
     <StyledNewsDiv>
       <StyledNewsKeyword darkMode={darkMode}>
-        <span>"{keyword}"</span>이 이렇게 언급됐어요
+        <span>"{keyword}"</span>이(가) 이렇게 언급됐어요
       </StyledNewsKeyword>
       <InstagramIndexes tagInfo={tagInfo}></InstagramIndexes>
       <StyledNewsItemParentDiv>
-        {data &&
+        {data.length === 0 ? (
+          darkMode ? (
+            <img
+              src="/assets/images/no-data-box-darkmode.svg"
+              alt="No search result"
+              style={{ marginTop: "40px", width: "400px" }}
+            />
+          ) : (
+            <img
+              src="/assets/images/no-data-box.svg"
+              alt="No search result"
+              style={{ marginTop: "40px", width: "400px" }}
+            />
+          )
+        ) : (
           data.map((e, index) => (
             <>
               <StyledNewsItemDiv key={index} darkMode={darkMode}>
@@ -118,7 +133,8 @@ export default function InstagramData({ tagInfo }) {
                 </StyledImageDiv>
               </StyledNewsItemDiv>
             </>
-          ))}
+          ))
+        )}
       </StyledNewsItemParentDiv>
       <StyledBlurDiv darkMode={darkMode} />
     </StyledNewsDiv>

@@ -11,13 +11,14 @@ export const StyledStockRightDiv = styled.div`
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 export const StyledStockHeaderDiv = styled.div`
   margin-left: 50px;
   font-size: 18px;
   margin-bottom: 40px;
-  
+
   color: ${(props) => (props.darkMode ? "white" : "")};
   & strong {
     font-size: 22px;
@@ -48,7 +49,7 @@ export const StyledBodyCompanyDiv = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
-  height: 615px;
+  height: 100%;
   overflow-y: scroll;
 
   &:hover {
