@@ -37,37 +37,51 @@ export default function RelatedKeyword({ keyword }) {
     }
   );
 
-  if (isLoadingKeyword) return (<StyledMainContentDiv>
-    <ContentHeader
+  if (isLoadingKeyword)
+    return (
+      <StyledMainContentDiv darkMode={darkMode}>
+        <ContentHeader
           imgUrl="/assets/images/bell.svg"
           keyword={keyword}
           description="과 함께 언급되는 단어에요"
           toLink="/main/keyword"
         />
-        <div style={{display:"flex",alignContent:"center", justifyContent:"center"}}>
-        <ClipLoader/>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <ClipLoader color="#43d2ff" />
         </div>
-  </StyledMainContentDiv>)
-  if (errorKeyword) return (<StyledMainContentDiv>
-    <ContentHeader
+      </StyledMainContentDiv>
+    );
+  if (errorKeyword)
+    return (
+      <StyledMainContentDiv darkMode={darkMode}>
+        <ContentHeader
           imgUrl="/assets/images/bell.svg"
           keyword={keyword}
           description="과 함께 언급되는 단어에요"
           toLink="/main/keyword"
+          darkMode={darkMode}
         />
-      {darkMode ? (
-            <img
-              style={{ width: "700px", height: "auto", marginTop:"50px" }}
-              src="/assets/images/no-data-darkmode.svg"
-            ></img>
-          ) : (
-            <img
-              style={{ width: "700px", height: "auto",  marginTop:"50px" }}
-              src="/assets/images/no-data.svg"
-            ></img>
-          )}
-      
-  </StyledMainContentDiv>)
+        {darkMode ? (
+          <img
+            style={{ width: "700px", height: "auto", marginTop: "50px" }}
+            src="/assets/images/no-data-darkmode.svg"
+          ></img>
+        ) : (
+          <img
+            style={{ width: "700px", height: "auto", marginTop: "50px" }}
+            src="/assets/images/no-data.svg"
+          ></img>
+        )}
+      </StyledMainContentDiv>
+    );
 
   return (
     <>
@@ -77,6 +91,7 @@ export default function RelatedKeyword({ keyword }) {
           keyword={keyword}
           description="과 함께 언급되는 단어에요"
           toLink="/main/keyword"
+          darkMode={darkMode}
         />
         <StyledBubbleContainer darkMode={darkMode}>
           {isLoadingKeyword ? (
@@ -87,9 +102,10 @@ export default function RelatedKeyword({ keyword }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                backgroundColor: darkMode ? "#333333" : "white",
               }}
             >
-              <ClipLoader color="#43d2ff" />
+              <ClipLoader color="#43d2ff"></ClipLoader>
             </div>
           ) : errorKeyword ? (
             <div
@@ -99,6 +115,7 @@ export default function RelatedKeyword({ keyword }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                backgroundColor: darkMode ? "#333333" : "white",
               }}
             >
               <img
