@@ -40,10 +40,11 @@ export default function RelatedKeyword({ keyword }) {
   if (isLoadingKeyword)
     return (
       <StyledMainContentDiv darkMode={darkMode}>
+      <StyledMainContentDiv>
         <ContentHeader
           imgUrl="/assets/images/bell.svg"
           keyword={keyword}
-          description="과 함께 언급되는 단어에요"
+          description="와(과) 함께 언급되는 단어에요"
           toLink="/main/keyword"
         />
         <div
@@ -56,16 +57,22 @@ export default function RelatedKeyword({ keyword }) {
           }}
         >
           <ClipLoader color="#43d2ff" />
+            alignContent: "center",
+            justifyContent: "center",
+          }}
+        >
+          <ClipLoader />
         </div>
       </StyledMainContentDiv>
     );
   if (errorKeyword)
     return (
       <StyledMainContentDiv darkMode={darkMode}>
+      <StyledMainContentDiv>
         <ContentHeader
           imgUrl="/assets/images/bell.svg"
           keyword={keyword}
-          description="과 함께 언급되는 단어에요"
+          description="와(과) 함께 언급되는 단어에요"
           toLink="/main/keyword"
           darkMode={darkMode}
         />
@@ -89,7 +96,7 @@ export default function RelatedKeyword({ keyword }) {
         <ContentHeader
           imgUrl="/assets/images/bell.svg"
           keyword={keyword}
-          description="과 함께 언급되는 단어에요"
+          description="와(과) 함께 언급되는 단어에요"
           toLink="/main/keyword"
           darkMode={darkMode}
         />

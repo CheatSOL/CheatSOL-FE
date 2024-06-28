@@ -62,7 +62,7 @@ export default function GoogleNews(props) {
   return (
     <StyledNewsDiv>
       <StyledNewsKeyword darkMode={darkMode}>
-        <span>{`"${keyword}"`}</span>이 이렇게 언급됐어요
+        <span>{`"${keyword}"`}</span>이(가) 이렇게 언급됐어요
       </StyledNewsKeyword>
       <StyledNewsItemPatentDiv>
         {isLoading ? (
