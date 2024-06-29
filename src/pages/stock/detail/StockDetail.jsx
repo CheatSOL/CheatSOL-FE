@@ -223,7 +223,7 @@ export default function StockDetail() {
 
   const handleClick = () => {
     window.open(
-      `http://ec2-3-35-199-226.ap-northeast-2.compute.amazonaws.com/005930`,
+      `http://ec2-3-35-199-226.ap-northeast-2.compute.amazonaws.com/${code}`,
       "_blank"
     );
   };
